@@ -9,56 +9,103 @@ prm
 
 
 OSCdef(\airSputters, { | msg |
-	var id, val, toggle;
+	var id, val, toggle, vol;
 	id = msg.at(1);
 	val = msg.at(2);
 	toggle = msg.at(3);
+	vol = msg.at(4);
 	case
-	{ id == \main } { ~connectMake[\airSputters].value([val, toggle]).postln; }
+	{ id == \main } { ~connectMake[\airSputters].value([val, toggle, vol]).postln; }
 	{ id == \toggle } { ~connectMake[\airSputtersToggle].value(val).postln; }
+	{ id == \volume } {
+		var amp = val.linlin(0, 127, 0, 1);
+		~connectSynth[\airSputters].del.set(\amp, amp); }
 }, \airSputters, ~scLang);
 
 OSCdef(\attackRandomizer, { | msg |
-	var id, val;
+	var id, val, toggle, vol;
 	id = msg.at(1);
 	val = msg.at(2);
+	toggle = msg.at(3);
+	vol = msg.at(4);
 	case
-	{ id == \main } { ~connectMake[\attackRandomizer].value(val).postln; }
+	{ id == \main } { ~connectMake[\attackRandomizer].value([val, toggle, vol]).postln; }
 	{ id == \toggle } { ~connectMake[\attackRandomizerToggle].value(val).postln; }
+	{ id == \volume } {
+		var amp = val.linlin(0, 127, 0, 1.0);
+		~connectSynth[\attackRandomizer].pan.set(\amp, amp); }
 }, \attackRandomizer, ~scLang);
 
+
 OSCdef(\bassline, { | msg |
-	var id, val, toggleOne, toggleTwo;
+	var id, val, toggleOne, toggleTwo, vol, gran;
 	id = msg.at(1);
 	val = msg.at(2);
 	toggleOne = msg.at(3);
 	toggleTwo = msg.at(4);
+	vol = msg.at(5);
+	gran = msg.at(6);
 	case
-	{ id == \main } { ~connectMake[\basslines].value([val, toggleOne, toggleTwo]).postln; }
+	{ id == \main } { ~connectMake[\basslines].value([val, toggleOne, toggleTwo, vol, gran]).postln; }
 	{ id == \one } { ~connectMake[\basslineOne].value(val).postln; }
 	{ id == \two } { ~connectMake[\basslineTwo].value(val).postln; }
+	{ id == \volume } {
+		var amp = val.linlin(0, 127, 0, 7.5);
+		~connectSynth[\basslines].fader.set(\amp, amp); }
+	{ id == \gran } {
+		var mix = val.linlin(0, 127, 0, 1.0);
+		~connectSynth[\basslines].gran.set(\mix, mix); }
 }, \bassline, ~scLang);
 
+
 OSCdef(\cascade, { | msg |
-	var id, val;
+	var id, val, toggle, vol;
 	id = msg.at(1);
 	val = msg.at(2);
+	toggle = msg.at(3);
+	vol = msg.at(4);
 	case
 	{ id == \record } { ~connectMake[\cascadeRecord].value(val).postln; }
-	{ id == \main } { ~connectMake[\cascade].value(val).postln; }
+	{ id == \main } { ~connectMake[\cascade].value([val, toggle, vol]).postln; }
 	{ id == \toggle } { ~connectMake[\cascadeToggle].value(val).postln; }
+	{ id == \volume } {
+		var amp = val.linlin(0, 127, 0, 1.0);
+		~connectSynth[\cascade].pan.set(\amp, amp); }
 }, \cascade, ~scLang);
 
 
+OSCdef(\chords, { | msg |
+	var id, val, sum, toggle, vol;
+	id = msg.at(1);
+	val = msg.at(2);
+	sum = msg.at(3);
+	toggle = msg.at(4);
+	vol = msg.at(5);
+	case
+	{ id == \record } { ~connectMake[\chordRecord].value(val).postln; }
+	{ id == \main } { ~connectMake[\chords].value([val, sum, toggle, vol]).postln; }
+	{ id == \sum } { ~connectMake[\chordSum].value(val).postln; }
+	{ id == \toggle } { ~connectMake[\chordsToggle].value(val).postln; }
+	{ id == \volume } {
+		var amp = val.linlin(0, 127, 0, 1.0);
+		~connectSynth[\chords].gran.set(\amp, amp); }
+}, \chords, ~scLang);
+
+
 OSCdef(\droner, { | msg |
-	var id, val, toggle, erode, rater;
+	var id, val, toggle, erode, rater, granMix, vol, hiShelf, loShelf;
 	id = msg.at(1);
 	val = msg.at(2);
 	toggle = msg.at(3);
 	erode = msg.at(4);
 	rater = msg.at(5);
+	granMix = msg.at(6);
+	vol = msg.at(7);
+	loShelf = msg.at(8);
+	hiShelf = msg.at(9);
 	case
-	{ id == \main } { ~connectMake[\droner].value([val, toggle, erode, rater]).postln; }
+	{ id == \main } {
+		~connectMake[\droner].value([val, toggle, erode, rater, granMix, vol, loShelf, hiShelf]).postln; }
 	{ id == \toggle } { ~connectMake[\dronerToggle].value(val).postln; }
 	{ id == \erodeOn } {
 		~connectSynth[\droner].erosion.set(\mix, 0.15);
@@ -67,47 +114,72 @@ OSCdef(\droner, { | msg |
 		~connectSynth[\droner].erosion.set(\mix, 0.02);
 		~ohm.turnYellow(val); }
 	{ id == \rater } { ~connectMake[\dronerRater].value(val); }
+	{ id == \granMix } {
+			var mix;
+			mix = val.linlin(0, 127, 0, 1);
+			~connectSynth[\droner].gran.set(\mix, mix);}
+	{ id == \volume } {
+		var amp;
+		amp = val.linlin(0, 127, 0, 0.9);
+		~connectSynth[\droner].fader.set(\amp, amp) }
+	{ id == \loShelf } {
+		var amp = val.linlin(0, 127, -6.0, 6.0);
+		~connectSynth[\droner].loShelf.set(\gain, amp); }
+	{ id == \hiShelf } {
+		var amp = val.linlin(0, 127, -3.0, 4.0);
+		~connectSynth[\droner].hiShelf.set(\gain, amp); }
+
 }, \droner, ~scLang);
 
 
-OSCdef(\chords, { | msg |
-	var id, val;
-	id = msg.at(1);
-	val = msg.at(2);
-	case
-	{ id == \record } { ~connectMake[\chordRecord].value(val).postln; }
-	{ id == \sum } { ~connectMake[\chordSum].value(val).postln; }
-	{ id == \main } { ~connectMake[\chords].value(val).postln; }
-	{ id == \toggle } { ~connectMake[\chordsToggle].value(val).postln; }
-}, \chords, ~scLang);
-
-
 OSCdef(\granDelay, { | msg |
-	var id, val;
+	var id, val, toggle, hiShelf, decay;
 	id = msg.at(1);
 	val = msg.at(2);
+	toggle = msg.at(3);
+	hiShelf = msg.at(4);
+	decay = msg.at(5);
 	case
-	{ id == \main } { ~connectMake[\granDelay].value(val).postln; }
+	{ id == \main } { ~connectMake[\granDelay].value([val, toggle, hiShelf, decay]).postln; }
 	{ id == \toggle } { ~connectMake[\granDelayToggle].value(val).postln; }
+	{ id == \hiShelf } {
+		var gain = val.linlin(0, 127, -6.0, 2.0);
+		~connectSynth[\granDelay].hiShelf.set(\gain, gain); }
+	{ id == \decay } {
+		var decay = val.linlin(0, 127, 7.0, 45.0);
+		~connectSynth[\granDelay].del.set(\decayTime, decay); }
 }, \granDelay, ~scLang);
 
 
 OSCdef(\inlet, { | msg |
-	var id, val;
+	var id, val, gran;
 	id = msg.at(1);
 	val = msg.at(2);
+	gran = msg.at(3);
 	case
-	{ id == \main } { ~connectMake[\inlet].value(val).postln; }
+	{ id == \main } { ~connectMake[\inlet].value([val, gran]).postln; }
+	{ id == \gran } {
+		var mix = val.linlin(0, 127, 0, 1.0);
+		~connectSynth[\inlet].gran.set(\mix, mix); }
 }, \inlet, ~scLang);
 
 
 OSCdef(\micVerb, { | msg |
-	var id, val;
+	var id, val, toggle, vol, gran;
 	id = msg.at(1);
 	val = msg.at(2);
+	toggle = msg.at(3);
+	vol = msg.at(4);
+	gran = msg.at(5);
 	case
-	{ id == \main } { ~connectMake[\micVerb].value(val).postln; }
+	{ id == \main } { ~connectMake[\micVerb].value([val, toggle, vol, gran]).postln; }
 	{ id == \toggle } { ~connectMake[\micVerbToggle].value(val).postln; }
+	{ id == \volume } {
+		var amp = val.linlin(0, 127, 0, 1);
+		~connectSynth[\micVerb].fader.set(\amp, amp); }
+	{ id == \gran } {
+		var mix = val.linlin(0, 127, 0, 0.3);
+		~connectSynth[\mixVerb].gran.set(\mix, mix); }
 }, \micVerb, ~scLang);
 
 
@@ -121,13 +193,26 @@ OSCdef(\noteRecord, { | msg |
 
 
 OSCdef(\stabs, { | msg |
+	var id, val, toggle, vol;
+	id = msg.at(1);
+	val = msg.at(2);
+	toggle = msg.at(3);
+	vol = msg.at(4);
+	case
+	{ id == \main } { ~connectMake[\stabs].value([val, toggle, vol]).postln; }
+	{ id == \toggle } { ~connectMake[\stabsToggle].value(val).postln; }
+	{ id == \volume } {
+		var amp = val.linlin(0, 127, 0, 1.0);
+		~connectSynt[\stabs].fader.set(\amp, amp); }
+}, \stabs, ~scLang);
+
+OSCdef(\transport, { | msg |
 	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
 	case
-	{ id == \main } { ~connectMake[\stabs].value(val).postln; }
-	{ id == \toggle } { ~connectMake[\stabsToggle].value(val).postln; }
-}, \stabs, ~scLang);
+	{ id == \main } { ~connectMake[\seeTransport].value(val); }
+}, \transport, ~scLang);
 
 
 /*

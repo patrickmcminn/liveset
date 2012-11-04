@@ -4,6 +4,7 @@ micVerb.scd
 prm
 */
 
+
 ~connections[\micVerb] = {
 
 	~connectBus[\micVerb] = (
@@ -46,20 +47,32 @@ prm
 	~connectSynth[\micVerb].do({ | i | i.free });
 });
 
-~connectMake[\micVerb] = r { | val |
+~connectMake[\micVerb] = r { | main |
+	var val, toggle, vol, mix;
+	val = main.at(0);
+	toggle = main.at(1);
+	vol = main.at(2);
+	mix = main.at(3);
 	loop{
-
 		~connections[\micVerb].value;
+		~ohm.turnGreen(toggle);
+		MIDIdef.noteOn(\micVerbToggle, { ~scLang.sendMsg(\micVerb, \toggle, toggle) }, toggle);
+		MIDIdef.cc(\micVerbVolume, { | amp | ~scLang.sendMsg(\micVerb, \volume, amp) }, vol);
+		MIDIdef.cc(\micVerbGran, { | mix | ~scLang.sendMsg(\micVerb, \gran, mix) }, mix);
 		"Mic Verb Active".postln;
 		~ohm.turnBlue(val).yield;
 
 		~connections[\micVerb].kill;
+		~ohm.turnOff(toggle);
+		MIDIdef(\micVerbVolume).free;
+		MIDIdef(\micVerbToggle).free;
+		MIDIdef(\micVerbGran).free;
 		"Mic Verb Freed".postln;
 		~ohm.turnRed(val).yield;
 	};
 };
 
-~connectMake[\micVerb] = r { | val |
+~connectMake[\micVerbToggle] = r { | val |
 	loop{
 		~connectSynth[\micVerb].inFader.set(\mute, 0);
 		["input for mic verb muted"].postln;

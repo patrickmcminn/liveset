@@ -5,6 +5,7 @@ prm
 */
 
 "/connections/init.scd".loadRelative;
+"/connections/transport.scd".loadRelative;
 "/connections/airSputters.scd".loadRelative;
 "/connections/attackRandomizer.scd".loadRelative;
 "/connections/basslines.scd".loadRelative;

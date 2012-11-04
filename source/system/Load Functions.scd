@@ -7,3 +7,5 @@ prm
 "/functions/Load Impulse Responses.scd".loadRelative;
 "/functions/grainBufs.scd".loadRelative;
 "/functions/Load Connections Functions.scd".loadRelative;
+"/functions/Load boy Functions.scd".loadRelative;
+"/functions/Load birds Functions.scd".loadRelative;

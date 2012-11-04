@@ -7,3 +7,4 @@ prm
 "/mixer/groups.scd".loadRelative;
 "/mixer/mixer.scd".loadRelative;
 "/mixer/instruments.scd".loadRelative;
+"/mixer/guitar.scd".loadRelative;

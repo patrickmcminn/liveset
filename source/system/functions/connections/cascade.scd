@@ -150,7 +150,7 @@ prm
 	Pbindef(\highFSharp).clear;
 });
 
-~connections[\cascade].addUniqueMethod(\play, {
+~connections[\cascade].addUniqueMethod(\playCascade, {
 	~connections[\transport].schedAbs(~connections[\transport].nextTimeOnGrid, {Pbindef(\highCSharp).play});
 	~connections[\transport].schedAbs(~connections[\transport].nextTimeOnGrid + 4, {Pbindef(\gSharp).play});
 	~connections[\transport].schedAbs(~connections[\transport].nextTimeOnGrid + 8, {Pbindef(\lowFSharp).play});
@@ -161,7 +161,7 @@ prm
 	~connections[\transport].schedAbs(~connections[\transport].nextTimeOnGrid + 28, {Pbindef(\highFSharp).play});
 });
 
-~connections[\cascade].addUniqueMethod(\stop, {
+~connections[\cascade].addUniqueMethod(\stopCascade, {
 	Pbindef(\highCSharp).stop;
 	Pbindef(\gSharp).stop;
 	Pbindef(\lowFSharp).stop;
@@ -172,13 +172,23 @@ prm
 	Pbindef(\highFSharp).stop;
 });
 
-~connectMake[\cascade] = r { | val |
+~connectMake[\cascade] = r { | main |
+	var val, toggle, vol;
+	val = main.at(0);
+	toggle = main.at(1);
+	vol = main.at(2);
 	loop {
 		~connections[\cascade].value;
+		~ohm.turnGreen(toggle);
+		MIDIdef.noteOn(\cascadeToggle, { ~scLang.sendMsg(\cascade, \toggle, toggle)}, toggle);
+		MIDIdef.cc(\cascadeVolume, { | amp | ~scLang.sendMsg(\cascade, \volume, amp)}, vol);
 		["cascade synths created"].postln;
 		~ohm.turnLavender(val).yield;
 
 		~connections[\cascade].kill;
+		MIDIdef(\cascadeVolume).free;
+		MIDIdef(\cascadeToggle).free;
+		~ohm.turnOff(toggle);
 		["cascade synths freed"].postln;
 		~ohm.turnRed(val).yield;
 	};
@@ -186,11 +196,11 @@ prm
 
 ~connectMake[\cascadeToggle] = r { | val |
 	loop {
-		~connections[\cascade].play;
+		~connections[\cascade].playCascade;
 		["cascade synths playing"].postln;
 		~ohm.turnPink(val).yield;
 
-		~connections[\cascade].stop;
+		~connections[\cascade].stopCascade;
 		["cascade synths stopped"].postln;
 		~ohm.turnRed(val).yield;
 	};

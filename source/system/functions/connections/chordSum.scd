@@ -11,7 +11,6 @@ prm
 	sustain = 0.8;
 	release = 0.1;
 	amp = 1;
-	~connectBuf[\chordSum] = Buffer.allocConsecutive(4, s, s.sampleRate, 1);
 	~connectBus[\chordSum] = (
 		\fSharpMinor: Bus.audio,
 		\aMajor: Bus.audio,
@@ -25,15 +24,15 @@ prm
 	~connectSynth[\chordSum].fSharpMinor = (
 
 		\fSharp: Synth(\playBuf, [\out, ~connectBus[\chordSum].fSharpMinor, \amp, amp,
-			\bufName, ~connectBuf[\chords].at(0), \attack, attack, \sustain, sustain,
+			\bufName, ~connectBuf[\chord].at(0), \attack, attack, \sustain, sustain,
 			\release, release], ~group[\synths], \addToTail),
 
 		\a: Synth(\playBuf, [\out, ~connectBus[\chordSum].fSharpMinor, \amp, amp,
-			\bufName, ~connectBuf[\chords].at(1), \attack, attack, \sustain, sustain,
+			\bufName, ~connectBuf[\chord].at(1), \attack, attack, \sustain, sustain,
 			\release, release], ~group[\synths], \addToTail),
 
 		\cSharp: Synth(\playBuf, [\out, ~connectBus[\chordSum].fSharpMinor, \amp, amp,
-			\bufName, ~connectBuf[\chords].at(2), \attack, attack, \sustain, sustain,
+			\bufName, ~connectBuf[\chord].at(2), \attack, attack, \sustain, sustain,
 			\release, release], ~group[\synths], \addToTail),
 
 		\rec: Synth(\recordBuf, [\in, ~connectBus[\chordSum].fSharpMinor, \bufName, ~connectBuf[\chordSum].at(0)],
@@ -43,13 +42,13 @@ prm
 
 	~connectSynth[\chordSum].aMajor = (
 
-		\a: Synth(\playBuf, [\out, ~connectBus[\chordSum].aMajor, \amp, amp, \bufName, ~connectBuf[\chords].at(1),
+		\a: Synth(\playBuf, [\out, ~connectBus[\chordSum].aMajor, \amp, amp, \bufName, ~connectBuf[\chord].at(1),
 			\attack, attack, \sustain, sustain, \release, release], ~group[\synths], \addToTail),
 
-		\cSharp: Synth(\playBuf, [\out, ~connectBus[\chordSum].aMajor, \amp, amp, \bufName, ~connectBuf[\chords].at(2),
+		\cSharp: Synth(\playBuf, [\out, ~connectBus[\chordSum].aMajor, \amp, amp, \bufName, ~connectBuf[\chord].at(2),
 			\attack, attack, \sustain, sustain, \release, release], ~group[\synths], \addToTail),
 
-		\e: Synth(\playBuf, [\out, ~connectBus[\chordSum].aMajor, \amp, amp, \bufName, ~connectBuf[\chords].at(5),
+		\e: Synth(\playBuf, [\out, ~connectBus[\chordSum].aMajor, \amp, amp, \bufName, ~connectBuf[\chord].at(5),
 			\attack, attack, \sustain, sustain, \release, release], ~group[\synths], \addToTail),
 
 		\rec: Synth(\recordBuf, [\in, ~connectBus[\chordSum].aMajor, \bufName, ~connectBuf[\chordSum].at(1)],
@@ -59,15 +58,15 @@ prm
 	~connectSynth[\chordSum].cSharpMinor = (
 
 		\cSharp: Synth(\playBuf, [\out, ~connectBus[\chordSum].cSharpMinor, \amp, amp,
-			\bufName, ~connectBuf[\chords].at(2), \attack, attack, \sustain, sustain, \release, release],
+			\bufName, ~connectBuf[\chord].at(2), \attack, attack, \sustain, sustain, \release, release],
 			~group[\synths], \addToTail),
 
 		\e: Synth(\playBuf, [\out, ~connectBus[\chordSum].cSharpMinor, \amp, amp,
-			\bufName, ~connectBuf[\chords].at(5), \attack, attack, \sustain, sustain, \release, release],
+			\bufName, ~connectBuf[\chord].at(5), \attack, attack, \sustain, sustain, \release, release],
 			~group[\synths], \addToTail),
 
 		\gSharp: Synth(\playBuf, [\out, ~connectBus[\chordSum].cSharpMinor, \amp, amp,
-			\bufName, ~connectBuf[\chords].at(4), \attack, attack, \sustain, sustain, \release, release],
+			\bufName, ~connectBuf[\chord].at(4), \attack, attack, \sustain, sustain, \release, release],
 			~group[\synths], \addToTail),
 
 		\rec: Synth(\recordBuf, [\in, ~connectBus[\chordSum].cSharpMinor, \bufName, ~connectBuf[\chordSum].at(2)],
@@ -77,15 +76,15 @@ prm
 	~connectSynth[\chordSum].eMajor = (
 
 		\e: Synth(\playBuf, [\out, ~connectBus[\chordSum].eMajor, \amp, amp,
-			\bufName, ~connectBuf[\chords].at(5), \attack, attack, \sustain, sustain, \release, release],
+			\bufName, ~connectBuf[\chord].at(5), \attack, attack, \sustain, sustain, \release, release],
 			~group[\synths], \addToTail),
 
 		\gSharp: Synth(\playBuf, [\out, ~connectBus[\chordSum].eMajor, \amp, amp,
-			\bufName, ~connectBuf[\chords].at(4), \attack, attack, \sustain, sustain, \release, release],
+			\bufName, ~connectBuf[\chord].at(4), \attack, attack, \sustain, sustain, \release, release],
 			~group[\synths], \addToTail),
 
 		\b: Synth(\playBuf, [\out, ~connectBus[\chordSum].eMajor, \amp, amp,
-			\bufName, ~connectBuf[\chords].at(3), \attack, attack, \sustain, sustain, \release, release],
+			\bufName, ~connectBuf[\chord].at(3), \attack, attack, \sustain, sustain, \release, release],
 			~group[\synths], \addToTail),
 
 		\rec: Synth(\recordBuf, [\in, ~connectBus[\chordSum].eMajor, \bufName, ~connectBuf[\chordSum].at(3)],
@@ -98,11 +97,13 @@ prm
 
 ~connectMake[\chordSum] = r { | val |
 	loop{
-		~connection[\chordSum].value;
+		~connections[\chordSum].value;
 		["chords summed"].postln;
 		~ohm.turnPurple(val).yield;
 	};
 };
+
+
 
 /*
 

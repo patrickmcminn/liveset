@@ -14,4 +14,5 @@ prm
 "/Utility SynthDefs/pan.scd".loadRelative;
 "/Utility SynthDefs/playBuf.scd".loadRelative;
 "/Utility SynthDefs/recordBuf.scd".loadRelative;
-
+"/Utility SynthDefs/eq3.scd".loadRelative;
+"/Utility SynthDefs/eq3 stereo.scd".loadRelative;

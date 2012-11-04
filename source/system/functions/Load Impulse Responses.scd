@@ -4,10 +4,12 @@ Load Impulse Responses.scd
 prm
 */
 
-var cathedral1Path, cathedral2Path;
+var cathedral1Path, cathedral2Path, chamberMediumPath;
 
 cathedral1Path = thisProcess.nowExecutingPath.dirname ++ "/impulse responses/cathedral1.wav";
 cathedral2Path = thisProcess.nowExecutingPath.dirname ++ "/impulse responses/cathedral2.wav";
+chamberMediumPath = thisProcess.nowExecutingPath.dirname ++ "/impulse responses/chamberMedium.wav";
+
 
 // creates dictionary to store impulse responses
 ~impulse = ( );
@@ -39,6 +41,18 @@ cathedral2Path = thisProcess.nowExecutingPath.dirname ++ "/impulse responses/cat
 	"Cathedral 2 Impulse Loaded".postln;
 }.fork(AppClock);
 
+// load Cathedral 3 Impulse
+{
+	var buffer, bufSize;
+	buffer = Buffer.read(s, chamberMediumPath);
+	s.sync;
+	bufSize = PartConv.calcBufSize(2048, buffer);
+	~impulse[\chamberMedium] = Buffer.alloc(s, bufSize, 1);
+	s.sync;
+	~impulse[\chamberMedium].preparePartConv(buffer, 2048);
+	buffer.free;
+	"chamberMedium Impulse Loaded".postln;
+}.fork(AppClock);
 
 
 /*

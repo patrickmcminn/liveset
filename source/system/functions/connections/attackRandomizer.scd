@@ -6,7 +6,7 @@ prm
 
 
 ~connections[\attackRandomizer] = {
-	~connectBus[\attackRandomzier] = (
+	~connectBus[\attackRandomizer] = (
 		\audio: Bus.audio,
 		\pan: Bus.control
 	);
@@ -96,26 +96,36 @@ prm
 	Pbindef(\atkRandA).clear;
 });
 
-~connections[\attackRandomizer].addUniqueMethod(\play, {
+~connections[\attackRandomizer].addUniqueMethod(\playAtk, {
 	Pbindef(\atkRandCSharp).play;
 	Pbindef(\atkRandGSharp).play;
 	Pbindef(\atkRandFSharp).play;
 	Pbindef(\atkRandA).play;
 });
 
-~connections[\attackRandomizer].addUniqueMethod(\stop, {
+~connections[\attackRandomizer].addUniqueMethod(\stopAtk, {
 	Pbindef(\atkRandCSharp).stop;
 	Pbindef(\atkRandGSharp).stop;
 	Pbindef(\atkRandFSharp).stop;
 	Pbindef(\atkRandA).stop;
 });
 
-~connectMake[\attackRandomizer] = r { | val |
+~connectMake[\attackRandomizer] = r { | main |
+	var val, toggle, vol;
+	val = main.at(0);
+	toggle = main.at(1);
+	vol = main.at(2);
 	loop {
 		~connections[\attackRandomizer].value;
+		~ohm.turnGreen(toggle);
+		MIDIdef.noteOn(\attackRandomizerToggle, { ~scLang.sendMsg(\attackRandomizer, \toggle, toggle) }, toggle);
+		MIDIdef.cc(\attackRandomizerVolume, { | amp | ~scLang.sendMsg(\attackRandomizer, \volume, amp) }, vol);
 		["attack randomizers created"].postln;
 		~ohm.turnPurple(val).yield;
 
+		MIDIdef(\attackRandomizerToggle).free;
+		MIDIdef(\attackRandomizerVolume).free;
+		~ohm.turnOff(toggle);
 		~connections[\attackRandomizer].kill;
 		["attack randomizers freed"].postln;
 		~ohm.turnRed(val).yield;
@@ -124,11 +134,11 @@ prm
 
 ~connectMake[\attackRandomizerToggle] = r { | val |
 	loop {
-		~connections[\attackRandomizer].play;
+		~connections[\attackRandomizer].playAtk;
 		["attack randomizers playing"].postln;
 		~ohm.turnPink(val).yield;
 
-		~connections[\attackRandomizers].stop;
+		~connections[\attackRandomizer].stopAtk;
 		["attack randomizers stopped"].postln;
 		~ohm.turnRed(val).yield;
 	};

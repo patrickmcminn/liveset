@@ -54,23 +54,33 @@ prm
 	Pbindef(\stabs).clear;
 });
 
-~connections[\stabs].addUniqueMethod(\play, {
+~connections[\stabs].addUniqueMethod(\playStabs, {
 	Pbindef(\stabs).play;
 });
 
-~connections[\stabs].addUniqueMethod(\stop, {
+~connections[\stabs].addUniqueMethod(\stopStabs, {
 	Pbindef(\stabs).stop;
 });
 
 
-~connectMake[\stabs] = r { | val |
+~connectMake[\stabs] = r { | main |
+	var val, toggle, vol;
+	val = main.at(0);
+	toggle = main.at(1);
+	vol = main.at(2);
 	loop {
 
 		~connections[\stabs].value;
+		~ohm.turnGreen(toggle);
+		MIDIdef.noteOn(\stabsToggle, { ~scLang.sendMsg(\stabs, \toggle, toggle) }, toggle);
+		MIDIdef.cc(\stabsVolume, { | amp | ~scLang.sendMsg(\stabs, \volume, amp) }, vol);
 		["stabs synths created"].postln;
 		~ohm.turnPurple(val).yield;
 
 		~connections[\stabs].kill;
+		~ohm.turnOff(toggle);
+		MIDIdef(\stabsVolume).free;
+		MIDIdef(\stabsToggle).free;
 		["stabs synths freed"].postln;
 		~ohm.turnRed(val).yield;
 	};
@@ -79,13 +89,13 @@ prm
 ~connectMake[\stabsToggle] = r { | val |
 	loop {
 		~connections[\transport].playNextBar({
-			~connections[\stabs].play;
+			~connections[\stabs].playStabs;
 			["stabs synths playing"].postln;
 		});
 		~ohm.turnLavender(val).yield;
 
 		~connections[\transport].playNextBar({
-			~connections[\stabs].stop;
+			~connections[\stabs].stopStabs;
 			["stabs synths stopped"].postln;
 		});
 		~ohm.turnRed(val).yield;

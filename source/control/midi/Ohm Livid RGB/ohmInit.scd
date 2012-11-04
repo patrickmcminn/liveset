@@ -36,6 +36,31 @@ ohm.latency = 0;
 	127.do({ | i | ~ohm.turnOff(i);});});
 
 
+~ohm.addUniqueMethod(\blink, { | func, val, color, time |
+	case
+	{ color == \lavender } {
+		~ohm.turnLavender(val);
+		{ ~ohm.turnOff(val) }.defer(time);}
+	{ color == \blue } {
+		~ohm.turnBlue(val);
+		{ ~ohm.turnOff(val) }.defer(time);}
+	{ color == \pink } {
+		~ohm.turnPink(val);
+		{ ~ohm.turnOff(val) }.defer(time); }
+	{ color == \red } {
+		~ohm.turnRed(val);
+		{ ~ohm.turnOff(val) }.defer(time); }
+	{ color == \purple } {
+		~ohm.turnPurple(val);
+		{ ~ohm.turnOff(val) }.defer(time); }
+	{ color == \yellow } {
+		~ohm.turnYellow(val);
+		{ ~ohm.turnOff(val) }.defer(time); }
+	{ color == \green } {
+		~ohm.turnGreen(val);
+		{ ~ohm.turnOff(val) }.defer(time); }
+});
+
 ~ohm.addUniqueMethod(\addEssential, {
 	// adds buttons and faders that persist through page and effect changes
 
@@ -69,12 +94,14 @@ ohm.latency = 0;
 		amp = val.linlin(0, 127, 0, 1);
 		~scLang.sendMsg(\mixer, \s1, amp);
 	}, 5);
-		MIDIdef.cc(\s2, { | val |
+
+	MIDIdef.cc(\s2, { | val |
 		var amp;
 		amp = val.linlin(0, 127, 0, 1);
 		~scLang.sendMsg(\mixer, \s2, amp);
 	}, 7);
-		MIDIdef.cc(\s3, { | val |
+
+	MIDIdef.cc(\s3, { | val |
 		var amp;
 		amp = val.linlin(0, 127, 0, 1);
 		~scLang.sendMsg(\mixer, \s3, amp);
@@ -104,3 +131,5 @@ ohm.latency = 0;
 
 "Ohm Functions Added".postln;
 )
+
+		

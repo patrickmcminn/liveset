@@ -5,7 +5,6 @@ prm
 */
 
 
-
 ~connections[\chords] = {
 	~connectBus[\chords] = (
 		\verb: Bus.audio,
@@ -86,13 +85,28 @@ prm
 	Pbindef(\chords).stop;
 });
 
-~connectMake[\chords] = r { | val |
+~connectMake[\chords] = r { | main |
+	var val, sum, toggle, vol;
+	val = main.at(0);
+	sum = main.at(1);
+	toggle = main.at(2);
+	vol = main.at(3);
 	loop{
 		~connections[\chords].value;
+		~ohm.turnGreen(sum);
+		MIDIdef.noteOn(\chordSum, { ~scLang.sendMsg(\chords, \sum, sum) }, sum);
+		~ohm.turnGreen(toggle);
+		MIDIdef.noteOn(\chordToggle, { ~scLang.sendMsg(\chords, \toggle, toggle) }, toggle);
+		MIDIdef.cc(\chordVolume, { | amp | ~scLang.sendMsg(\chords, \volume, amp) }, vol);
 		["chord synths made"].postln;
 		~ohm.turnPurple(val).yield;
 
 		~connections[\chords].kill;
+		~ohm.turnOff(sum);
+		~ohm.turnOff(toggle);
+		MIDIdef(\chordVolume).free;
+		MIDIdef(\chordSum).free;
+		MIDIdef(\chordToggle).free;
 		["chord synths freed"].postln;
 		~ohm.turnRed(val).yield;
 	};

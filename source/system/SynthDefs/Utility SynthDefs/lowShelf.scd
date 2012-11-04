@@ -17,3 +17,4 @@ SynthDef(\lowShelf, {
 
 "lowShelf SynthDef Added".postln;
 "     args: in, out, freq = 110, rs = 1, gain = 0".postln;
+"".postln;

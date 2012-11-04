@@ -23,10 +23,9 @@ prm
 ~connectBuf[\note] = Buffer.allocConsecutive(5, s, s.sampleRate * 3.2, 1);
 ~connectBuf[\cascade] = Buffer.allocConsecutive(3, s, s.sampleRate*0.5, 1);
 ~connectBuf[\chord] = Buffer.allocConsecutive(6, s, s.sampleRate*1, 1);
+~connectBuf[\chordSum] = Buffer.allocConsecutive(4, s, s.sampleRate, 1);
 
-// creates a tempo clock:
-~connections[\transport] = TempoClock;
-~connections[\transport].tempo = 75/60;
+
 
 
 // sets up a function to clear the piece
@@ -34,7 +33,7 @@ prm
 
 	~connectSynth.do({ | i | i.free });
 	~connectBus.do({ | i | i.free; });
-	~connecBuf.do({ | i | i.free; });
+	~connectBuf.do({ | i | i.free; });
 
 	~connectMake.clear;
 	~connectSynth.clear;
@@ -48,7 +47,18 @@ prm
 ~seeTransport =
 	~connections[\transport].schedAbs(~connections[\transport].nextBar, {
 	[~connections[\transport].bar, (~connections[\transport].beatInBar + 1)].postln; 1;});
-*/
 
+
+~cool = Routine({
+	loop{
+		~connections[\transport].schedAbs(~connections[\transport].nextTimeOnGrid, {
+			[~connections[\transport].bar, (~connections[\transport].beatInBar + 1)].postln;});
+		1.wait;
+	}
+});
+~cool.play(~connections[\transport])
+~cool.stop
+~cool.reset
+*/
 
 

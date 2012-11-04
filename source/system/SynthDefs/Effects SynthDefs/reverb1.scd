@@ -15,3 +15,5 @@ SynthDef(\reverb1, {	// mono reverb
 
 "reverb1 SynthDef added".postln;
 "     args: in, out, mix = 0.25, room = 0.15, damp = 0.5, amp = 1".postln;
+"".postln;
+

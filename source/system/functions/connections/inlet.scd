@@ -21,7 +21,7 @@ prm
 			],
 			~group[\fx], \addToTail),
 
-		\fader: Synth(\stereoFader, [\in, ~connectBus[\inlet].fader, \out, \mixer[\s2],
+		\fader: Synth(\stereoFader, [\in, ~connectBus[\inlet].fader, \out, ~mixer[\s2],
 			\amp, 1.2], ~group[\fx], \addToTail)
 	);
 };
@@ -32,12 +32,17 @@ prm
 	~connectSynth[\inlet].do({ | i | i.free });
 });
 
-~connectMake[\inlet] = r { | val |
+~connectMake[\inlet] = r { | main |
+	var val, mix;
+	val = main.at(0);
+	mix = main.at(1);
 	loop {
 		~connections[\inlet].value;
+		MIDIdef.cc(\inletGran, { | mix | ~scLang.sendMsg(\inlet, \gran, mix); }, mix);
 		["inlet created"].postln;
 		~ohm.turnPurple(val).yield;
 
+		MIDIdef(\inletGran).free;
 		~connections[\inlet].kill;
 		["inlet feed"].postln;
 		~ohm.turnRed(val).yield;

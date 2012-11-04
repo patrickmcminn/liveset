@@ -10,4 +10,5 @@ prm
 "/SynthDefs/Load Effects SynthDefs.scd".loadRelative;
 "/SynthDefs/Load Machine Listening SynthDefs.scd".loadRelative;
 "/SynthDefs/Load Utility SynthDefs.scd".loadRelative;
+"/SynthDefs/Load Synth SynthDefs.scd".loadRelative;
 

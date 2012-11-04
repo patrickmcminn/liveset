@@ -5,13 +5,13 @@ prm
 */
 
 
-~connections[\airSputters] = {
+~connections[\airSputters] = { | val |
 	var sputterMake;
 
 	//creates buse
 	~connectBus[\airSputters] = (
 		\gran: Bus.audio,
-		\del: Bus.audio
+		\del: Bus.audio(s, 2)
 	);
 
 	// allocates buffers to be played into
@@ -117,27 +117,32 @@ prm
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(0)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterOne).play; }.defer(0.4);
-		["first breath recorded"].yield;
+		["first breath recorded"].postln;
+		~ohm.turnLavender(val).yield;
 
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(1)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterTwo).play; }.defer(0.4);
-		["second breath recorded"].yield;
+		["second breath recorded"].postln;
+		~ohm.turnPink(val).yield;
 
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(2)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterThree).play; }.defer(0.4);
-		["third breath recorded"].yield;
+		["third breath recorded"].postln;
+		~ohm.turnPurple(val).yield;
 
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(3)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterFour).play; }.defer(0.4);
-		["fourth breath recorded"].yield;
+		["fourth breath recorded"].postln;
+		~ohm.turnYellow(val).yield;
 
 		OSCdef(\airRespond).free;
-		["done with breath attacks"].yield;
+		["done with breath attacks"].postln;
+		~ohm.turnBlue(val).yield;
 	});
-	
+
 	OSCdef(\airRespond, { ~sputterMake.next.postln; }, '/tr');
 };
 
@@ -175,19 +180,22 @@ prm
 });
 
 ~connectMake[\airSputters] = r { | main |
-	var val, toggle;
+	var val, toggle, vol;
 	val = main.at(0);
 	toggle = main.at(1);
+	vol = main.at(2);
 	loop {
-		~connections[\airSputters].value;
+		~connections[\airSputters].value(val);
 		"Air Sputters Active".postln;
 		~ohm.turnGreen(toggle);
 		MIDIdef.noteOn(\airSputtersToggle, { ~scLang.sendMsg(\airSputters, \toggle, toggle) }, toggle);
+		MIDIdef.cc(\airSputtersVol, { | amp | ~scLang.sendMsg(\airSputters, \volume, amp) }, vol);
 		~ohm.turnPurple(val).yield;
 
 		~connections[\airSputters].kill;
 		~ohm.turnOff(toggle);
 		MIDIdef(\airSputtersToggle).free;
+		MIDIdef(\airSputtersVol).free;
 		"Air Sputters Stopped and Freed".postln;
 		~ohm.turnRed(val).yield;
 	};

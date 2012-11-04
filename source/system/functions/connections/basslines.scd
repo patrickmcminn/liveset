@@ -89,21 +89,29 @@ prm
 });
 
 ~connectMake[\basslines] = r { | main |
-	var val, toggleOne, toggleTwo;
+	var val, toggleOne, toggleTwo, vol, gran;
 	val = main.at(0);
 	toggleOne = main.at(1);
 	toggleTwo = main.at(2);
+	vol = main.at(3);
+	gran = main.at(4);
 	loop {
 		~connections[\basslines].value;
+		MIDIdef.cc(\basslineVolume, { | amp | ~scLang.sendMsg(\bassline, \volume, amp)}, vol);
+		MIDIdef.cc(\basslineGran, { | mix | ~scLang.sendMsg(\bassline, \gran, mix)}, gran);
 		~ohm.turnGreen(toggleOne);
 		MIDIdef.noteOn(\basslineOne, { ~scLang.sendMsg(\bassline, \one, toggleOne)}, toggleOne);
+
 		~ohm.turnGreen(toggleTwo);
 		MIDIdef.noteOn(\basslineTwo, { ~scLang.sendMsg(\bassline, \two, toggleTwo)}, toggleTwo);
+
 		["bassline routing created"].postln;
 		~ohm.turnLavender(val).yield;
 
 		~connections[\basslines].kill;
 		~ohm.turnOff(toggleOne);
+		MIDIdef(\basslineGran).free;
+		MIDIdef(\basslineVolume).free;
 		MIDIdef(\basslineOne).free;
 		MIDIdef(\basslineTwo).free;
 		~ohm.turnOff(toggleTwo);
