@@ -5,9 +5,953 @@ prm
 */
 
 
+(
+~birds[\noiseSynth] = {
+
+	var attack, sustain, release;
+	attack = 0.05;
+	sustain = 0.5;
+	release = 3;
+
+	~birdsBus[\noiseSynth] = (
+		\pan: Bus.control,
+		\gran: Bus.audio,
+		\delay: Bus.audio(s, 2),
+		\verb: Bus.audio(s, 2),
+		\fader: Bus.audio(s, 2)
+	);
+
+	~birdsSynth[\noiseSynth] = (
+
+		\pan: Synth(\lfSin, [\out, ~birdsBus[\noiseSynth].pan, \freq, 0.14, \rangeLo, -0.7, \rangeHi, 0.7],
+			~group[\control], \addToTail),
+
+		\gran: Synth(\granulator,
+			[
+				\in, ~birdsBus[\noiseSynth].gran, \out, ~birdsBus[\noiseSynth].delay,
+				\bufLength, 4, \pan, ~birdsBus[\noiseSynth].pan.asMap, \panOffset, 0,
+				\grainDur, 0.5, \grainDurOffset, 0.1, \trigRate, 45, \mix, 1
+			],
+			~group[\fx], \addToTail),
+
+		\delay: Synth(\delayStereo, [\in, ~birdsBus[\noiseSynth].delay, \out, ~birdsBus[\noiseSynth].verb,
+			\delayTime, 1, \decayTime, 5, \amp, 1, \mix, 0.3], ~group[\fx], \addToTail),
+
+		\verb: Synth(\reverb2, [\in, ~birdsBus[\noiseSynth].verb, \out, ~birdsBus[\noiseSynth].fader,
+			\mix, 0.1, \room, 0.5, \damp, 0.4, \amp, 1], ~group[\fx], \addToTail),
+
+		\fader: Synth(\stereoFader, [\in, ~birdsBus[\noiseSynth].fader, \out, ~mixer[\s3], \amp, -20.dbamp],
+			~group[\fx], \addToTail)
+	);
+
+
+	~birdsPatterns[\noiseSynth] = (
+		\phrase1: (
+			\one: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\loop, 1,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\two: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\three: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([6, 4], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\four: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\five: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 6,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\six: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\seven: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([6, 4], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\eight: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\nine: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([6, 6], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\ten: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.4, 0.7, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4/3,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }))
+		),
+
+		\phrase2: (
+			\one: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 2,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\loop, 1,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\two: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 2,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\three: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 2,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([6, 4], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\four: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 2,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\five: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 3,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\six: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 4,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\seven: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 2,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([6, 4], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\eight: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 6,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\nine: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 3,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([6, 6], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\ten: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.5, 0.75, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 2/3,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }))
+		),
+
+		\phrase3: (
+			\one: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\loop, 1,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\two: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\three: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([6, 4], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\four: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\five: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1.5,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\six: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 2,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\seven: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([6, 4], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\eight: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 3,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\nine: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1.5,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([6, 6], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\ten: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.55, 0.8, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1/3,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }))
+		),
+		\phrase4: (
+			\one: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 0.5,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release/2,
+				\loop, 1,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\two: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 0.5,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release/2,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\three: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 0.5,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release/2,
+				\degree, Pseq([6, 4], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\four: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 0.5,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release/2,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\five: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 0.75,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release/2,
+				\degree, Pseq([2, 1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\six: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\seven: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 0.5,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release/2,
+				\degree, Pseq([6, 4], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\eight: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1.5,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release/2,
+				\degree, Pseq([1], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\nine: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 0.75,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release/2,
+				\degree, Pseq([6, 6], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })),
+
+			\ten: Pbind(
+				\instrument, \playBuf,
+				\out, ~birdsBus[\noiseSynth].gran,
+				\group, ~birdsSynth[\noiseSynth].gran,
+				\addAction, \addBefore,
+				\amp, Pwhite(0.8, 0.85, inf),
+				\scale, Pfunc({ ~birds[\mode]}, inf),
+				\root, 6,
+				\legato, 1,
+				\octave, 5,
+				\dur, 1/6,
+				\attack, attack,
+				\sustain, sustain,
+				\release, release/2,
+				\degree, Pseq([7, 2], 1),
+				\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+				\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }))
+		)
+	);
+	Pdef(\phrase1, Pdict(~birdsPatterns[\noiseSynth].phrase1,
+		Prand([\one, \two, \three, \four, \five, \six, \seven, \eight, \nine, \ten], inf)));
+	Pdef(\phrase2, Pdict(~birdsPatterns[\noiseSynth].phrase2,
+		Prand([\one, \two, \three, \four, \five, \six, \seven, \eight, \nine, \ten], inf)));
+	Pdef(\phrase3, Pdict(~birdsPatterns[\noiseSynth].phrase3,
+		Prand([\one, \two, \three, \four, \five, \six, \seven, \eight, \nine, \ten], inf)));
+	Pdef(\phrase4, Pdict(~birdsPatterns[\noiseSynth].phrase4,
+		Prand([\one, \two, \three, \four, \five, \six, \seven, \eight, \nine, \ten], inf)));
+	};
+
+~birds[\noiseSynth].addUniqueMethod(\kill, {
+
+	Pdef(\phrase1).stop;
+	Pdef(\phrase2).stop;
+	Pdef(\phrase3).stop;
+	Pdef(\phrase4).stop;
+
+	Pdef(\phrase1).clear;
+	Pdef(\phrase2).clear;
+	Pdef(\phrase3).clear;
+	Pdef(\phrase4).clear;
+
+
+	~birdsBus[\noiseSynth].do({ | i | i.free });
+	~birdsSynth[\noiseSynth].do({ | i | i.free });
+	~birdsPatterns[\noiseSynth].do({ | i | i.free });
+	~birdsPatterns[\noiseSynth].do({ | i | i.clear });
+});
+
+~birds[\noiseSynth].addUniqueMethod(\granShift1, {
+	~birdsBus[\noiseSynth].granControl = Bus.control;
+	~birdsSynth[\noiseSynth].gran.set(\mix, ~birdsBus[\noiseSynth].granControl.asMap);
+	Synth(\ctlLinLine, [\out, ~birdsBus[\noiseSynth].granControl, \start, 1, \end, 0.787, \dur, 15],
+		~group[\control], \addToTail);
+	{ ~birdsBus[\noiseSynth].granControl.free; }.defer(15);
+});
+
+~birds[\noiseSynth].addUniqueMethod(\granShift2, {
+	~birdsBus[\noiseSynth].granControl = Bus.control;
+	~birdsSynth[\noiseSynth].gran.set(\mix, ~birdsBus[\noiseSynth].granControl.asMap);
+	Synth(\ctlLinLine, [\out, ~birdsBus[\noiseSynth].granControl, \start, 0.787, \end, 0, \dur, 30],
+		~group[\control], \addToTail);
+	{ ~birdsBus[\noiseSynth].granControl.free; }.defer(30);
+});
+
+~birds[\noiseSynth].addUniqueMethod(\volShift, {
+	~birdsBus[\noiseSynth].volControl = Bus.control;
+	~birdsSynth[\noiseSynth].fader.set(\amp, ~birdsBus[\noiseSynth].volControl.asMap);
+	Synth(\ctlLinLine, [\out, ~birdsBus[\noiseSynth].volControl, \start, -20.dbamp, \end, -12.dbamp, \dur, 4],
+		~group[\control], \addToTail);
+	{ ~birdsBus[\noiseSynth].volControl.free; }.defer(4);
+});
+
+
+~birdsMake[\noiseSynth] = r ({ | main |
+
+	var val, play, shift, vol;
+	val = main.at(0);
+	play = main.at(1);
+	shift = main.at(2);
+	vol = main.at(3);
+
+	loop {
+
+		~birds[\noiseSynth].value;
+
+		~ohm.turnBlue(play);
+		MIDIdef.noteOn(\noiseSynthPlay, { ~scLang.sendMsg(\noiseSynth, \play, play) }, play);
+
+		~ohm.turnBlue(shift);
+		MIDIdef.noteOn(\noiseSynthShift, { ~scLang.sendMsg(\noiseSynth, \shift, shift) }, shift);
+
+		MIDIdef.cc(\noiseSynthVolume, { | amp | ~scLang.sendMsg(\noiseSynth, \volume, amp) }, vol);
+
+		["noiseSynth Synths Active"].postln;
+		~ohm.turnPink(val).yield;
+
+
+
+		~birds[\noiseSynth].kill;
+		~ohm.turnOff(play);
+		MIDIdef(\noiseSynthPlay).free;
+		~ohm.turnOff(shift);
+		MIDIdef(\noiseSynthShift).free;
+		["noiseSynth Synths Freed"].postln;
+		~ohm.turnRed(val).yield;
+	}
+});
+
+~birdsMake[\noiseSynthPlay] = r({ | val |
+	loop {
+
+		Pdef(\phrase1).play;
+		["phrase 1 playing"].postln;
+		~ohm.turnYellow(val).yield;
+
+		Pdef(\phrase2).play;
+		Pdef(\phrase1).stop;
+		["phrase 2 playing"].postln;
+		~ohm.turnLavender(val).yield;
+
+		Pdef(\phrase3).play;
+		Pdef(\phrase2).stop;
+		["phrase 3 playing"].postln;
+		~ohm.turnPurple(val).yield;
+
+		Pdef(\phrase4).play;
+		Pdef(\phrase3).stop;
+		["phrase 4 playing"].postln;
+		~ohm.turnPink(val).yield;
+
+		Pdef(\phrase4).stop;
+		["all phrases stopped"].postln;
+		~ohm.turnRed(val).yield;
+
+	}
+});
+
+~birdsMake[\noiseSynthShift] = r ({ | val |
+	loop {
+
+		~birds[\noiseSynth].granShift1;
+		["gran mix from 1 to 0.787 over 15 seconds"].postln;
+		~ohm.turnLavender(val).yield;
+
+		~birds[\noiseSynth].granShift2;
+		["gran mix ferom 0.787 to 0 over 30 seconds"].postln;
+		~ohm.turnPurple(val).yield;
+
+		~birds[\noiseSynth].volShift;
+		["volume from -20db to -12db over 4 seconds"].postln;
+		~ohm.turnPink(val).yield;
+
+	}
+});
+
+)
+
+
+/*
+
+~birds[\noiseSynth].granShift1;
+~birds[\noiseSynth].granShift2;
+~birds[\noiseSynth].volShift
+
+s.meter
+
+~birds[\noiseSynth].kill
+Pdef(\phrase1).play;
+Pdef(\phrase4).stop;
+Pdef(\phrase3).stop;
+
+
+~birdsSynth[\noiseSynth].gran.set(\mix, 1)
+~birds[\noiseSynth].value
+a = { Out.ar(~birdsBus[\noiseSynth].gran, Saw.ar(220)) }.play
+a.free;
+Pdef(\phrase1, Pdict(~birdsPatterns[\noiseSynth].phrase1,
+	Prand([\one, \two, \three, \four, \five, \six, \seven, \eight, \nine, \ten], inf)));
+~birdsSynth[\noiseSynth].gran.set(\mix, 0)
+Pdef(\phrase1).stop;
+
+*/
+
+
+
+
+
+
+
+
+/*
 ~birdsBuf[\noiseSynthPath] = thisProcess.nowExecutingPath.dirname;
 
-~birdsBuf[\noisSynth] = [ ]
+~birdsBuf[\noiseSynth] = [ ]
 
 
 
@@ -45,19 +989,19 @@ Pbindef(\test2,
 	\freq, 220).play
 
 
-~midinotes = 
+~midinotes =
 
 
-Pbindef(\testPlayer, 
+Pbindef(\testPlayer,
 	\instrument, \playBuf,
 	\degree, Pseries(0, Prand(#[-2, -1, 1, 2], inf), inf).fold(-11, 11),
 	\dur, Pwrand([0.25, Pn(0.125, 2)], #[0.8, 0.2], inf),
 	\amp, 0.5,
 	\freq, Pfunc { | ev | ev.use(ev[\freq]) },
-	\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].indexInBetween(ev[\freq].cpsmidi) }).clip(0, 
+	\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].indexInBetween(ev[\freq].cpsmidi) }).clip(0,
 		~birdsBuf[\noiseSynth].size - 1.001)
 	).play;
-	
+
 ~birdsBuf[\noiseSynth]
 
 
@@ -68,33 +1012,33 @@ Pbindef(\testPlayer,
 ~midinotes = [39, 46, 53, 60, 67, 74, 81, 88];
 
 SynthDef(\multiSampler, { |out, bufnum, bufBase, baseFreqBuf, freq = 440, amp = 1|
-Ê Ê var Ê Êbuf1 = bufnum.floor,
-Ê Ê Ê Ê buf2 = buf1 + 1,
-Ê Ê Ê Ê xfade = (bufnum - buf1).madd(2, -1),
-Ê Ê Ê Ê basefreqs = Index.kr(baseFreqBuf, [buf1, buf2]),
-Ê Ê Ê Ê playbufs = PlayBuf.ar(1, bufBase + [buf1, buf2], freq / basefreqs, loop: 0, doneAction: 2),
-Ê Ê Ê Ê sig = XFade2.ar(playbufs[0], playbufs[1], xfade, amp);
-Ê Ê Out.ar(out, sig ! 2)
+ï¿½ ï¿½ var ï¿½ ï¿½buf1 = bufnum.floor,
+ï¿½ ï¿½ ï¿½ ï¿½ buf2 = buf1 + 1,
+ï¿½ ï¿½ ï¿½ ï¿½ xfade = (bufnum - buf1).madd(2, -1),
+ï¿½ ï¿½ ï¿½ ï¿½ basefreqs = Index.kr(baseFreqBuf, [buf1, buf2]),
+ï¿½ ï¿½ ï¿½ ï¿½ playbufs = PlayBuf.ar(1, bufBase + [buf1, buf2], freq / basefreqs, loop: 0, doneAction: 2),
+ï¿½ ï¿½ ï¿½ ï¿½ sig = XFade2.ar(playbufs[0], playbufs[1], xfade, amp);
+ï¿½ ï¿½ Out.ar(out, sig ! 2)
 }).add;
 
-~baseBuf = Buffer.alloc(s, ~midinotes.size, 1, { |buf| buf.setnMsg(0, 
+~baseBuf = Buffer.alloc(s, ~midinotes.size, 1, { |buf| buf.setnMsg(0,
 	~midinotes.midicps) });
 )
 
 (
 TempoClock.default.tempo = 1;
 p = Pbind(
-Ê Ê \instrument, \multiSampler,
-Ê Ê \bufBase, ~birdsBuf[\noiseSynth].first,
-Ê Ê \baseFreqBuf, ~baseBuf,
-Ê Ê \degree, Pseries(0, Prand(#[-2, -1, 1, 2], inf), inf).fold(-11, 11),
-Ê Ê \dur, 9,
-Ê Ê \amp, Pexprand(0.1, 0.5, inf),
-Ê Ê Ê Ê // some important conversions
-Ê Ê Ê Ê // identify the buffer numbers to read
-Ê Ê \freq, Pfunc { |ev| ev.use(ev[\freq]) },
-Ê Ê \bufnum, Pfunc({ |ev| ~midinotes.indexInBetween(ev[\freq].cpsmidi) })
-Ê Ê Ê Ê .clip(0, ~midinotes.size - 1.001)
+ï¿½ ï¿½ \instrument, \multiSampler,
+ï¿½ ï¿½ \bufBase, ~birdsBuf[\noiseSynth].first,
+ï¿½ ï¿½ \baseFreqBuf, ~baseBuf,
+ï¿½ ï¿½ \degree, Pseries(0, Prand(#[-2, -1, 1, 2], inf), inf).fold(-11, 11),
+ï¿½ ï¿½ \dur, 9,
+ï¿½ ï¿½ \amp, Pexprand(0.1, 0.5, inf),
+ï¿½ ï¿½ ï¿½ ï¿½ // some important conversions
+ï¿½ ï¿½ ï¿½ ï¿½ // identify the buffer numbers to read
+ï¿½ ï¿½ \freq, Pfunc { |ev| ev.use(ev[\freq]) },
+ï¿½ ï¿½ \bufnum, Pfunc({ |ev| ~midinotes.indexInBetween(ev[\freq].cpsmidi) })
+ï¿½ ï¿½ ï¿½ ï¿½ .clip(0, ~midinotes.size - 1.001)
 ).play;
 )
 
@@ -106,7 +1050,7 @@ Scale
 
 // actually in the key of C!!!
 { SinOsc.ar(261.6255653006) }.play
-Pbindef(\samplePlayer, 
+Pbindef(\samplePlayer,
 	\instrument, \playBuf,
 	\scale, Pfunc({ ~birds[\mode]}, inf),
 	\dur, Prand([0.5, 0.25, 0.75, 1], inf),
@@ -118,7 +1062,9 @@ Pbindef(\samplePlayer,
 	\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }).poll
 ).play
 
-Pbindef(\samplePlayer5, 
+
+// this one is the winner!!
+Pbindef(\samplePlayer5,
 	\instrument, \playBuf,
 	\scale, Pfunc({ ~birds[\mode]}, inf),
 	\dur, Pseq([1, 1, 0.5, 0.5, 1], inf),
@@ -128,6 +1074,125 @@ Pbindef(\samplePlayer5,
 	\amp, 0.5,
 	\freq, Pfunc { | ev | ev.use(ev[\freq]) },
 	\bufName, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) })
-).play
+).play;
 
-	
+
+Patterns
+
+
+Ppar
+Ptpar
+
+~phrase1 = Pseq([0, 1, 2, 3, 2, 1], 2);
+~phrase2 = Prand([0, 1, 2, 3, 4, 5], 2);
+~dur1 = 0.25;
+~dur2 = 0.5;
+
+Pbindef(\nester,
+	\instrument, \default,
+	\degree, Prand([~phrase1, ~phrase2], inf),
+	\dur, 0.25);
+
+Pbindef(\nester).play
+Pbindef(\nest1,
+	\instrument, \default,
+	\degree, Pseq([0, 1, 2, 3, 2, 1], 7),
+	\dur, 0.25);
+
+Pbindef(\nest2,
+	\instrument, \default,
+	\degree, Prand([0, 1, 2, 3, 4, 5], 7),
+	\dur, 0.25);
+
+
+
+~dict = (
+	\one: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 4,
+		\degree, Pseq([7, 2], 1)),
+
+	\two: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 4,
+		\degree, Pseq([2, 1], 1)),
+
+	\three: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 4,
+		\degree, Pseq([6, 4], 1)),
+
+	\four: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 4,
+		\degree, Pseq([2, 1], 1)),
+
+	\five: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 6,
+		\degree, Pseq([2, 1], 1)),
+
+	\six: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 4,
+		\degree, Pseq([7, 2], 1)),
+
+	\seven: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 4,
+		\degree, Pseq([6, 4], 1)),
+
+	\eight: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 4,
+		\degree, Pseq([1], 1)),
+
+	\nine: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 4,
+		\degree, Pseq([6, 6], 1)),
+
+	\ten: Pbind(
+		\instrument, \default,
+		\scale, Scale.aeolian,
+		\legato, 1,
+		\octave, 5,
+		\dur, 4/3,
+		\degree, Pseq([7, 2], 1))
+)
+
+Pdef(\phrase1, Pdict(~dict, Prand([\one, \two, \three, \four, \five, \six, \seven, \eight, \nine, \ten], inf)));
+Pdef(\phrase1).play;
+Pdef(\phrase1).stop
+*/
+
+
+
+

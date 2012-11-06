@@ -19,6 +19,10 @@ prm
 // creates a dictionary to store buffers:
 ~birdsBuf = ( );
 
+// creates a dictionary to store patterns used in the piece
+Pdef.removeAll;
+~birdsPatterns = ( );
+
 // creates shared buffers for piece:
 
 ~birdsBuf[\noiseSynthPath] = thisProcess.nowExecutingPath.dirname;

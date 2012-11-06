@@ -10,3 +10,4 @@ prm
 "birds/eqgtr.scd".loadRelative;
 "birds/tremgtr.scd".loadRelative;
 "birds/wobble.scd".loadRelative;
+"birds/noiseSynth.scd".loadRelative;
