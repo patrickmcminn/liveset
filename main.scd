@@ -1,6 +1,5 @@
 /*
 Wednesday, October 10th
-somewhere between New Orleans, LA and Houston, TX
 main.scd
 prm
 */

@@ -12,7 +12,7 @@ OSCdef(\page, { | msg |
 	case
 	{ id == \top } { ~page[\top].value }
 	{ id == \connections } { ~page[\connections].value; }
-	{ id == \theBoy } { ~page[\theBoy].value; }
+	{ id == \boy } { ~page[\boy].value; }
 	{ id == \birds } { ~page[\birds].value; }
 
 }, \page, ~scLang);

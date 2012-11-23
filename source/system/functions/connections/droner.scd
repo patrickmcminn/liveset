@@ -115,6 +115,7 @@ prm
 		MIDIdef(\dronerErode).free;
 		MIDIdef(\dronerErode).free;
 		~ohm.turnOff(rater);
+		~connectMake[\dronerRater].reset;
 		MIDIdef(\dronerRater).free;
 		~connections[\droner].kill;
 		"Droner Freed".postln;

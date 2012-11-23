@@ -12,7 +12,7 @@ prm
 		\eq: Bus.audio,
 		\trem: Bus.audio,
 		\verb2: Bus.audio,
-		\fader: Bus.audio
+		\fader: Bus.audio(s, 2)
 	);
 
 	~birdsSynth[\tremgtr] = (

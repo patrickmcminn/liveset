@@ -16,3 +16,6 @@ prm
 "/Effects SynthDefs/reverb1.scd".loadRelative;
 "/Effects SynthDefs/reverb2.scd".loadRelative;
 "/Effects SynthDefs/multiTrem.scd".loadRelative;
+"/Effects SynthDefs/pingPongDelay.scd".loadRelative;
+"/Effects SynthDefs/nebulator.scd".loadRelative;
+"/Effects SynthDefs/nebula.scd".loadRelative;

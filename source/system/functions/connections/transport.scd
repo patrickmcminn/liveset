@@ -2,6 +2,7 @@
 Monday, October 29th 2012
 between Boise, ID and Salt Lake City, UT
 transport.scd
+prm
 */
 
 ~connections[\transport] = TempoClock;
@@ -26,7 +27,8 @@ transport.scd
 		~ohm.turnLavender(val).yield;
 
 		~connections[\seeTransport].stop;
-		~connections[\seeTransport].reset.yield;
+		~connections[\seeTransport].reset;
+		["transport off"].postln;
 		~ohm.turnRed(val).yield;
 	}
 });

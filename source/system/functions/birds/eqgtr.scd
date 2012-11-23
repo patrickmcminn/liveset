@@ -22,7 +22,7 @@ prm
 			[
 				\in, ~birdsBus[\eqgtr].gran, \out, ~birdsBus[\eqgtr].dist
 			],
-			~fx[\group], \addToTail),
+			~group[\fx], \addToTail),
 
 		\dist: Synth(\digitalClip2Stereo, [\in, ~birdsBus[\eqgtr].dist, \out, ~birdsBus[\eqgtr].verb,
 			\amount, 1, \amp, 1], ~group[\fx], \addToTail),

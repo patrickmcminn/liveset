@@ -43,6 +43,7 @@ prm
 		\attack, 0.005,
 		\sustain, 0.25,
 		\release, 0.45,
+		\amp, 1,
 		\dur, 4
 	);
 };

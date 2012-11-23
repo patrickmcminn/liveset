@@ -15,13 +15,13 @@ defines function for making the top layer of the tree
 
 	// The Boy who Tired of Sitting Still:
 	~ohm.turnLavender(1);
-	MIDIdef(\theBoyBranch, { }, 1);
+	MIDIdef.noteOn(\theBoyBranch, { ~scLang.sendMsg(\page,  \boy)}, 1);
 
 	// Where the Birds Must be Drunk to be Amidst the Unknown Spray and Skies
 	~ohm.turnPurple(2);
-	MIDIdef(\birdsBranch, {  }, 2);
+	MIDIdef.noteOn(\birdsBranch, { ~scLang.sendMsg(\page, \birds) }, 2);
 
 	// Free Play:
 	~ohm.turnPink(3);
-	MIDIdef(\freeBranch, { }, 3);
+	MIDIdef.noteOn(\freeBranch, { }, 3);
 };

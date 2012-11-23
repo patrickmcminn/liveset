@@ -179,7 +179,7 @@ OSCdef(\micVerb, { | msg |
 		~connectSynth[\micVerb].fader.set(\amp, amp); }
 	{ id == \gran } {
 		var mix = val.linlin(0, 127, 0, 0.3);
-		~connectSynth[\mixVerb].gran.set(\mix, mix); }
+		~connectSynth[\micVerb].gran.set(\mix, mix); }
 }, \micVerb, ~scLang);
 
 
@@ -203,7 +203,7 @@ OSCdef(\stabs, { | msg |
 	{ id == \toggle } { ~connectMake[\stabsToggle].value(val).postln; }
 	{ id == \volume } {
 		var amp = val.linlin(0, 127, 0, 1.0);
-		~connectSynt[\stabs].fader.set(\amp, amp); }
+		~connectSynth[\stabs].fader.set(\amp, amp); }
 }, \stabs, ~scLang);
 
 OSCdef(\transport, { | msg |

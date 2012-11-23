@@ -64,6 +64,10 @@ prm
 	MIDIdef.noteOn(\micVerb, { | vel, note, chn, time, toggle = 42, vol = 14, gran = 12  |
 		~scLang.sendMsg(\micVerb, \main, note, toggle, vol, gran) }, 34);
 
+	~ohm.turnGreen(77);
+	MIDIdef.noteOn(\transport, { | vel, note |
+		~scLang.sendMsg(\transport, \main, note) }, 69);
+
 
 	/*
 

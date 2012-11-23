@@ -11,3 +11,4 @@ prm
 "birds/tremgtr.scd".loadRelative;
 "birds/wobble.scd".loadRelative;
 "birds/noiseSynth.scd".loadRelative;
+"birds/birdsMicVerb.scd".loadRelative;
