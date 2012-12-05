@@ -5,7 +5,7 @@ transport.scd
 prm
 */
 
-~connections[\transport] = TempoClock;
+~connections[\transport] = TempoClock.new;
 ~connections[\transport].tempo = 75/60;
 
 ~connections[\seeTransport] = Routine({
@@ -20,14 +20,15 @@ prm
 	};
 });
 
+
 ~connectMake[\seeTransport] = Routine({ | val |
 	loop{
+		~connections[\seeTransport].reset;
 		~connections[\seeTransport].play(~connections[\transport]);
 		["transport visualized"].postln;
 		~ohm.turnLavender(val).yield;
 
 		~connections[\seeTransport].stop;
-		~connections[\seeTransport].reset;
 		["transport off"].postln;
 		~ohm.turnRed(val).yield;
 	}

@@ -15,16 +15,16 @@ prm
 
 
 	~ohm.turnGreen(1);
-	MIDIdef.noteOn(\eqgtr, { | vel, note, chn, time, toggle = 9, vol = 22 |
-		~scLang.sendMsg(\eqgtr, \main, note, toggle, vol); }, 1);
+	MIDIdef.noteOn(\eqgtr, { | vel, note, chn, time, toggle = 9, shift = 55, vol = 22 |
+		~scLang.sendMsg(\eqgtr, \main, note, toggle, shift, vol); }, 1);
 
 	~ohm.turnGreen(2);
-	MIDIdef.noteOn(\tremgtr, { | vel, note, chn, time, toggle = 10, vol = 15 |
-		~scLang.sendMsg(\tremgtr, \main, note, toggle, vol); }, 2);
+	MIDIdef.noteOn(\tremgtr, { | vel, note, chn, time, toggle = 10, shift = 47, vol = 15 |
+		~scLang.sendMsg(\tremgtr, \main, note, toggle, shift, vol); }, 2);
 
 	~ohm.turnGreen(3);
-	MIDIdef.noteOn(\noiseSynth, { | vel, note, chn, time, play = 11, shift = 19, vol = 14 |
-		~scLang.sendMsg(\noiseSynth, \main, note, play, shift, vol); }, 3);
+	MIDIdef.noteOn(\noiseSynth, { | vel, note, chn, time, play = 11, shift = 19, vol = 14, end = 72|
+		~scLang.sendMsg(\noiseSynth, \main, note, play, shift, vol, end); }, 3);
 
 	~ohm.turnGreen(4);
 	MIDIdef.noteOn(\wobble, { | vel, note, chn, time, toggle = 12, vol = 12 |

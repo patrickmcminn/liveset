@@ -47,6 +47,8 @@ prm
 ~boy[\mainBell].addUniqueMethod(\kill, {
 	~boyBus[\mainBell].do({ | i | i.free; });
 	~boySynth[\mainBell].do({ | i | i.free; });
+	Pbindef(\mainBell).stop;
+	Pbindef(\mainBell).remove;
 });
 
 ~boyMake[\mainBell] = r({ | main |

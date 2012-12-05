@@ -21,7 +21,7 @@ defines function for making the top layer of the tree
 	~ohm.turnPurple(2);
 	MIDIdef.noteOn(\birdsBranch, { ~scLang.sendMsg(\page, \birds) }, 2);
 
-	// Free Play:
-	~ohm.turnPink(3);
-	MIDIdef.noteOn(\freeBranch, { }, 3);
+	//soundcheck:
+	~ohm.turnLavender(56);
+	MIDIdef.noteOn(\soundcheck, { | vel, note | ~mixer[\soundcheckMake].value(note); }, 56);
 };

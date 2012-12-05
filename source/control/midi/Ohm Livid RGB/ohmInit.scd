@@ -91,19 +91,19 @@ ohm.latency = 0;
 
 	MIDIdef.cc(\s1, { | val |
 		var amp;
-		amp = val.linlin(0, 127, 0, 1);
+		amp = val.linlin(0, 127, 0, 0.7);
 		~scLang.sendMsg(\mixer, \s1, amp);
 	}, 5);
 
 	MIDIdef.cc(\s2, { | val |
 		var amp;
-		amp = val.linlin(0, 127, 0, 1);
+		amp = val.linlin(0, 127, 0, 0.7);
 		~scLang.sendMsg(\mixer, \s2, amp);
 	}, 7);
 
 	MIDIdef.cc(\s3, { | val |
 		var amp;
-		amp = val.linlin(0, 127, 0, 1);
+		amp = val.linlin(0, 127, 0, 0.7);
 		~scLang.sendMsg(\mixer, \s3, amp);
 	}, 6);
 });

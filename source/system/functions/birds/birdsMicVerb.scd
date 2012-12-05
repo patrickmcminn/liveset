@@ -9,7 +9,7 @@ prm
 
 	~birdsBus[\birdsMicVerb] = (
 		\verb: Bus.audio,
-		\fader: Bus.audio(s, 2)
+		\fader: Bus.audio
 	);
 
 	~birdsSynth[\birdsMicVerb] = (
@@ -18,10 +18,10 @@ prm
 		\inFader: Synth(\fader, [\in, ~inst[\mic], \out, ~birdsBus[\birdsMicVerb].verb], ~group[\fx], \addToTail),
 
 
-		\verb: Synth(\convReverbStereo, [\in, ~birdsBus[\birdsMicVerb].verb, \out, ~birdsBus[\birdsMicVerb].fader,
-			\buffer, ~impulse[\cathedral2], \mix, 0.3], ~group[\fx], \addToTail),
+		\verb: Synth(\convReverb, [\in, ~birdsBus[\birdsMicVerb].verb, \out, ~birdsBus[\birdsMicVerb].fader,
+			\buffer, ~impulse[\cathedral1], \mix, 0.6], ~group[\fx], \addToTail),
 
-		\fader: Synth(\stereoFader, [\in, ~birdsBus[\birdsMicVerb].fader, \out, ~mixer[\s3]], ~group[\fx], \addToTail)
+		\fader: Synth(\pan, [\in, ~birdsBus[\birdsMicVerb].fader, \out, ~mixer[\s2]], ~group[\fx], \addToTail)
 	);
 
 };

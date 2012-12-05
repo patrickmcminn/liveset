@@ -18,8 +18,8 @@ prm
 		\hiShelf: Synth(\hiShelf, [\in, ~connectBus[\attackRandomizer].audio, \out, ~connectBus[\attackRandomizer].audio,
 			\freq, 2500, \grain, -7], ~connectSynth[\inlet].verb, \addBefore),
 
-		\pan: Synth(\pan, [\in, ~connectBus[\attackRandomizer].audio, \out, ~connectBus[\inlet].verb,
-			\pan, ~connectBus[\attackRandomizer].pan.asMap], ~connectSynth[\inlet].verb, \addBefore)
+		\pan: Synth(\pan, [\in, ~connectBus[\attackRandomizer].audio, \out, ~connectBus[\inlet].verb, \amp, -6.dbamp,
+			\pan, ~connectBus[\attackRandomizer].at(\pan).asMap], ~connectSynth[\inlet].verb, \addBefore)
 	);
 
 	Pbindef(\atkRandCSharp,

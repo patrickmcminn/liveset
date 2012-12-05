@@ -26,20 +26,23 @@ prm
 		\lowFader: Synth(\fader, [\in, ~boyBus[\rowFuzz].lowFader, \out, ~boyBus[\rowFuzz].eq, \amp, 1],
 			~group[\fx], \addToTail),
 
-		\eq: Synth(\eq3, [\in, ~boyBus[\rowFuzz].eq, \out, ~boyBus[\rowFuzz].verb, \hiGain, 6],
+		\eq: Synth(\eq3, [\in, ~boyBus[\rowFuzz].eq, \out, ~boyBus[\rowFuzz].verb, \hiGain, 9],
 			~group[\fx], \addToTail),
 
-		\verb: Synth(\reverb1, [\in, ~boyBus[\rowFuzz].verb, \out, ~boyBus[\rowFuzz].nebula, \mix, 0.8,
-			\room, 0.7, \damp, 0.3, \amp, 1], ~group[\fx], \addToTail),
+		\verb: Synth(\reverb1, [\in, ~boyBus[\rowFuzz].verb, \out, ~boyBus[\rowFuzz].dist, \mix, 0.86,
+			\room, 0.8, \damp, 0, \amp, 1], ~group[\fx], \addToTail),
 
-		\nebula: Synth(\nebula, [\in, ~boyBus[\rowFuzz].nebula, \out, ~boyBus[\rowFuzz].del,
-			\depth, 61, \activity, 55, \num, 8], ~group[\fx], \addToTail),
+		\dist: Synth(\distortion3, [\in, ~boyBus[\rowFuzz].dist, \out, ~boyBus[\rowFuzz].nebula, \dist, 5.5, \amp, 1,
+			\mix, 0.87, \bw, 25], ~group[\fx], \addToTail),
+
+		\nebula: Synth(\nebula8, [\in, ~boyBus[\rowFuzz].nebula, \out, ~boyBus[\rowFuzz].del,
+			\depth, 50, \activity, 40], ~group[\fx], \addToTail),
 
 		\del: Synth(\pingPongDelayStereo, [\in, ~boyBus[\rowFuzz].del, \out, ~boyBus[\rowFuzz].fader,
-			\delay, 0.915, \decay, 12, \centerFreq, 1000, \bw, 5, \mix, 0.49],
+			\delay, 0.915, \decay, 6, \centerFreq, 1000, \bw, 12, \mix, 0.49],
 			~group[\fx], \addToTail),
 
-		\fader: Synth(\pan, [\in, ~boyBus[\rowFuzz].fader, \out, ~mixer[\s1]], ~group[\fx], \addToTail)
+		\fader: Synth(\stereoFader, [\in, ~boyBus[\rowFuzz].fader, \out, ~mixer[\s1], \amp, -6.dbamp], ~group[\fx], \addToTail)
 	);
 
 	Pbindef(\rowFuzzMain,
@@ -48,21 +51,20 @@ prm
 		\addAction, \addBefore,
 		\out, ~boyBus[\rowFuzz].mainFader,
 		\root, -5,
-		\octave, 5,
+		\octave, 6,
 		\amp, 0.5,
+		\subAmp, 0.7,
+		\bassAmp, 0,
+		\partial2Amp, 0.1,
+		\partial3Amp, 0.05,
+		\partial4Amp, 0.05,
+		\partial5Amp, 0.05,
+		\partial6Amp, 0.01,
+		\partial8Amp, 0,
 		\note, Pseq([[-1, 0, 4, 6, 7, 9, 12]], inf),
 		\dur, 8,
-		\subAmp,
-		\bassAmp,
-		\fundAmp,
-		\partial2Amp,
-		\partial3Amp,
-		\partial4Amp,
-		\partial5Amp,
-		\partial6Amp,
-		\partial8Amp,
 		\cutoff, 15000,
-		\dist, 15,
+		\dist, 0.3,
 		\noise, 0.03,
 		\atk, 0.01,
 		\sus, Pkey(\dur),
@@ -76,20 +78,19 @@ prm
 		\out, ~boyBus[\rowFuzz].lowFader,
 		\root, -5,
 		\octave, 4,
-		\amp, 0.2,
+		\subAmp, 0,
+		\bassAmp, 0,
+		\partial2Amp, 0.1,
+		\partial3Amp, 0.1,
+		\partial4Amp, 0.05,
+		\partial5Amp, 0.05,
+		\partial6Amp, 0,
+		\partial8Amp, 0,
+		\amp, 0.1,
 		\note, Pseq([[-1, 0, 4, 6, 7, 9, 12]], inf),
 		\dur, 8,
-		\subAmp,
-		\bassAmp,
-		\fundAmp,
-		\partial2Amp,
-		\partial3Amp,
-		\partial4Amp,
-		\partial5Amp,
-		\partial6Amp,
-		\partial8Amp,
 		\cutoff, 15000,
-		\dist, 15,
+		\dist, 1,
 		\noise, 0.03,
 		\atk, 0.01,
 		\sus, Pkey(\dur),
@@ -100,12 +101,16 @@ prm
 ~boy[\rowFuzz].addUniqueMethod(\kill, {
 	~boyBus[\rowFuzz].do({ | i | i.free });
 	~boySynth[\rowFuzz].do({ | i | i.free });
-	Pbindef(\rowFuzzMain).clear;
-	Pbindef(\rowFuzzLow).clear;
+	Pbindef(\rowFuzzMain).stop;
+	Pbindef(\rowFuzzLow).stop;
+	Pbindef(\rowFuzzMain).remove;
+	Pbindef(\rowFuzzLow).remove;
 });
 
 ~boy[\rowFuzz].addUniqueMethod(\playMain, {
-	Pbindef(\rowFuzzMain).play(~boy[\transport]);
+	~boy[\transport].playNextBar({
+		Pbindef(\rowFuzzMain).play(~boy[\transport]);
+	});
 });
 
 ~boy[\rowFuzz].addUniqueMethod(\stopMain, {
@@ -113,7 +118,9 @@ prm
 });
 
 ~boy[\rowFuzz].addUniqueMethod(\playLow, {
-	Pbindef(\rowFuzzLow).play(~boy[\transport]);
+	~boy[\transport].playNextBar({
+		Pbindef(\rowFuzzLow).play(~boy[\transport]);
+	});
 });
 
 ~boy[\rowFuzz].addUniqueMethod(\stopLow, {
@@ -125,8 +132,7 @@ prm
 	val = main.at(0);
 	mainToggle = main.at(1);
 	lowToggle = main.at(2);
-	play = main.at(3);
-	vol = main.at(4);
+	vol = main.at(3);
 
 	loop {
 		~boy[\rowFuzz].value;
@@ -176,4 +182,5 @@ prm
 		~ohm.turnRed(val).yield;
 	};
 });
+
 		

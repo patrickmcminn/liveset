@@ -10,7 +10,7 @@ SynthDef(\lowShelfStereo, {
 	input = In.ar(in, 2);
 	filter = BLowShelf.ar(input, freq, rs, gain);
 	sig = filter.softclip;
-	sig = ReplaceOut.ar(out, sig);
+	sig = Out.ar(out, sig);
 }).add;
 
 

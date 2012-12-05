@@ -7,33 +7,26 @@ prm
 ~birds[\eqgtr] = {
 
 	~birdsBus[\eqgtr] = (
-		\gran: Bus.audio,
-		\dist: Bus.audio(s, 2),
-		\verb: Bus.audio(s, 2),
-		\eq: Bus.audio(s, 2),
-		\fader: Bus.audio(s, 2)
+		\dist: Bus.audio,
+		\verb: Bus.audio,
+		\eq: Bus.audio,
+		\fader: Bus.audio
 	);
 
 	~birdsSynth[\eqgtr] = (
 
-		\inFader: Synth(\fader, [\in, ~inst[\guitar], \out, ~birdsBus[\eqgtr].gran, \amp, 1], ~group[\fx], \addToTail),
+		\inFader: Synth(\fader, [\in, ~inst[\guitar], \out, ~birdsBus[\eqgtr].dist, \amp, 1], ~group[\fx], \addToTail),
 
-		\gran: Synth(\granulator,
-			[
-				\in, ~birdsBus[\eqgtr].gran, \out, ~birdsBus[\eqgtr].dist
-			],
-			~group[\fx], \addToTail),
-
-		\dist: Synth(\digitalClip2Stereo, [\in, ~birdsBus[\eqgtr].dist, \out, ~birdsBus[\eqgtr].verb,
+		\dist: Synth(\digitalClip2, [\in, ~birdsBus[\eqgtr].dist, \out, ~birdsBus[\eqgtr].verb,
 			\amount, 1, \amp, 1], ~group[\fx], \addToTail),
 
-		\verb: Synth(\convReverbStereo, [\in, ~birdsBus[\eqgtr].verb, \out, ~birdsBus[\eqgtr].eq,
-			\buffer, ~impulse[\cathedral2], \mix, 0.8], ~group[\fx], \addToTail),
+		\verb: Synth(\convReverb, [\in, ~birdsBus[\eqgtr].verb, \out, ~birdsBus[\eqgtr].eq,
+			\buffer, ~impulse[\cathedral1], \mix, 0.8], ~group[\fx], \addToTail),
 
-		\eq: Synth(\eq3Stereo, [\in, ~birdsBus[\eqgtr].eq, \out, ~birdsBus[\eqgtr].fader,
-			\freqHi, 1970, \hiGain, -70], ~group[\fx], \addToTail),
+		\eq: Synth(\eq3, [\in, ~birdsBus[\eqgtr].eq, \out, ~birdsBus[\eqgtr].fader,
+			\freqHi, 12000, \hiGain, -40], ~group[\fx], \addToTail),
 
-		\fader: Synth(\stereoFader, [\in, ~birdsBus[\eqgtr].fader, \out, ~mixer[\s1], \amp, 0.8], ~group[\fx], \addToTail)
+		\fader: Synth(\pan, [\in, ~birdsBus[\eqgtr].fader, \out, ~mixer[\s1], \amp, 0.8], ~group[\fx], \addToTail)
 	);
 
 };
@@ -45,10 +38,11 @@ prm
 
 ~birdsMake[\eqgtr] = r({ | main|
 
-	var val, toggle, vol;
+	var val, toggle, shift, vol;
 	val = main.at(0);
 	toggle = main.at(1);
-	vol = main.at(2);
+	shift = main.at(2);
+	vol = main.at(3);
 
 	loop {
 
@@ -58,12 +52,17 @@ prm
 		MIDIdef.noteOn(\eqgtrToggle, { ~scLang.sendMsg(\eqgtr, \toggle, toggle) }, toggle);
 		MIDIdef.cc(\eqgtrVolume, { | amp | ~scLang.sendMsg(\eqgtr, \volume, amp) }, vol);
 
+		~ohm.turnBlue(shift);
+		MIDIdef.noteOn(\eqgtrShift, { ~scLang.sendMsg(\eqgtr, \shift, shift) }, shift);
+
 		["eqgtr synths made"].postln;
 		~ohm.turnBlue(val).yield;
 
 
 		~ohm.turnOff(toggle);
+		~ohm.turnOff(shift);
 		MIDIdef(\eqgtrToggle).free;
+		MIDIdef(\eqgtrShift).free;
 		MIDIdef(\eqgtrVolume).free;
 		~birds[\eqgtr].kill;
 		["eqgtr Synths freed"].postln;

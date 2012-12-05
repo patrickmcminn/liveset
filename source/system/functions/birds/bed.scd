@@ -27,21 +27,22 @@ prm
 		\verb1: Synth(\reverb1, [\in, ~birdsBus[\bed].verb1, \out, ~birdsBus[\bed].eq,
 			\mix, 0.7, \room, 0.5, \damp, 0.1], ~group[\fx], \addToTail),
 
-		\eq: Synth(\eq3, [\in, ~birdsBus[\bed].eq, \out, ~birdsBus[\bed].gran, \hiFreq, 34800, \hiGain, -70],
+		\eq: Synth(\eq3, [\in, ~birdsBus[\bed].eq, \out, ~birdsBus[\bed].gran, \hiFreq, 8000, \hiGain, -70],
 			~group[\fx], \addToTail),
 
 		\gran: Synth(\granulator,
 			[
-				\in, ~birdsBus[\bed].gran, \out, ~birdsBus[\bed].verb2
+				\in, ~birdsBus[\bed].gran, \out, ~birdsBus[\bed].verb2, \mix, 0.6, \bufLength, 5, \trigRate, 32,
+				\grainDur, 1, \grainDurOffset, 0.5
 			],
 			~group[\fx], \addToTail),
 
 		\verb2: Synth(\convReverbStereo, [\in, ~birdsBus[\bed].verb2, \out, ~birdsBus[\bed].fader,
-			\buffer, ~impulse[\cathedral1], \mix, 0.7], ~group[\fx], \addToTail),
+			\buffer, ~impulse[\cathedral1], \mix, 0.7, \inputScale, 0.1], ~group[\fx], \addToTail),
 
-		\fader: Synth(\stereoFader, [\in, ~birdsBus[\bed].fader, \out, ~mixer[\s1], \amp, 0.8], ~group[\fx], \addToTail),
+		\fader: Synth(\stereoFader, [\in, ~birdsBus[\bed].fader, \out, ~mixer[\s1], \amp, 1], ~group[\fx], \addToTail),
 
-		\onset: Synth(\onsetDetectorTrig, [\in, ~inst[\guitar], \id, 0, \thresh, 0.1, \fastMul, 0.65],
+		\onset: Synth(\onsetDetectorTrig, [\in, ~inst[\guitar], \id, 0, \thresh, 0.01, \fastMul, 0.6],
 			~group[\fx], \addToTail)
 	);
 
@@ -227,6 +228,7 @@ prm
 		~ohm.turnPink(val).yield;
 
 		~birds[\bed].kill;
+		~birdsMake[\bedPlay].reset;
 		~ohm.turnOff(play);
 		MIDIdef(\bedPlay).free;
 		~ohm.turnOff(toggle);
@@ -276,9 +278,11 @@ prm
 ~birdsMake[\bedToggle] = r ({ | val |
 	loop{
 		~birds[\bed].playBed;
+		["all beds on"].postln;
 		~ohm.turnPink(val).yield;
 
 		~birds[\bed].stopBed;
+		["all beds off"].postln;
 		~ohm.turnRed(val).yield;
 	}
 });

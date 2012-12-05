@@ -14,6 +14,6 @@ prm
 ~mixer[\s3] = Bus.audio(s, 2);
 
 ~mixerSynth[\master] = Synth(\stereoFader, [\in, ~mixer[\master], \out, 0, \amp, 1], ~group[\audioFader], \addToTail);
-~mixerSynth[\s1] = Synth(\stereoFader, [\in, ~mixer[\s1], \out, ~mixer[\master], \amp, 0.8], ~group[\audioFader], \addToHead);
-~mixerSynth[\s2] = Synth(\stereoFader, [\in, ~mixer[\s2], \out, ~mixer[\master], \amp, 0.8], ~group[\audioFader], \addToHead);
-~mixerSynth[\s3] = Synth(\stereoFader, [\in, ~mixer[\s3], \out, ~mixer[\master], \amp, 0.8], ~group[\audioFader], \addToHead);
+~mixerSynth[\s1] = Synth(\stereoFader, [\in, ~mixer[\s1], \out, ~mixer[\master], \amp, 0.6], ~group[\audioFader], \addToHead);
+~mixerSynth[\s2] = Synth(\stereoFader, [\in, ~mixer[\s2], \out, ~mixer[\master], \amp, 0.6], ~group[\audioFader], \addToHead);
+~mixerSynth[\s3] = Synth(\stereoFader, [\in, ~mixer[\s3], \out, ~mixer[\master], \amp, 0.6], ~group[\audioFader], \addToHead);

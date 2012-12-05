@@ -22,8 +22,8 @@ prm
 		\gran: Synth(\granulator,
 			[
 				\in, ~connectBus[\granDelay].gran, \out, ~connectBus[\granDelay].del,
-				\bufLength, 1, \panOffset, 0, \grainDur, 0.05,
-				\grainDurOffset, 0.01, \trigRate, 70, \amp, 1.5, \posOffset, 0.1
+				\bufLength, 1.5, \panOffset, 0, \grainDur, 0.05,
+				\grainDurOffset, 0.01, \trigRate, 40, \amp, 1.5, \posOffset, 1
 			],
 			~group[\fx], \addToTail),
 
@@ -33,7 +33,7 @@ prm
 		\verb: Synth(\reverb2, [\in, ~connectBus[\granDelay].verb, \out, ~connectBus[\granDelay].fader, \mix, 0.55,
 			\room, 0.75, \damp, 0.3], ~group[\fx], \addToTail),
 
-		\fader: Synth(\stereoFader, [\in, ~connectBus[\granDelay].fader, \out, ~mixer[\s2], \amp, 0.6],
+		\fader: Synth(\stereoFader, [\in, ~connectBus[\granDelay].fader, \out, ~mixer[\s2], \amp, -6.dbamp],
 			~group[\fx], \addToTail)
 	);
 };
@@ -44,11 +44,12 @@ prm
 });
 
 ~connectMake[\granDelay] = r { | main |
-	var val, toggle, hiShelf, decay;
+	var val, toggle, hiShelf, decay, vol;
 	val = main.at(0);
 	toggle = main.at(1);
 	hiShelf = main.at(2);
 	decay = main.at(3);
+	vol = main.at(4);
 	loop{
 
 		~connections[\granDelay].value;
@@ -56,12 +57,14 @@ prm
 		MIDIdef.noteOn(\granDelayToggle, { ~scLang.sendMsg(\granDelay, \toggle, toggle)}, toggle);
 		MIDIdef.cc(\granDelayHiShelf, { | gain | ~scLang.sendMsg(\granDelay, \hiShelf, gain)}, hiShelf);
 		MIDIdef.cc(\granDelayDecay, { | decay | ~scLang.sendMsg(\granDelay, \decay, decay)}, decay);
+		MIDIdef.cc(\granDelayVolume, { | amp | ~scLang.sendMsg(\granDelay, \volume, amp)}, vol);
 		"GranDelay Active".postln;
 		~ohm.turnBlue(val).yield;
 
 		MIDIdef(\granDelayToggle).free;
 		MIDIdef(\granDelayHiShelf).free;
 		MIDIdef(\granDelayDecay).free;
+		MIDIdef(\granDelayVolume).free;
 		~ohm.turnOff(toggle);
 		~connections[\granDelay].kill;
 		"GranDelay Freed".postln;

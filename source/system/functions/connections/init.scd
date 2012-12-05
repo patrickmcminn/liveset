@@ -25,7 +25,13 @@ prm
 ~connectBuf[\chord] = Buffer.allocConsecutive(6, s, s.sampleRate*1, 1);
 ~connectBuf[\chordSum] = Buffer.allocConsecutive(4, s, s.sampleRate, 1);
 
+Pbindef.removeAll;
 
+// creates a dictionary to store Restore functions
+~connectionsRestore = ( );
+
+// creates a dictionary to hold the states of each ~connectMake function
+~connectRestore = ( );
 
 
 // sets up a function to clear the piece
@@ -35,11 +41,6 @@ prm
 	~connectBus.do({ | i | i.free; });
 	~connectBuf.do({ | i | i.free; });
 
-	~connectMake.clear;
-	~connectSynth.clear;
-	~connectBus.clear;
-	~connectBuf.clear;
-	~connections.clear;
 };
 
 

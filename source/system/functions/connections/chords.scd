@@ -22,7 +22,7 @@ prm
 			[
 				\in, ~connectBus[\chords].gran, \out, ~mixer[\s1],
 				\bufLength, 3, \mix, 0.45, \grainDur, 0.15, \grainDurOffset, 0.05,
-				\panOffset, 0, \env, ~grainBufs[\gabor], \trigRate, 25
+				\panOffset, 0, \env, ~grainBufs[\gabor], \trigRate, 25, \amp, -12.dbamp
 			],
 			~group[\fx], \addToTail)
 	);
@@ -70,19 +70,27 @@ prm
 });
 
 ~connections[\chords].addUniqueMethod(\playRand, {
-	Pbindef(\chordRand).play;
+	~connections[\transport].playNextBar({
+		Pbindef(\chordRand).play(~connections[\transport]);
+	});
 });
 
 ~connections[\chords].addUniqueMethod(\stopRand, {
-	Pbindef(\chordRand).stop;
+	~connections[\transport].playNextBar({
+		Pbindef(\chordRand).stop;
+	});
 });
 
 ~connections[\chords].addUniqueMethod(\playChords, {
-	Pbindef(\chords).play;
+	~connections[\transport].playNextBar({
+		Pbindef(\chords).play(~connections[\transport]);
+	});
 });
 
 ~connections[\chords].addUniqueMethod(\stopChords, {
-	Pbindef(\chords).stop;
+	~connections[\transport].playNextBar({
+		Pbindef(\chords).stop;
+	});
 });
 
 ~connectMake[\chords] = r { | main |
@@ -115,24 +123,18 @@ prm
 ~connectMake[\chordsToggle] = r { | val |
 	loop{
 
-		~connections[\transport].playNextBar({
-			~connections[\chords].playRand;
-			["random chords playing"].postln;
-		});
+		~connections[\chords].playRand;
+		["random chords playing"].postln;
 		~ohm.turnYellow(val).yield;
 
 
-		~connections[\transport].playNextBar({
-			~connections[\chords].stopRand;
-			~connections[\chords].playChords;
-			["chord sequence playing"].postln;
-		});
+		~connections[\chords].stopRand;
+		~connections[\chords].playChords;
+		["chord sequence playing"].postln;
 		~ohm.turnLavender(val).yield;
 
-		~connections[\transport].playNextBar({
-			~connections[\chords].stopChords;
-			["chord sequence stopped"].postln;
-		});
+		~connections[\chords].stopChords;
+		["chord sequence stopped"].postln;
 		~ohm.turnRed(val).yield;
 	};
 };

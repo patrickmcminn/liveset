@@ -9,3 +9,9 @@ prm
 "boy/rowFuzz.scd".loadRelative;
 "boy/randBell.scd".loadRelative;
 "boy/bassline.scd".loadRelative;
+"boy/noiseChords.scd".loadRelative;
+"boy/trumpet.scd".loadRelative;
+"boy/transport.scd".loadRelative;
+"boy/endSynth.scd".loadRelative;
+"boy/accompSynth.scd".loadRelative;
+"boy/endFade.scd".loadRelative;

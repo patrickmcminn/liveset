@@ -28,6 +28,15 @@ OSCdef(\mixer, { | msg |
 	{ id == \s3 } { ~mixerSynth[\s3].set(\amp, val); }
 }, '\mixer', ~scLang);
 
+OSCdef(\clear, { | msg |
+	var id, val;
+	id = msg.at(1);
+	val = msg.at(2);
+	case
+	{ id == \connections } {~connections[\clear].value; }
+	{ id == \birds } { ~birds[\clear].value; }
+	{ id == \boy } { ~boy[\clear].value; }
+}, \clear);
 
 
 

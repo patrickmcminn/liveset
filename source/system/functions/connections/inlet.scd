@@ -22,7 +22,7 @@ prm
 			~group[\fx], \addToTail),
 
 		\fader: Synth(\stereoFader, [\in, ~connectBus[\inlet].fader, \out, ~mixer[\s2],
-			\amp, 1.2], ~group[\fx], \addToTail)
+			\amp, 1], ~group[\fx], \addToTail)
 	);
 };
 

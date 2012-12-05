@@ -10,6 +10,7 @@ SynthDef(\fader, {
 	var input, sig;
 	input = In.ar(in);
 	sig = input * amp * mute;
+	sig = sig.softclip;
 	sig = Out.ar(out, sig);
 }).add;
 
@@ -21,8 +22,10 @@ SynthDef(\stereoFader, {
 	var input, sig;
 	input = In.ar(in, 2);
 	sig = input * amp * mute;
+	sig = sig.softclip;
 	sig = Out.ar(out, sig);
 }).add;
 
 "stereo fader SynthDef added".postln;
 "     args: in, out, amp = 1, mute = 1".postln;
+

@@ -15,8 +15,9 @@ prm
 
 	~ohm.turnGreen(1);
 	MIDIdef.noteOn(\droner, {
-		| vel, note, chn, time, toggle = 9, erode = 2, rater = 10, granMix = 17, vol = 22, hiShelf = 9, loShelf = 16 |
-		~scLang.sendMsg(\droner, \main, note, toggle, erode, rater, granMix, vol, loShelf, hiShelf)}, 1);
+		| vel, note, chn, time, toggle = 9, erode = 2, rater = 10,
+		granMix = 17, vol = 22, hiShelf = 9, loShelf = 16, erodeControl = 24 |
+		~scLang.sendMsg(\droner, \main, note, toggle, erode, rater, granMix, vol, loShelf, hiShelf, erodeControl)}, 1);
 
 
 	~ohm.turnGreen(3);
@@ -36,8 +37,8 @@ prm
 
 
 	~ohm.turnGreen(5);
-	MIDIdef.noteOn(\granDelay, { | vel, note, chn, time, toggle = 13, hiShelf = 18, decay = 11 |
-		~scLang.sendMsg(\granDelay, \main, note, toggle, hiShelf, decay)}, 5);
+	MIDIdef.noteOn(\granDelay, { | vel, note, chn, time, toggle = 13, hiShelf = 18, decay = 11, vol = 21 |
+		~scLang.sendMsg(\granDelay, \main, note, toggle, hiShelf, decay, vol)}, 5);
 
 
 	~ohm.turnGreen(64);
@@ -66,7 +67,7 @@ prm
 
 	~ohm.turnGreen(77);
 	MIDIdef.noteOn(\transport, { | vel, note |
-		~scLang.sendMsg(\transport, \main, note) }, 69);
+		~scLang.sendMsg(\transport, \main, note) }, 77);
 
 
 	/*

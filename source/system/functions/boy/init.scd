@@ -22,7 +22,13 @@ prm
 
 // creates a dictionary to store patterns used in the piece
 Pdef.removeAll;
+Pbindef.removeAll;
 ~boyPatterns = ( );
+
+// creates a tempo clock:
+~boy[\transport] = TempoClock.new;
+~boy[\transport].tempo = 82/60;
+
 
 // creates shared buffers for piece:
 
@@ -31,11 +37,12 @@ Pdef.removeAll;
 		Buffer.read(s,
 			(~boyBuf[\bellsPath] ++ "/bells/" ++ (i + 60) ++ ".wav").postln; )
 	});
+~boyBuf[\noiseSynthPath] = thisProcess.nowExecutingPath.dirname;
+~boyBuf[\noiseSynth] = Array.fill(53, { | i |
+		Buffer.read(s,
+			(~boyBuf[\noiseSynthPath] ++ "/Noise Synth/" ++ (i + 32) ++ ".wav").postln; )
+	});
 
-
-// creates a tempo clock:
-~boy[\transport] = TempoClock;
-~boy[\transport].tempo = 82/60;
 
 
 // sets up a function to clear the piece
@@ -45,11 +52,6 @@ Pdef.removeAll;
 	~boyBus.do({ | i | i.free; });
 	~boyBuf.do({ | i | i.free; });
 
-	~boyMake.clear;
-	~boySynth.clear;
-	~boyBus.clear;
-	~boyBuf.clear;
-	~boy.clear;
 };
 
 

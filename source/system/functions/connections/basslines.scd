@@ -31,7 +31,7 @@ prm
 			],
 			~group[\fx], \addToTail),
 
-		\fader: Synth(\stereoFader, [\in, ~connectBus[\basslines].fader, \out, ~mixer[\s2], \amp, 7],
+		\fader: Synth(\stereoFader, [\in, ~connectBus[\basslines].fader, \out, ~mixer[\s2], \amp, 2.dbamp],
 			~group[\fx], \addToTail)
 	);
 
@@ -42,7 +42,7 @@ prm
 			~connectBuf[\note].at(3), ~connectBuf[\note].at(1)], inf),
 		\rate, 0.25,
 		\attack, Pseq([0.05, 0.05, 0.05, 0.05, 0.05], inf),
-		\sustain, Pseq([7.9, 7.9, 7.9, 3.9, 3.9], inf),
+		\sustain, Pseq([7.9, 7.9, 7.9, 3.9, 3.9], inf) * (1/~connections[\transport].tempo),
 		\release, Pseq([0.05, 0.05, 0.05, 0.05, 0.05], inf),
 		\startPos, s.sampleRate*0.1,
 		\group, ~connectSynth[\basslines].loShelf,
@@ -71,7 +71,7 @@ prm
 			Pseq([0.05, 1/30, 0.025, 1/30, 0.025], inf)),
 		\sustain, Pstutter(
 			noteCount,
-			Pseq([0.4, 0.59, 0.2, 0.27, 0.2], inf)),
+			Pseq([0.4, 0.59, 0.2, 0.27, 0.2], inf)) * (1/~connections[\transport].tempo),
 		\release, Pstutter(
 			noteCount,
 			Pseq([0.05, 1/30, 0.025, 1/30, 0.025], inf)),

@@ -19,7 +19,7 @@ prm
 		\shelf: Synth(\hiShelf, [\in, ~connectBus[\cascade], \out, ~connectBus[\cascade],
 			\freq, 2500, \gain, -7], ~connectSynth[\inlet].verb, \addBefore),
 		\pan: Synth(\pan, [\in, ~connectBus[\cascade], \out, ~connectBus[\inlet].verb,
-			\pan, -0.35], ~connectSynth[\inlet].verb, \addBefore)
+			\pan, -0.35, \amp, -6.dbamp], ~connectSynth[\inlet].verb, \addBefore)
 	);
 
 	Pbindef(\highCSharp,

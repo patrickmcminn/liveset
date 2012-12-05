@@ -7,10 +7,11 @@ prm
 
 ~connections[\droner] = {
 	~connectBus[\droner] = (
+		\rate:    Bus.control,
 		\drone:   Bus.audio,
-		\verb:    Bus.audio,
+		\verb:    Bus.audio(s, 2),
 		\filter:  Bus.audio(s, 2),
-		\rate:    Bus.control
+		\fader: Bus.audio(s, 2)
 	);
 
 	~connectSynth[\droner] = (
@@ -44,7 +45,7 @@ prm
 				\mix, 0, \in, ~connectBus[\droner].drone,
 				\out, ~connectBus[\droner].verb,
 				\bufLength, 5, \panOffset, 0.03, \grainDur, 0.13, \grainDurOffset, 0.1,
-				\rate, ~connectBus[\droner].rate.asMap, \env, ~grainBufs[\gabor], \trigRate, 15, \amp, 3
+				\rate, ~connectBus[\droner].at(\rate).asMap, \env, ~grainBufs[\gabor], \trigRate, 15, \amp, 3
 		], ~group[\fx], \addToTail),
 
 
@@ -54,12 +55,12 @@ prm
 
 
 
-		\loShelf: Synth(\lowShelfStereo, [\in, ~connectBus[\droner].filter, \out, ~connectBus[\droner].filter,
+		\loShelf: Synth(\lowShelfStereo, [\in, ~connectBus[\droner].filter, \out, ~connectBus[\droner].fader,
 			\freq, 250, \gain, -6], ~group[\fx], \addToTail),
 
 
 
-		\fader:   Synth(\stereoFader, [\in, ~connectBus[\droner].filter, \out, ~mixer[\s1], \amp, 0.6],
+		\fader:   Synth(\stereoFader, [\in, ~connectBus[\droner].filter, \out, ~mixer[\s1], \amp, -6.dbamp],
 			~group[\fx], \addToTail)
 	);
 
@@ -73,7 +74,7 @@ prm
 
 
 ~connectMake[\droner] = r { | main |
-	var val, toggle, erode, rater, granMix, vol, loShelf, hiShelf;
+	var val, toggle, erode, rater, granMix, vol, loShelf, hiShelf, erodeControl;
 	val = main.at(0);
 	toggle = main.at(1);
 	erode = main.at(2);
@@ -82,6 +83,7 @@ prm
 	vol = main.at(5);
 	loShelf = main.at(6);
 	hiShelf = main.at(7);
+	erodeControl = main.at(8);
 	loop {
 
 		~connections[\droner].value;
@@ -100,8 +102,10 @@ prm
 		MIDIdef.cc(\dronerVolume, { | amp | ~scLang.sendMsg(\droner, \volume, amp)}, vol);
 		MIDIdef.cc(\dronerLoShelf, { | gain | ~scLang.sendMsg(\droner, \loShelf, gain)}, loShelf);
 		MIDIdef.cc(\dronerHiShelf, { | gain | ~scLang.sendMsg(\droner, \hiShelf, gain)}, hiShelf);
+		MIDIdef.cc(\dronerErodeControl, { | amt | ~scLang.sendMsg(\droner, \erodeControl, amt)}, erodeControl);
 
 		"Droner Active".postln;
+		~connectSynth[\droner].at(\rate).set(\out, ~connectBus[\droner].at(\rate));
 		~ohm.turnBlue(val).yield;
 
 
@@ -109,6 +113,7 @@ prm
 		MIDIdef.cc(\dronerGran).free;
 		MIDIdef.cc(\dronerHiShelf).free;
 		MIDIdef.cc(\dronerLoShelf).free;
+		MIDIdef(\dronerErodeControl).free;
 		~ohm.turnOff(toggle);
 		MIDIdef(\dronerToggle).free;
 		~ohm.turnOff(erode);
@@ -121,6 +126,26 @@ prm
 		"Droner Freed".postln;
 		~ohm.turnRed(val).yield;
 	};
+
+	~connectRestore[\droner] = { | main |
+
+		~ohm.turnGreen(toggle);
+		MIDIdef.noteOn(\dronerToggle, { ~scLang.sendMsg(\droner, \toggle, toggle) }, toggle);
+
+		~ohm.turnYellow(erode);
+		MIDIdef.noteOn(\dronerErode, { ~scLang.sendMsg(\droner, \erodeOn, erode)}, erode);
+		MIDIdef.noteOff(\dronerErodeOff, { ~scLang.sendMsg(\droner, \erodeOff, erode) }, erode);
+
+		~ohm.turnGreen(rater);
+		MIDIdef.noteOn(\dronerRater, { ~scLang.sendMsg(\droner, \rater, rater)}, rater);
+
+		MIDIdef.cc(\dronerGran, { | mix | ~scLang.sendMsg(\droner, \granMix, mix)}, granMix);
+		MIDIdef.cc(\dronerVolume, { | amp | ~scLang.sendMsg(\droner, \volume, amp)}, vol);
+		MIDIdef.cc(\dronerLoShelf, { | gain | ~scLang.sendMsg(\droner, \loShelf, gain)}, loShelf);
+		MIDIdef.cc(\dronerHiShelf, { | gain | ~scLang.sendMsg(\droner, \hiShelf, gain)}, hiShelf);
+
+	};
+
 };
 
 ~connectMake[\dronerToggle] = r { | val |
@@ -137,19 +162,23 @@ prm
 
 ~connectMake[\dronerRater] = r { | val |
 	loop {
-		~connectSynth[\droner].rate.set(\d1, 1, \d2, 1);
+		~connectSynth[\droner].at(\rate).set(\d1, 1, \d2, 1);
 		["droner rates of 1 added"].postln;
 		~ohm.turnPink(val).yield;
 
-		~connectSynth[\droner].gran.set(\rate, 0.5);
+		~connectSynth[\droner].at(\gran).set(\rate, 0.5);
 		["droner rates to 0.5"].postln;
 		~ohm.turnPurple(val).yield;
 
-		~connectSynth[\droner].rate.set(\d1, 0.5, \d2, 0.5, \d3, 0.5, \d4, 0.5, \d5, 0.5, \d6, 0.25, \d7, 0.25);
-		~connectSynth[\droner].gran.set(\rate, ~connectBus[\droner].rate.asMap);
-		~ohm.turnGreen(val).yield;
+		~connectSynth[\droner].at(\rate).set(\d1, 0.5, \d2, 0.5, \d3, 0.5, \d4, 0.5, \d5, 0.5, \d6, 0.25, \d7, 0.25);
+		~connectSynth[\droner].at(\gran).set(\rate, ~connectBus[\droner].at(\rate).asMap);
+		["droner rates reset"].postln;
+		~ohm.turnLavender(val).yield;
 	}
 };
+
+
+
 
 
 
@@ -200,3 +229,4 @@ droner = {
 );
 
 */
+

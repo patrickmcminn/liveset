@@ -21,6 +21,7 @@ prm
 
 // creates a dictionary to store patterns used in the piece
 Pdef.removeAll;
+Pbindef.removeAll;
 ~birdsPatterns = ( );
 
 // creates shared buffers for piece:
@@ -32,7 +33,7 @@ Pdef.removeAll;
 	});
 
 // creates a tempo clock:
-~birds[\transport] = TempoClock;
+~birds[\transport] = TempoClock.new;
 ~birds[\transport].tempo = 60/60;
 
 // defines mode:
@@ -45,11 +46,6 @@ Pdef.removeAll;
 	~birdsBus.do({ | i | i.free; });
 	~birdsBuf.do({ | i | i.free; });
 
-	~birdsMake.clear;
-	~birdsSynth.clear;
-	~birdsBus.clear;
-	~birdsBuf.clear;
-	~birds.clear;
 };
 
 

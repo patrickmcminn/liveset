@@ -23,9 +23,9 @@ prm
 		\inFader: Synth(\fader, [\in, ~boyBus[\bassline].inFader, \out, ~boyBus[\bassline].eq], ~group[\fx], \addToTail),
 
 		\eq: Synth(\eq3, [\in, ~boyBus[\bassline].eq, \out, ~boyBus[\bassline].verb,
-			\loGain, 1, \hiFreq, 605, \hiGain, -70], ~group[\fx], \addToTail),
+			\loGain, 2, \hiFreq, 7000, \hiGain, -70], ~group[\fx], \addToTail),
 
-		\verb: Synth(\reverb1, [\in, ~boyBus[\bassline].verb, \out, ~boyBus[\bassline].fader, \mix, 0.7, \room, 0.6],
+		\verb: Synth(\reverb1, [\in, ~boyBus[\bassline].verb, \out, ~boyBus[\bassline].fader, \mix, 0.4, \room, 0.6],
 			~group[\fx], \addToTail),
 
 		\fader: Synth(\pan, [\in, ~boyBus[\bassline].fader, \out, ~mixer[\s2]], ~group[\fx], \addToTail)
@@ -36,8 +36,8 @@ prm
 		\group, ~boySynth[\bassline].inFader,
 		\addAction, \addBefore,
 		\out, ~boyBus[\bassline].inFader,
-		\amp, 0.5,
-		\cutoff, 800,
+		\amp, 1,
+		\cutoff, 1000,
 		\loGain, 6,
 		\legato, 1,
 		\root, 7,
@@ -50,8 +50,8 @@ prm
 			Pseq([0.25, 0.25, 1/3, 0.5], inf)
 		),
 		\atk, 0.12,
-		\sus, 1,
-		\octave, 5
+		\sus, Pkey(\dur) * 4.5,
+		\octave, 3
 	);
 
 	Pbindef(\boyBasslineTwo,
@@ -59,8 +59,8 @@ prm
 		\group, ~boySynth[\bassline].inFader,
 		\addAction, \addBefore,
 		\out, ~boyBus[\bassline].inFader,
-		\amp, 0.6,
-		\cutoff, 800,
+		\amp, 1.2,
+		\cutoff, 1000,
 		\loGain, 6,
 		\legato, 1,
 		\root, 7,
@@ -72,9 +72,9 @@ prm
 			Pseq([16, 14, 18, 7, 12, 9, 5, 1, 8], inf),
 			Pseq([0.25, 0.25, 0.25, 0.5, 1/3, 0.5, 0.75, 0.25, 0.5], inf)
 		),
-		\atk, 0.12,
-		\sus, 1,
-		\octave, 5
+		\atk, 0.07,
+		\sus, Pkey(\dur) * 5,
+		\octave, 3
 	);
 
 	Pbindef(\boyBasslineTwoLow,
@@ -82,11 +82,15 @@ prm
 		\group, ~boySynth[\bassline].inFader,
 		\addAction, \addBefore,
 		\out, ~boyBus[\bassline].inFader,
-		\filterMul, 2,
+		\filterMul, 6,
 		\root, 7,
-		\note, Pseq([12, 9, 12, 9, 7, 5, 12, 5], inf),
+		\note, Pseq([12, 9, 12, 9, 7, 5, 12, 7], inf),
 		\dur, Pseq([4, 3.5, 4.5, 3.5, 4, 4.5, 4, 4], inf),
-		\octave, 3
+		\atk, 0.01,
+		\rel, 0.01,
+		\sus, Pkey(\dur)*0.732,
+		\octave, 1,
+		\amp, 1,
 	);
 
 	Pbindef(\boyBasslineThree,
@@ -94,7 +98,7 @@ prm
 		\group, ~boySynth[\bassline].inFader,
 		\addAction, \addBefore,
 		\out, ~boyBus[\bassline].inFader,
-		\amp, 0.6,
+		\amp, 1,
 		\cutoff, 800,
 		\loGain, 6,
 		\legato, 1,
@@ -108,8 +112,8 @@ prm
 			Pseq([0.25, 0.25, 0.25, 0.5], inf)
 		),
 		\atk, 0.12,
-		\sus, 1,
-		\octave, 5
+		\sus, Pkey(\dur) * 4.5,
+		\octave, 3
 	);
 
 	Pbindef(\boyBasslineThreeLow,
@@ -117,11 +121,15 @@ prm
 		\group, ~boySynth[\bassline].inFader,
 		\addAction, \addBefore,
 		\out, ~boyBus[\bassline].inFader,
-		\filterMul, 2,
+		\filterMul, 6,
 		\root, 7,
-		\octave, 3,
+		\octave, 1,
 		\note, Pseq([12, 9], inf),
-		\dur, Pseq([4, 3.5, 4.5, 3.5], inf)
+		\dur, Pseq([4, 3.5, 4.5, 3.5], inf),
+		\atk, 0.01,
+		\rel, 0.01,
+		\sus, Pkey(\dur)*0.732,
+		\amp, 1
 	);
 
 };
@@ -129,11 +137,16 @@ prm
 ~boy[\bassline].addUniqueMethod(\kill, {
 	~boyBus[\bassline].do({ | i | i.free; });
 	~boySynth[\bassline].do({ | i | i.free; });
-	Pbindef(\boyBasslineOne).free;
-	Pbindef(\boyBasslineTwo).free;
-	Pbindef(\boyBasslineThree).free;
-	Pbindef(\boyBasslineTwoLow).free;
-	Pbindef(\boyBasslineThreeLow).free;
+	Pbindef(\boyBasslineOne).stop;
+	Pbindef(\boyBasslineTwo).stop;
+	Pbindef(\boyBasslineThree).stop;
+	Pbindef(\boyBasslineTwoLow).stop;
+	Pbindef(\boyBasslineThreeLow).stop;
+	Pbindef(\boyBasslineOne).remove;
+	Pbindef(\boyBasslineTwo).remove;
+	Pbindef(\boyBasslineThree).remove;
+	Pbindef(\boyBasslineTwoLow).remove;
+	Pbindef(\boyBasslineThreeLow).remove;
 });
 
 ~boy[\bassline].addUniqueMethod(\playOne, {
@@ -171,21 +184,25 @@ prm
 });
 
 ~boyMake[\bassline] = r({ | main |
-	var val, basslineOne, basslineTwo, basslineThree, vol;
+	var val, basslineOne, basslineTwo, basslineThree, vol, cutoff;
 	val = main.at(0);
 	basslineOne = main.at(1);
 	basslineTwo = main.at(2);
 	basslineThree = main.at(3);
 	vol = main.at(4);
+	cutoff = main.at(5);
 
 	loop {
 		~boy[\bassline].value;
 
 		~ohm.turnPurple(basslineOne);
-		MIDIdef.noteOn(\boyBasslineOne, { ~scLang.sendMsg(\bassline, \one, basslineOne); }, basslineOne);
+		MIDIdef.noteOn(\boyBasslineOne, { ~scLang.sendMsg(\boyBassline, \one, basslineOne); }, basslineOne);
 		~ohm.turnLavender(basslineTwo);
-		MIDIdef.noteOn(\boyBasslineTwo, { ~scLang.sendMsg(\bassline, \two, basslineTwo); }, basslineTwo);
-		MIDIdef.cc(\boyBasslineVolume, { | amp | ~scLang.sendMsg(\bassline, \volume, amp); }, vol);
+		MIDIdef.noteOn(\boyBasslineTwo, { ~scLang.sendMsg(\boyBassline, \two, basslineTwo); }, basslineTwo);
+		~ohm.turnPink(basslineThree);
+		MIDIdef.noteOn(\boyBasslineThree, { ~scLang.sendMsg(\boyBassline, \three, basslineThree); }, basslineThree);
+		MIDIdef.cc(\boyBasslineVolume, { | amp | ~scLang.sendMsg(\boyBassline, \volume, amp); }, vol);
+		MIDIdef.cc(\boyBasslineCutoff, { | cutoff | ~scLang.sendMsg(\boyBassline, \cutoff, cutoff); }, cutoff);
 
 		["bassline synths created"].postln;
 		~ohm.turnPink(val).yield;
@@ -193,8 +210,12 @@ prm
 		~boy[\bassline].kill;
 		~ohm.turnOff(basslineOne);
 		~ohm.turnOff(basslineTwo);
+		~ohm.turnOff(basslineThree);
 		MIDIdef(\boyBasslineOne).free;
 		MIDIdef(\boyBasslineTwo).free;
+		MIDIdef(\boyBasslineThree).free;
+		MIDIdef(\boyBasslineVolume).free;
+		MIDIdef(\boyBasslineCutoff).free;
 		["bassline synths freed"].postln;
 		~ohm.turnRed(val).yield;
 	};

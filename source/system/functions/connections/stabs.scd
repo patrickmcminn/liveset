@@ -29,7 +29,7 @@ prm
 		\verb: Synth(\reverb2, [\in, ~connectBus[\stabs].verb, \out, ~connectBus[\stabs].fader,
 			\room, 0.8, \mix, 0.6, \damp, 0.7], ~group[\fx], \addToTail),
 
-		\fader: Synth(\stereoFader, [\in, ~connectBus[\stabs].fader, \out, ~mixer[\s1], \amp, 1],
+		\fader: Synth(\stereoFader, [\in, ~connectBus[\stabs].fader, \out, ~mixer[\s1], \amp, -16.dbamp],
 			~group[\fx], \addToTail)
 	);
 

@@ -12,7 +12,7 @@ prm
 		\eq: Bus.audio,
 		\trem: Bus.audio,
 		\verb2: Bus.audio,
-		\fader: Bus.audio(s, 2)
+		\fader: Bus.audio
 	);
 
 	~birdsSynth[\tremgtr] = (
@@ -21,22 +21,22 @@ prm
 			~group[\fx], \addToTail),
 
 		\verb: Synth(\reverb1, [\in, ~birdsBus[\tremgtr].verb, \out, ~birdsBus[\tremgtr].dist,
-			\mix, 0.68, \room, 0.9, \damp, 0.1, \amp, 1], ~group[\fx], \addToTail),
+			\mix, 0.95, \room, 0.9, \damp, 0.1, \amp, 1], ~group[\fx], \addToTail),
 
 		\dist: Synth(\digitalClip2, [\in, ~birdsBus[\tremgtr].dist, \out, ~birdsBus[\tremgtr].eq,
-			\amount, 50, \amp, 0.2], ~group[\fx], \addToTail),
+			\amount, 500, \amp, 0.2], ~group[\fx], \addToTail),
 
 		\eq: Synth(\eq3, [\in, ~birdsBus[\tremgtr].eq, \out, ~birdsBus[\tremgtr].trem,
-			\loFreq, 250, \loGain, 5, \hiFreq, 2500, \hiGain, -7.65], ~group[\fx], \addToTail),
+			\loFreq, 250, \loGain, 5, \hiFreq, 3500, \hiGain, -7.65], ~group[\fx], \addToTail),
 
 		\trem: Synth(\multiTrem, [\in, ~birdsBus[\tremgtr].trem, \out, ~birdsBus[\tremgtr].verb2,
 			\tremOneFreq, 0.25, \tremTwoFreq, 1.3333, \tremThreeFreq, 1.5, \tremFourFreq, 4],
 			~group[\fx], \addToTail),
 
-		\verb2: Synth(\convReverbStereo, [\in, ~birdsBus[\tremgtr].verb2, \out, ~birdsBus[\tremgtr].fader,
-			\buffer, ~impulse[\chamberMedium], \mix, 0.5], ~group[\fx], \addToTail),
+		\verb2: Synth(\convReverb, [\in, ~birdsBus[\tremgtr].verb2, \out, ~birdsBus[\tremgtr].fader,
+			\buffer, ~impulse[\chamberMedium], \mix, 0.1], ~group[\fx], \addToTail),
 
-		\fader: Synth(\stereoFader, [\in, ~birdsBus[\tremgtr].fader, \out, ~mixer[\s2], \amp, 1],
+		\fader: Synth(\pan, [\in, ~birdsBus[\tremgtr].fader, \out, ~mixer[\s2], \amp, 0],
 			~group[\fx], \addToTail)
 	);
 };
@@ -48,10 +48,11 @@ prm
 
 ~birdsMake[\tremgtr] = r ({ | main |
 
-	var val, toggle, vol;
+	var val, toggle, shift, vol;
 	val = main.at(0);
 	toggle = main.at(1);
-	vol = main.at(2);
+	shift = main.at(2);
+	vol = main.at(3);
 
 	loop {
 
@@ -59,6 +60,8 @@ prm
 
 		~ohm.turnBlue(toggle);
 		MIDIdef.noteOn(\tremgtrToggle, { ~scLang.sendMsg(\tremgtr, \toggle, toggle); }, toggle);
+		~ohm.turnGreen(shift);
+		MIDIdef.noteOn(\tremgtrShift, { ~scLang.sendMsg(\tremgtr, \shift, shift); }, shift);
 
 		MIDIdef.cc(\tremgtrVolume, { | amp | ~scLang.sendMsg(\tremgtr, \volume, amp); }, vol);
 
@@ -68,7 +71,9 @@ prm
 
 		~birds[\tremgtr].kill;
 		~ohm.turnOff(toggle);
+		~ohm.turnOff(shift);
 		MIDIdef(\tremgtrToggle).free;
+		MIDIdef(\tremgtrShift).free;
 		MIDIdef(\tremgtrVolume).free;
 		["tremgtr synths freed"].postln;
 		~ohm.turnRed(val).yield;

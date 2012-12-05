@@ -8,3 +8,4 @@ prm
 "/OSC/midi.scd".loadRelative;
 "/OSC/connections.scd".loadRelative;
 "/OSC/birds.scd".loadRelative;
+"/OSC/boy.scd".loadRelative;

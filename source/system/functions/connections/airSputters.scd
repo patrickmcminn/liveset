@@ -36,7 +36,7 @@ prm
 			~group[\fx], \addToTail),
 
 		\del: Synth(\delayStereo, [\in, ~connectBus[\airSputters].del, \out, ~mixer[\s1],
-			\maxDelay, 3, \delayTime, 3, \decayTime, 15, \amp, 1, \mix, 0.75],
+			\maxDelay, 3, \delayTime, 3, \decayTime, 15, \amp, -6.dbamp, \mix, 0.75],
 			~group[\fx], \addToTail),
 
 		\onset: Synth(\onsetDetectorTrig, [\in, ~inst[\mute], \id, 0, \thresh, 0.1, \fastMul, 0.65],

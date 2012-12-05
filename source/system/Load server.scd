@@ -22,5 +22,5 @@ prm
 });
 
 
-~server.memSize(65536);
+~server.memSize(131072);
 ~server.boot;

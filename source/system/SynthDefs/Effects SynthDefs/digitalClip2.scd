@@ -5,11 +5,12 @@ prm
 */
 
 SynthDef(\digitalClip2, {	// best to have a noise gate in front of this
-	| in, out, amount = 10, amp = 0.2 |
-	var sig, scale, distort, output;
+	| in, out, amount = 10, amp = 0.2, cutoff = 20000 |
+	var sig, scale, distort, output, filter;
 	sig = In.ar(in) * amount;
 	distort = sig.distort;
-	scale = distort * amp;
+	filter = LPF.ar(distort, cutoff);
+	scale = filter * amp;
 	output = ReplaceOut.ar(out, scale);
 }).add;
 

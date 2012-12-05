@@ -1,22 +1,22 @@
-SynthDef(\nebula, {
-	| in = 0, out = 0 trig, depth = 25, amp = 1, num = 8,
-	activity = 50, clock = 0 |
+SynthDef(\nebula8, {
+	| in = 0, out = 0 trig, depth = 25, amp = 1, activity = 50 |
 	var input, range, offset, rate, trigger, nebulaLeft, nebulaRight, left, right, sig;
-	var leftNum = num/2, rightNum = num/2;
 
 	input = In.ar(in);
 	range = depth * 0.01;
 	offset = 0.945 - range + (range/5);
 	rate = ((activity/100) -1*(-500)+11)/1000;
-	trigger = Select.kr(clock, [Impulse.kr(1/rate), In.kr(trig)]);
+	trigger = Impulse.kr(1/rate);
 
-	nebulaLeft = Mix.new(leftNum, {
-		(TRand.kr(0, range, trigger) + offset).linexp(0, 1.2, 0.0001, 1.2) * [1, -1].choose;
+	nebulaLeft = Mix.fill(4, {
+		(TRand.kr(0, range, trigger) + offset).linexp(0, 1.2, 0.0001, 1.2)
 	});
+	nebulaLeft = nebulaLeft/4;
 
-	nebulaRight = Mix.new(rightNum, {
-		(TRand.kr(0, range, trigger) + offset).linexp(0, 1.2, 0.0001, 1.2) * [1, -1].choose;
+	nebulaRight = Mix.fill(4, {
+		(TRand.kr(0, range, trigger) + offset).linexp(0, 1.2, 0.0001, 1.2)
 	});
+	nebulaRight = nebulaRight/4;
 
 
 	left = input * Lag2.kr(nebulaLeft, 0.7);
@@ -47,4 +47,4 @@ Synth(\nebulator, [\in, ~bus, \out, 0, \depth, 76, \activity, 61], addAction: \a
 ~synth = { Out.ar(~bus, Saw.ar(220) * 0.4) }.play;
 ~nebula = Synth(\nebula, [\in, ~bus, \out, 0, \depth, 76, \activity, 61], addAction: \addToTail);
 )
-*/
+*/ 

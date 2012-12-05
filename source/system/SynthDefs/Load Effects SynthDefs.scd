@@ -5,6 +5,7 @@ prm
 */
 
 "/Effects SynthDefs/convReverbStereo.scd".loadRelative;
+"/Effects SynthDefs/convReverb.scd".loadRelative;
 "/Effects SynthDefs/delay.scd".loadRelative;
 "/Effects SynthDefs/delayStereo.scd".loadRelative;
 "/Effects SynthDefs/digitalClip2.scd".loadRelative;
@@ -17,5 +18,9 @@ prm
 "/Effects SynthDefs/reverb2.scd".loadRelative;
 "/Effects SynthDefs/multiTrem.scd".loadRelative;
 "/Effects SynthDefs/pingPongDelay.scd".loadRelative;
+"/Effects SynthDefs/pingPongDelayStereo.scd".loadRelative;
+"/Effects SynthDefs/pitchShifter.scd".loadRelative;
 "/Effects SynthDefs/nebulator.scd".loadRelative;
 "/Effects SynthDefs/nebula.scd".loadRelative;
+"/Effects SynthDefs/distortion3.scd".loadRelative;
+"/Effects SynthDefs/brokenAntenna.scd".loadRelative;

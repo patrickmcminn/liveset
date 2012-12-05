@@ -23,21 +23,21 @@ prm
 		\inFader: Synth(\fader, [\in, ~inst[\mic], \out, ~connectBus[\micVerb].inVerb], ~group[\fx], \addToTail),
 
 		\verb: Synth(\reverb1, [\in, ~connectBus[\micVerb].inVerb, \out, ~connectBus[\micVerb].gran,
-			\room, 0.9, \damp, 0.2, \mix, 0.6, \amp, 0.8], ~group[\fx], \addToTail),
+			\room, 0.9, \damp, 0.2, \mix, 0.6, \amp, 1], ~group[\fx], \addToTail),
 
 		\gran: Synth(\granulator,
 			[
 				\in, ~connectBus[\micVerb].gran, \out, ~connectBus[\micVerb].verb,
 				\mix, 0.2, \bufLength, 3, \pan, 0.15, \panOffset, 0.3,
-				\env, ~grainBufs[\rexpodec], \rate, ~connectBus[\micVerb].rate.asMap,
+				\env, ~grainBufs[\rexpodec], \rate, ~connectBus[\micVerb].at(\rate).asMap,
 				\grainDur, 0.2, \grainDurOffset, 0.05, \trigRate, 35, \sync, 0.5
 			],
 			~group[\fx], \addToTail),
 
 		\verb2: Synth(\convReverbStereo, [\in, ~connectBus[\micVerb].verb, \out, ~connectBus[\micVerb].fader,
-			\buffer, ~impulse[\cathedral2], \mix, 0.3], ~group[\fx], \addToTail),
+			\buffer, ~impulse[\cathedral1], \mix, 0.5], ~group[\fx], \addToTail),
 
-		\fader: Synth(\stereoFader, [\in, ~connectBus[\micVerb].fader, \out, ~mixer[\s3]], ~group[\fx], \addToTail)
+		\fader: Synth(\stereoFader, [\in, ~connectBus[\micVerb].fader, \out, ~mixer[\s3], \amp, 1], ~group[\fx], \addToTail)
 	);
 
 };
@@ -59,6 +59,7 @@ prm
 		MIDIdef.noteOn(\micVerbToggle, { ~scLang.sendMsg(\micVerb, \toggle, toggle) }, toggle);
 		MIDIdef.cc(\micVerbVolume, { | amp | ~scLang.sendMsg(\micVerb, \volume, amp) }, vol);
 		MIDIdef.cc(\micVerbGran, { | mix | ~scLang.sendMsg(\micVerb, \gran, mix) }, mix);
+		~connectSynth[\micVerb].gran.set(\rate, ~connectBus[\micVerb].at(\rate).asMap);
 		"Mic Verb Active".postln;
 		~ohm.turnBlue(val).yield;
 

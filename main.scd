@@ -11,3 +11,5 @@ r {
 	"/source/Load control.scd".loadRelative;
 }.play(AppClock);
 );
+
+s.meter;
