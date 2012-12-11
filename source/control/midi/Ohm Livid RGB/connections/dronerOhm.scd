@@ -1,34 +1,69 @@
 /*
-Wednesday, October 12th 2012
+Tuesday, December 11th 2012
 dronerOhm.scd
 prm
 */
 
+var val, toggle, erode, rater, granMix, vol, loShelf, hiShelf, erodeControl;
+val = 1;
+toggle = 9;
+erode = 2;
+rater = 10;
+granMix = 17;
+vol = 22;
+loShelf = 9;
+hiShelf = 16;
+erodeControl = 24;
 
-~connectMake[\droner] = r { | main |
-	var val, toggle, erode, rater, granMix, vol, loShelf, hiShelf, erodeControl;
-	val = main.at(0);
-	toggle = main.at(1);
-	erode = main.at(2);
-	rater = main.at(3);
-	granMix = main.at(4);
-	vol = main.at(5);
-	loShelf = main.at(6);
-	hiShelf = main.at(7);
-	erodeControl = main.at(8);
+OSCdef(\dronerOhm, { | msg |
+	var id;
+	id = msg.at(1);
+	case
+	{ id == \droner } { ~connectOhm[\droner].value;}
+	{ id == \dronerToggle } { ~connectOhm[\dronerToggle].value; }
+	{ id == \dronerRater } { ~connectOhm[\dronerRater].value; }
+	{ id == \dronerErodeOn } { ~ohm.turnRed(erode); }
+	{ id == \dronerErodeOff } { ~ohm.turnYellow(erode); }
+}, \control, ~scLang);
+
+
+~connectOhm[\droner] = r { | main |
 	loop {
 		~ohm.turnGreen(toggle);
 		MIDIdef.noteOn(\dronerToggle, { ~scLang.sendMsg(\droner, \toggle, toggle) }, toggle);
+
 		~ohm.turnYellow(erode);
 		MIDIdef.noteOn(\dronerErode, { ~scLang.sendMsg(\droner, \erodeOn, erode)}, erode);
 		MIDIdef.noteOff(\dronerErodeOff, { ~scLang.sendMsg(\droner, \erodeOff, erode) }, erode);
+
 		~ohm.turnGreen(rater);
 		MIDIdef.noteOn(\dronerRater, { ~scLang.sendMsg(\droner, \rater, rater)}, rater);
-		MIDIdef.cc(\dronerGran, { | mix | ~scLang.sendMsg(\droner, \granMix, mix)}, granMix);
-		MIDIdef.cc(\dronerVolume, { | amp | ~scLang.sendMsg(\droner, \volume, amp)}, vol);
-		MIDIdef.cc(\dronerLoShelf, { | gain | ~scLang.sendMsg(\droner, \loShelf, gain)}, loShelf);
-		MIDIdef.cc(\dronerHiShelf, { | gain | ~scLang.sendMsg(\droner, \hiShelf, gain)}, hiShelf);
-		MIDIdef.cc(\dronerErodeControl, { | amt | ~scLang.sendMsg(\droner, \erodeControl, amt)}, erodeControl);
+
+		MIDIdef.cc(\dronerGran, { | val |
+			var mix = val.linlin(0, 127, 0, 1);
+			~scLang.sendMsg(\droner, \granMix, mix)}, granMix
+		);
+
+		MIDIdef.cc(\dronerVolume, { | val |
+			var amp = val.linlin(0, 127, 0, -4.dbamp);
+			~scLang.sendMsg(\droner, \volume, amp)}, vol
+		);
+
+		MIDIdef.cc(\dronerLoShelf, { | val |
+			var gain = val.linlin(0, 127, -6.0, 6.0);
+			~scLang.sendMsg(\droner, \loShelf, gain)}, loShelf
+		);
+
+		MIDIdef.cc(\dronerHiShelf, { | val |
+			var gain = val.linlin(0, 127, -3.0, 4.0);
+			~scLang.sendMsg(\droner, \hiShelf, gain)}, hiShelf
+		);
+
+		MIDIdef.cc(\dronerErodeControl, { | val |
+			var amt = val.linlin(0, 127, 0, 0.15);
+			~scLang.sendMsg(\droner, \erodeControl, amt)}, erodeControl
+		);
+
 		~ohm.turnBlue(val).yield;
 
 
@@ -48,31 +83,20 @@ prm
 	};
 };
 
-~connectMake[\dronerToggle] = r { | val |
+~connectOhm[\dronerToggle] = r {
 	loop {
-		~connectSynth[\droner].inFader.set(\mute, 0);
-		["droner input muted"].postln;
-		~ohm.turnRed(val).yield;
+		~ohm.turnRed(toggle).yield;
 
-		~connectSynth[\droner].inFader.set(\mute, 1);
-		["droner input active"].postln;
-		~ohm.turnBlue(val).yield;
+		~ohm.turnBlue(toggle).yield;
 	};
 };
 
-~connectMake[\dronerRater] = r { | val |
+~connectOhm[\dronerRater] = r { | val |
 	loop {
-		~connectSynth[\droner].at(\rate).set(\d1, 1, \d2, 1);
-		["droner rates of 1 added"].postln;
-		~ohm.turnPink(val).yield;
+		~ohm.turnPink(rater).yield;
 
-		~connectSynth[\droner].at(\gran).set(\rate, 0.5);
-		["droner rates to 0.5"].postln;
-		~ohm.turnPurple(val).yield;
+		~ohm.turnPurple(rater).yield;
 
-		~connectSynth[\droner].at(\rate).set(\d1, 0.5, \d2, 0.5, \d3, 0.5, \d4, 0.5, \d5, 0.5, \d6, 0.25, \d7, 0.25);
-		~connectSynth[\droner].at(\gran).set(\rate, ~connectBus[\droner].at(\rate).asMap);
-		["droner rates reset"].postln;
-		~ohm.turnLavender(val).yield;
+		~ohm.turnLavender(rater).yield;
 	}
 };

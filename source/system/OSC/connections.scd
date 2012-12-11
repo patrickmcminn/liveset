@@ -96,46 +96,25 @@ OSCdef(\chords, { | msg |
 
 
 OSCdef(\droner, { | msg |
-	var id, val, toggle, erode, rater, granMix, vol, hiShelf, loShelf, erodeControl;
-	id = msg.at(1);
-	val = msg.at(2);
-	toggle = msg.at(3);
-	erode = msg.at(4);
-	rater = msg.at(5);
-	granMix = msg.at(6);
-	vol = msg.at(7);
-	loShelf = msg.at(8);
-	hiShelf = msg.at(9);
-	erodeControl = msg.at(10);
-	case
-	{ id == \main } {
-		~connectMake[\droner].value([val, toggle, erode, rater, granMix, vol, loShelf, hiShelf, erodeControl]).postln; }
-	{ id == \toggle } { ~connectMake[\dronerToggle].value(val).postln; }
-	{ id == \erodeOn } {
-		~connectSynth[\droner].erosion.set(\mix, 0.15);
-		~ohm.turnRed(val); }
-	{ id == \erodeOff } {
-		~connectSynth[\droner].erosion.set(\mix, 0.02);
-		~ohm.turnYellow(val); }
-	{ id == \rater } { ~connectMake[\dronerRater].value(val); }
-	{ id == \granMix } {
-			var mix;
-			mix = val.linlin(0, 127, 0, 1);
-			~connectSynth[\droner].gran.set(\mix, mix);}
-	{ id == \volume } {
-		var amp;
-		amp = val.linlin(0, 127, 0, -4.dbamp);
-		~connectSynth[\droner].fader.set(\amp, amp) }
-	{ id == \loShelf } {
-		var amp = val.linlin(0, 127, -6.0, 6.0);
-		~connectSynth[\droner].loShelf.set(\gain, amp); }
-	{ id == \hiShelf } {
-		var amp = val.linlin(0, 127, -3.0, 4.0);
-		~connectSynth[\droner].hiShelf.set(\gain, amp); }
-	{ id == \erodeControl } {
-		var amt = val.linlin(0, 127, 0, 0.15);
-		~connectSynth[\droner].erosion.set(\mix, amt); }
 
+	var id = msg.at(1);
+	var val = msg.at(2);
+
+	case
+	{ id == \main } {~connectMake[\droner].value; }
+	{ id == \toggle } { ~connectMake[\dronerToggle].value(val).postln; }
+	{ id == \erodeOn } { ~connectSynth[\droner].erosion.set(\mix, 0.15);
+		~scLang.sendMsg(\control, \dronerErodeOn);
+	}
+	{ id == \erodeOff } { ~connectSynth[\droner].erosion.set(\mix, 0.02);
+		~scLang.sendMsg(\control, \dronerErodeOff);
+	}
+	{ id == \rater } { ~connectMake[\dronerRater].value(val); }
+	{ id == \granMix } { ~connectSynth[\droner].gran.set(\mix, val);}
+	{ id == \volume } { ~connectSynth[\droner].fader.set(\amp, val) }
+	{ id == \loShelf } { ~connectSynth[\droner].loShelf.set(\gain, val); }
+	{ id == \hiShelf } { ~connectSynth[\droner].hiShelf.set(\gain, val); }
+	{ id == \erodeControl } { ~connectSynth[\droner].erosion.set(\mix, val); }
 }, \droner, ~scLang);
 
 
