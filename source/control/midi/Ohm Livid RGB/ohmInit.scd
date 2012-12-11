@@ -128,6 +128,12 @@ ohm.latency = 0;
 // creates function dictionary to hold different pages
 ~page = ( );
 
+//creates function dictionaries to hold song functions specific to the Ohm control surface:
+
+~connectOhm = ( );
+~boyOhm = ( );
+~birdsOhm = ( );
+
 
 "Ohm Functions Added".postln;
 )

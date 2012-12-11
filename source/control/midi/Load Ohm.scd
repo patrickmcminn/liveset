@@ -6,7 +6,8 @@ prm
 
 "/Ohm Livid RGB/ohmInit.scd".loadRelative;
 "/Ohm Livid RGB/topPage.scd".loadRelative;
-"/Ohm Livid RGB/connections.scd".loadRelative;
+"/Ohm Livid RGB/connectionsPage.scd".loadRelative;
+"/Ohm Livid RGB/connectionsOhm.scd".loadRelative;
 "/Ohm Livid RGB/birds.scd".loadRelative;
 "/Ohm Livid RGB/boy.scd".loadRelative;
 
