@@ -1,5 +1,7 @@
 /*
 Tuesday, October 16th 2012
+edited 12/12/2012
+-reflects change in control surface structure
 attackRandomizer.scd
 prm
 */
@@ -110,37 +112,27 @@ prm
 	Pbindef(\atkRandA).stop;
 });
 
-~connectMake[\attackRandomizer] = r { | main |
-	var val, toggle, vol;
-	val = main.at(0);
-	toggle = main.at(1);
-	vol = main.at(2);
+~connectMake[\attackRandomizer] = r {
 	loop {
 		~connections[\attackRandomizer].value;
-		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\attackRandomizerToggle, { ~scLang.sendMsg(\attackRandomizer, \toggle, toggle) }, toggle);
-		MIDIdef.cc(\attackRandomizerVolume, { | amp | ~scLang.sendMsg(\attackRandomizer, \volume, amp) }, vol);
-		["attack randomizers created"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \attackRandomizer);
+		["attack randomizers created"].postln.yield;
 
-		MIDIdef(\attackRandomizerToggle).free;
-		MIDIdef(\attackRandomizerVolume).free;
-		~ohm.turnOff(toggle);
 		~connections[\attackRandomizer].kill;
-		["attack randomizers freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \attackRandomizer);
+		["attack randomizers freed"].postln.yield;
 	};
 };
 
 ~connectMake[\attackRandomizerToggle] = r { | val |
 	loop {
 		~connections[\attackRandomizer].playAtk;
-		["attack randomizers playing"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \attackRandomizerToggle);
+		["attack randomizers playing"].postln.yield;
 
 		~connections[\attackRandomizer].stopAtk;
-		["attack randomizers stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \attackRandomizerToggle);
+		["attack randomizers stopped"].postln.yield;
 	};
 };
 

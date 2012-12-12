@@ -20,22 +20,18 @@ OSCdef(\airSputters, { | msg |
 
 
 OSCdef(\attackRandomizer, { | msg |
-	var id, val, toggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	vol = msg.at(4);
 	case
-	{ id == \main } { ~connectMake[\attackRandomizer].value([val, toggle, vol]).postln; }
-	{ id == \toggle } { ~connectMake[\attackRandomizerToggle].value(val).postln; }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, -4.dbamp);
-		~connectSynth[\attackRandomizer].pan.set(\amp, amp); }
+	{ id == \main } { ~connectMake[\attackRandomizer].value.postln; }
+	{ id == \toggle } { ~connectMake[\attackRandomizerToggle].value.postln; }
+	{ id == \volume } { ~connectSynth[\attackRandomizer].pan.set(\amp, val); }
 }, \attackRandomizer, ~scLang);
 
 
 OSCdef(\bassline, { | msg |
-	var id, val, toggleOne, toggleTwo, vol, gran;
+	var id, val, val2;
 	id = msg.at(1);
 	val = msg.at(2);
 	val2 = msg.at(3);
@@ -52,36 +48,27 @@ OSCdef(\bassline, { | msg |
 
 
 OSCdef(\cascade, { | msg |
-	var id, val, toggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	vol = msg.at(4);
 	case
 	{ id == \record } { ~connectMake[\cascadeRecord].value.postln; }
-	{ id == \main } { ~connectMake[\cascade].value([val, toggle, vol]).postln; }
-	{ id == \toggle } { ~connectMake[\cascadeToggle].value(val).postln; }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, -4.dbamp);
-		~connectSynth[\cascade].pan.set(\amp, amp); }
+	{ id == \main } { ~connectMake[\cascade].value.postln; }
+	{ id == \toggle } { ~connectMake[\cascadeToggle].value.postln; }
+	{ id == \volume } { ~connectSynth[\cascade].pan.set(\amp, val); }
 }, \cascade, ~scLang);
 
 
 OSCdef(\chords, { | msg |
-	var id, val, sum, toggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	sum = msg.at(3);
-	toggle = msg.at(4);
-	vol = msg.at(5);
 	case
 	{ id == \record } { ~connectMake[\chordRecord].value.postln; }
-	{ id == \main } { ~connectMake[\chords].value([val, sum, toggle, vol]).postln; }
-	{ id == \sum } { ~connectMake[\chordSum].value(val).postln; }
-	{ id == \toggle } { ~connectMake[\chordsToggle].value(val).postln; }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, -10.dbamp);
-		~connectSynth[\chords].gran.set(\amp, amp); }
+	{ id == \main } { ~connectMake[\chords].value.postln; }
+	{ id == \sum } { ~connectMake[\chordSum].value.postln; }
+	{ id == \toggle } { ~connectMake[\chordsToggle].value.postln; }
+	{ id == \volume } { ~connectSynth[\chords].gran.set(\amp, val); }
 }, \chords, ~scLang);
 
 

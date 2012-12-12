@@ -93,49 +93,37 @@ prm
 	});
 });
 
-~connectMake[\chords] = r { | main |
-	var val, sum, toggle, vol;
-	val = main.at(0);
-	sum = main.at(1);
-	toggle = main.at(2);
-	vol = main.at(3);
+~connectMake[\chords] = r {
 	loop{
 		~connections[\chords].value;
-		~ohm.turnGreen(sum);
-		MIDIdef.noteOn(\chordSum, { ~scLang.sendMsg(\chords, \sum, sum) }, sum);
-		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\chordToggle, { ~scLang.sendMsg(\chords, \toggle, toggle) }, toggle);
-		MIDIdef.cc(\chordVolume, { | amp | ~scLang.sendMsg(\chords, \volume, amp) }, vol);
-		["chord synths made"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \chords);
+		["chord synths made"].postln.yield;
+
 
 		~connections[\chords].kill;
-		~ohm.turnOff(sum);
-		~ohm.turnOff(toggle);
-		MIDIdef(\chordVolume).free;
-		MIDIdef(\chordSum).free;
-		MIDIdef(\chordToggle).free;
-		["chord synths freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsG(\control, \chords);
+		["chord synths freed"].postln.yield;
 	};
 };
 
 ~connectMake[\chordsToggle] = r { | val |
 	loop{
-
 		~connections[\chords].playRand;
-		["random chords playing"].postln;
-		~ohm.turnYellow(val).yield;
+		~scLang.sendMsg(\control, \chordsToggle);
+		["random chords playing"].postln.yield;
+
 
 
 		~connections[\chords].stopRand;
 		~connections[\chords].playChords;
-		["chord sequence playing"].postln;
-		~ohm.turnLavender(val).yield;
+		~scLang.sendMsg(\control, \chordsToggle);
+		["chord sequence playing"].postln.yield;
+
 
 		~connections[\chords].stopChords;
-		["chord sequence stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \chordsToggle);
+		["chord sequence stopped"].postln.yield;
+
 	};
 };
 

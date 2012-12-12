@@ -35,16 +35,13 @@ prm
 	MIDIdef.noteOn(\inlet, { ~scLang.sendMsg(\inlet, \main)}, 64);
 
 	~ohm.turnGreen(6);
-	MIDIdef.noteOn(\attackRandomizer, { | vel, note, chn, time, toggle = 14, vol = 2 |
-		~scLang.sendMsg(\attackRandomizer, \main, note, toggle, vol)}, 6);
+	MIDIdef.noteOn(\attackRandomizer, { ~scLang.sendMsg(\attackRandomizer, \main)}, 6);
 
 	~ohm.turnGreen(7);
-	MIDIdef.noteOn(\cascade, { | vel, note, chn, time, toggle = 15, vol = 3 |
-		~scLang.sendMsg(\cascade, \main, note, toggle, vol)}, 7);
+	MIDIdef.noteOn(\cascade, { ~scLang.sendMsg(\cascade, \main)}, 7);
 
 	~ohm.turnGreen(32);
-	MIDIdef.noteOn(\chords, { | vel, note, chn, time, sum = 40, toggle = 48, vol = 1 |
-		~scLang.sendMsg(\chords, \main, note, sum, toggle, vol)}, 32);
+	MIDIdef.noteOn(\chords, { ~scLang.sendMsg(\chords, \main)}, 32);
 
 	~ohm.turnGreen(33);
 	MIDIdef.noteOn(\stabs, { | vel, note, chn, time, toggle = 41, vol = 0 |
