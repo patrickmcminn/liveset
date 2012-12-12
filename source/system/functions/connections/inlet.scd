@@ -1,5 +1,7 @@
 /*
 Tuesday, October 16th 2012
+edited 12/12/2012
+- reflects changes to control surface structure
 inlet.scd
 prm
 */
@@ -32,20 +34,15 @@ prm
 	~connectSynth[\inlet].do({ | i | i.free });
 });
 
-~connectMake[\inlet] = r { | main |
-	var val, mix;
-	val = main.at(0);
-	mix = main.at(1);
+~connectMake[\inlet] = r {
 	loop {
 		~connections[\inlet].value;
-		MIDIdef.cc(\inletGran, { | mix | ~scLang.sendMsg(\inlet, \gran, mix); }, mix);
-		["inlet created"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \inlet);
+		["inlet created"].postln.yield;
 
-		MIDIdef(\inletGran).free;
 		~connections[\inlet].kill;
-		["inlet feed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \inlet);
+		["inlet freed"].postln.yield;
 	};
 };
 

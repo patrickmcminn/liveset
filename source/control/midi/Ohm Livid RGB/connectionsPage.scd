@@ -20,23 +20,19 @@ prm
 	~ohm.turnGreen(11);
 	MIDIdef.noteOn(\cascadeRecord, { ~scLang.sendMsg(\cascade, \record)}, 11);
 	~ohm.turnGreen(19);
-	MIDIdef.noteOn(\chordRecord, { | vel, note |
-		~scLang.sendMsg(\chords, \record, note)}, 19);
+	MIDIdef.noteOn(\chordRecord, { ~scLang.sendMsg(\chords, \record)}, 19);
 
 
 	~ohm.turnGreen(4);
-	MIDIdef.noteOn(\bassline, { | vel, note, chn, time, toggleOne = 12, toggleTwo = 20, vol = 15, gran = 19 |
-		~scLang.sendMsg(\bassline, \main, note, toggleOne, toggleTwo, vol, gran)}, 4);
+	MIDIdef.noteOn(\bassline, { ~scLang.sendMsg(\bassline, \main)}, 4);
 
 
 	~ohm.turnGreen(5);
-	MIDIdef.noteOn(\granDelay, { | vel, note, chn, time, toggle = 13, hiShelf = 18, decay = 11, vol = 21 |
-		~scLang.sendMsg(\granDelay, \main, note, toggle, hiShelf, decay, vol)}, 5);
+	MIDIdef.noteOn(\granDelay, { ~scLang.sendMsg(\granDelay, \main)}, 5);
 
 
 	~ohm.turnGreen(64);
-	MIDIdef.noteOn(\inlet, { | vel, note, chn, time, gran = 10 |
-		~scLang.sendMsg(\inlet, \main, note, gran)}, 64);
+	MIDIdef.noteOn(\inlet, { ~scLang.sendMsg(\inlet, \main)}, 64);
 
 	~ohm.turnGreen(6);
 	MIDIdef.noteOn(\attackRandomizer, { | vel, note, chn, time, toggle = 14, vol = 2 |

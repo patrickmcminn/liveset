@@ -1,5 +1,7 @@
 /*
 Saturday, October 13th 2012
+edited 12/12/2012
+- reflects new control surface handling
 airSputters.scd
 prm
 */
@@ -117,30 +119,35 @@ prm
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(0)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterOne).play; }.defer(0.4);
-		["first breath recorded"].postln;
-		~ohm.turnLavender(val).yield;
+		~scLang.sendMsg(\control, \sputterMake);
+		["first breath recorded"].postln.yield;
+
 
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(1)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterTwo).play; }.defer(0.4);
-		["second breath recorded"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \sputterMake);
+		["second breath recorded"].postln.yield;
+
 
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(2)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterThree).play; }.defer(0.4);
-		["third breath recorded"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \sputterMake);
+		["third breath recorded"].postln.yield;
+
 
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(3)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterFour).play; }.defer(0.4);
-		["fourth breath recorded"].postln;
-		~ohm.turnYellow(val).yield;
+		~scLang.sendMsg(\control, \sputterMake);
+		["fourth breath recorded"].postln.yield;
+
 
 		OSCdef(\airRespond).free;
-		["done with breath attacks"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \sputterMake);
+		["done with breath attacks"].postln.yield;
+
 	});
 
 	OSCdef(\airRespond, { ~sputterMake.next.postln; }, '/tr');
@@ -179,6 +186,8 @@ prm
 	Pbindef(\sputterFour).play;
 });
 
+
+
 ~connectMake[\airSputters] = r { | main |
 	var val, toggle, vol;
 	val = main.at(0);
@@ -186,30 +195,24 @@ prm
 	vol = main.at(2);
 	loop {
 		~connections[\airSputters].value(val);
-		"Air Sputters Active".postln;
-		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\airSputtersToggle, { ~scLang.sendMsg(\airSputters, \toggle, toggle) }, toggle);
-		MIDIdef.cc(\airSputtersVol, { | amp | ~scLang.sendMsg(\airSputters, \volume, amp) }, vol);
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \airSputters);
+		["Air Sputters Active"].postln.yield;
 
 		~connections[\airSputters].kill;
-		~ohm.turnOff(toggle);
-		MIDIdef(\airSputtersToggle).free;
-		MIDIdef(\airSputtersVol).free;
-		"Air Sputters Stopped and Freed".postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \airSputters);
+		["Air Sputters Stopped and Freed"].postln.yield;
 	};
 };
 
 ~connectMake[\airSputtersToggle] = r { | val |
 	loop {
 		~connections[\airSputters].stopSputters;
-		"Air Sputters Stopped".postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \airSputtersToggle);
+		["Air Sputters Stopped"].postln.yield;
 
 		~connections[\airSputters].playSputters;
-		"Air Sputters Playing".postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \airSputtersToggle);
+		["Air Sputters Playing"].postln.yield;
 	};
 };
 

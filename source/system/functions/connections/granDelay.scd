@@ -1,5 +1,7 @@
 /*
 Wednesday, October 10th 2012
+edited 12/12/2012
+-reflects change in control surface structure
 granDelay.scd
 prm
 */
@@ -43,44 +45,29 @@ prm
 	~connectSynth[\granDelay].do({ | i | i.free });
 });
 
-~connectMake[\granDelay] = r { | main |
-	var val, toggle, hiShelf, decay, vol;
-	val = main.at(0);
-	toggle = main.at(1);
-	hiShelf = main.at(2);
-	decay = main.at(3);
-	vol = main.at(4);
+~connectMake[\granDelay] = r {
 	loop{
 
 		~connections[\granDelay].value;
-		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\granDelayToggle, { ~scLang.sendMsg(\granDelay, \toggle, toggle)}, toggle);
-		MIDIdef.cc(\granDelayHiShelf, { | gain | ~scLang.sendMsg(\granDelay, \hiShelf, gain)}, hiShelf);
-		MIDIdef.cc(\granDelayDecay, { | decay | ~scLang.sendMsg(\granDelay, \decay, decay)}, decay);
-		MIDIdef.cc(\granDelayVolume, { | amp | ~scLang.sendMsg(\granDelay, \volume, amp)}, vol);
-		"GranDelay Active".postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \granDelay);
+		["GranDelay Active"].postln.yield;
 
-		MIDIdef(\granDelayToggle).free;
-		MIDIdef(\granDelayHiShelf).free;
-		MIDIdef(\granDelayDecay).free;
-		MIDIdef(\granDelayVolume).free;
-		~ohm.turnOff(toggle);
+
 		~connections[\granDelay].kill;
-		"GranDelay Freed".postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \granDelay);
+		["GranDelay Freed"].postln.yield;
 	};
 };
 
-~connectMake[\granDelayToggle] = r { | val |
+~connectMake[\granDelayToggle] = r {
 	loop {
 		~connectSynth[\granDelay].inFader.set(\mute, 0);
-		["input to gran delay muted"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \granDelayToggle);
+		["input to gran delay muted"].postln.yield;
 
 		~connectSynth[\granDelay].inFader.set(\mute, 1);
-		["input to gran delay active"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsG(\control, \granDelayToggle);
+		["input to gran delay active"].postln.yield;
 	};
 };
 

@@ -1,5 +1,7 @@
 /*
 Tuesday, October 16th 2012
+edited 12/12/2012
+-reflects control surface changes
 chordRecord.scd
 prm
 */
@@ -7,33 +9,33 @@ prm
 ~connections[\chordRecord] = Routine({ | val |
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\chord].at(0)],
 		~group[\fx], \addToTail);
-	["F# recorded"].postln;
-	~ohm.turnLavender(val).yield;
+	["F# recorded"].postln.yield;
+
 
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\chord].at(1)],
 		~group[\fx], \addToTail);
-	["A recorded"].postln;
-	~ohm.turnPurple(val).yield;
+	["A recorded"].postln.yield;
+
 
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\chord].at(2)],
 		~group[\fx], \addToTail);
-	["C# recorded"].postln;
-	~ohm.turnYellow(val).yield;
+	["C# recorded"].postln.yield;
+
 
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\chord].at(3)],
 		~group[\fx], \addToTail);
-	["B recorded"].postln;
-	~ohm.turnPink(val).yield;
+	["B recorded"].postln.yield;
+
 
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\chord].at(4)],
 		~group[\fx], \addToTail);
-	["G# recorded"].postln;
-	~ohm.turnGreen(val).yield;
+	["G# recorded"].postln.yield;
+
 
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\chord].at(5)],
 		~group[\fx], \addToTail);
-	["E recorded"].postln;
-	~ohm.turnBlue(val).yield;
+	["E recorded"].postln.yield;
+
 });
 
 ~connections[\chordRecord].addUniqueMethod(\reset, {
@@ -43,6 +45,7 @@ prm
 
 ~connectMake[\chordRecord] = r { | val |
 	loop {
-		~connections[\chordRecord].value(val).postln.yield;
+		~scLang.sendMsg(\control, \chordRecord);
+		~connections[\chordRecord].value.postln.yield;
 	};
 };

@@ -1,6 +1,8 @@
 /*
 Tuesday, October 16th 2012
 Somewhere in New Mexico, traveling from Palo Duro Canyon, TX to Santa Fe NM
+edited 12/12/2012
+- reflects control surface structure change
 basslines.scd
 prm
 */
@@ -92,35 +94,17 @@ prm
 	Pbindef(\basslineTwo).clear;
 });
 
-~connectMake[\basslines] = r { | main |
-	var val, toggleOne, toggleTwo, vol, gran;
-	val = main.at(0);
-	toggleOne = main.at(1);
-	toggleTwo = main.at(2);
-	vol = main.at(3);
-	gran = main.at(4);
+
+
+~connectMake[\basslines] = r {
 	loop {
 		~connections[\basslines].value;
-		MIDIdef.cc(\basslineVolume, { | amp | ~scLang.sendMsg(\bassline, \volume, amp)}, vol);
-		MIDIdef.cc(\basslineGran, { | mix | ~scLang.sendMsg(\bassline, \gran, mix)}, gran);
-		~ohm.turnGreen(toggleOne);
-		MIDIdef.noteOn(\basslineOne, { ~scLang.sendMsg(\bassline, \one, toggleOne)}, toggleOne);
-
-		~ohm.turnGreen(toggleTwo);
-		MIDIdef.noteOn(\basslineTwo, { ~scLang.sendMsg(\bassline, \two, toggleTwo)}, toggleTwo);
-
-		["bassline routing created"].postln;
-		~ohm.turnLavender(val).yield;
+		~scLang.sendMsg(\control, \basslines);
+		["bassline routing created"].postln.yield;
 
 		~connections[\basslines].kill;
-		~ohm.turnOff(toggleOne);
-		MIDIdef(\basslineGran).free;
-		MIDIdef(\basslineVolume).free;
-		MIDIdef(\basslineOne).free;
-		MIDIdef(\basslineTwo).free;
-		~ohm.turnOff(toggleTwo);
-		["bassline routing freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \basslines);
+		["bassline routing freed"].postln.yield;
 	};
 };
 
@@ -129,12 +113,12 @@ prm
 	loop{
 		~connections[\transport].playNextBar({
 			Pbindef(\basslineOne).play(~connections[\transport]); });
-		["Bassline One Playing"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \basslineOne);
+		["Bassline One Playing"].postln.yield;
 
 		Pbindef(\basslineOne).stop;
-		["Bassline One Stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \basslineTwo);
+		["Bassline One Stopped"].postln.yield;
 	};
 };
 
@@ -142,12 +126,12 @@ prm
 	loop {
 		~connections[\transport].playNextBar({
 			Pbindef(\basslineTwo).play(~connections[\transport]);});
-		["Bassline Two Playing"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \basslineTwo);
+		["Bassline Two Playing"].postln.yield;
 
 		Pbindef(\basslineTwo).stop;
-		["Bassline Two Stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \basslineTwo);
+		["Bassline Two Stopped"].postln.yield;
 	};
 };
 

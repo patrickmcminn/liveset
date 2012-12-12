@@ -4,22 +4,19 @@ cascadeRecord.scd
 prm
 */
 
-~connections[\cascadeRecord] = Routine ({ | val |
+~connections[\cascadeRecord] = Routine ({
 
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\cascade].at(0)],
 		~group[\fx], \addToTail);
-	["high E recorded"].postln;
-	~ohm.turnLavender(val).yield;
+	["high E recorded"].postln.yield;
 
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\cascade].at(1)],
 		~group[\fx], \addToTail);
-	["Low C# Recorded"].postln;
-	~ohm.turnPurple(val).yield;
+	["Low C# Recorded"].postln.yield;
 
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\cascade].at(2)],
 		~group[\fx], \addToTail);
-	["High F# Recorded"].postln;
-	~ohm.turnYellow(val).yield;
+	["High F# Recorded"].postln.yield;
 });
 
 ~connections[\cascadeRecord].addUniqueMethod(\reset, {
@@ -27,8 +24,9 @@ prm
 	~connections[\cascadeRecord].reset;
 });
 
-~connectMake[\cascadeRecord] = r { | val |
+~connectMake[\cascadeRecord] = r {
 	loop {
-		~connections[\cascadeRecord].value(val).postln.yield;
+		~scLang.sendMsg(\control, \cascadeRecord);
+		~connections[\cascadeRecord].value.postln.yield;
 	};
 };
