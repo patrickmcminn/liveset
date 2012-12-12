@@ -27,7 +27,7 @@ OSCdef(\dronerOhm, { | msg |
 }, \control, ~scLang);
 
 
-~connectOhm[\droner] = r { | main |
+~connectOhm[\droner] = r {
 	loop {
 		~ohm.turnGreen(toggle);
 		MIDIdef.noteOn(\dronerToggle, { ~scLang.sendMsg(\droner, \toggle, toggle) }, toggle);

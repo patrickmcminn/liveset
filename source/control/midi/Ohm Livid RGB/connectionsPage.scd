@@ -9,23 +9,16 @@ prm
 	~ohm.addEssential;
 
 	~ohm.turnGreen(0);
-	MIDIdef.noteOn(\airSputters, { | vel, note, chn, time, toggle = 8, vol = 23 |
-		~scLang.sendMsg(\airSputters, \main, note, toggle, vol)}, 0);
-
+	MIDIdef.noteOn(\airSputters, { ~scLang.sendMsg(\airSputters, \main, note, toggle, vol)}, 0);
 
 	~ohm.turnGreen(1);
-	MIDIdef.noteOn(\droner, {
-		| vel, note, chn, time, toggle = 9, erode = 2, rater = 10,
-		granMix = 17, vol = 22, hiShelf = 9, loShelf = 16, erodeControl = 24 |
-		~scLang.sendMsg(\droner, \main, note, toggle, erode, rater, granMix, vol, loShelf, hiShelf, erodeControl)}, 1);
+	MIDIdef.noteOn(\droner, { ~scLang.sendMsg(\droner, \main)}, 1);
 
 
 	~ohm.turnGreen(3);
-	MIDIdef.noteOn(\noteRecord, { | vel, note |
-		~scLang.sendMsg(\noteRecord, \main, note)}, 3);
+	MIDIdef.noteOn(\noteRecord, { ~scLang.sendMsg(\noteRecord, \main)}, 3);
 	~ohm.turnGreen(11);
-	MIDIdef.noteOn(\cascadeRecord, { | vel, note |
-		~scLang.sendMsg(\cascade, \record, note)}, 11);
+	MIDIdef.noteOn(\cascadeRecord, { ~scLang.sendMsg(\cascade, \record)}, 11);
 	~ohm.turnGreen(19);
 	MIDIdef.noteOn(\chordRecord, { | vel, note |
 		~scLang.sendMsg(\chords, \record, note)}, 19);

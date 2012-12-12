@@ -1,34 +1,23 @@
 /*
-Tuesday October 16th
-cascadeRecord.scd
+Tuesday, December 12th 2012
+cascadeRecordOhm.scd
 prm
 */
 
-~connections[\cascadeRecord] = Routine ({ | val |
+var val = 11;
 
-	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\cascade].at(0)],
-		~group[\fx], \addToTail);
-	["high E recorded"].postln;
-	~ohm.turnLavender(val).yield;
+OSCdef(\cascadeRecordOhm, { | msg |
+	var id = msg.at(1);
+	case
+	{ id == \cascadeRecord } { ~connectOhm[\cascadeRecord].value; }
+}, \control, ~scLang);
 
-	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\cascade].at(1)],
-		~group[\fx], \addToTail);
-	["Low C# Recorded"].postln;
-	~ohm.turnPurple(val).yield;
-
-	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\cascade].at(2)],
-		~group[\fx], \addToTail);
-	["High F# Recorded"].postln;
-	~ohm.turnYellow(val).yield;
-});
-
-~connections[\cascadeRecord].addUniqueMethod(\reset, {
-	~connecBuf[\cascade].do({ | i | i.zero });
-	~connections[\cascadeRecord].reset;
-});
-
-~connectMake[\cascadeRecord] = r { | val |
+~connectOhm[\cascadeRecord] = r {
 	loop {
-		~connections[\cascadeRecord].value(val).postln.yield;
+		~ohm.turnLavender(val).yield;
+
+		~ohm.turnPurple(val).yield;
+
+		~ohm.turnYellow(val).yield;
 	};
 };
