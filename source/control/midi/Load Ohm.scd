@@ -6,6 +6,9 @@ Load Ohm.scd
 prm
 */
 
+
+try
+{
 "/Ohm Livid RGB/ohmInit.scd".loadRelative;
 "/Ohm Livid RGB/livesetOhm.scd".loadRelative;
 "/Ohm Livid RGB/topPage.scd".loadRelative;
@@ -16,5 +19,7 @@ prm
 "/Ohm Livid RGB/birdsPage.scd".loadRelative;
 "/Ohm Livid RGB/loadBirdsOhm.scd".loadRelative;
 
-
 "/Ohm Livid RGB/ohmStartup.scd".loadRelative;
+}
+
+{ "ohm not present!" }

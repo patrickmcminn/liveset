@@ -1,3 +1,6 @@
 12/10/2012 - branching to work on new structure of passing information through OSCdefs
 
-12/13/2012 - done editing connections. still untested.
+12/13/2012 
+	- done editing connections. still untested.
+	- error handling for Ohm added
+	
