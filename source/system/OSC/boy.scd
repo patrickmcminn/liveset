@@ -28,27 +28,16 @@ OSCdef(\accompSynth, { | msg |
 
 
 OSCdef(\boyBassline, { | msg |
-
-	var id, val, one, two, three, vol, cutoff;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	one = msg.at(3);
-	two = msg.at(4);
-	three = msg.at(5);
-	vol = msg.at(6);
-	cutoff = msg.at(7);
-
 	case
-	{ id == \main } { ~boyMake[\bassline].value([val, one, two, three, vol, cutoff]) ; }
-	{ id == \one } { ~boyMake[\basslineOne].value(val); }
-	{ id == \two } { ~boyMake[\basslineTwo].value(val); }
-	{ id == \three } { ~boyMake[\basslineThree].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, 1);
-		~boySynth[\bassline].fader.set(\amp, amp); }
-	{ id == \cutoff } {
-		var cutoff = val.linexp(0, 127, 1, 7000);
-		~boySynth[\bassline].eq.set(\hiFreq, cutoff); }
+	{ id == \main } { ~boyMake[\bassline].value; }
+	{ id == \one } { ~boyMake[\basslineOne].value; }
+	{ id == \two } { ~boyMake[\basslineTwo].value; }
+	{ id == \three } { ~boyMake[\basslineThree].value; }
+	{ id == \volume } { ~boySynth[\bassline].fader.set(\amp, val); }
+	{ id == \cutoff } { ~boySynth[\bassline].eq.set(\hiFreq, val); }
 }, \boyBassline);
 
 
@@ -92,19 +81,13 @@ OSCdef(\endSynth, { | msg |
 
 
 OSCdef(\mainBell, { | msg |
-
-	var id, val, toggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	vol = msg.at(4);
-
 	case
-	{ id == \main } { ~boyMake[\mainBell].value([val, toggle, vol]); }
-	{ id == \toggle } { ~boyMake[\mainBellToggle].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, 1);
-		~boySynth[\mainBell].fader.set(\amp, amp); }
+	{ id == \main } { ~boyMake[\mainBell].value; }
+	{ id == \toggle } { ~boyMake[\mainBellToggle].value; }
+	{ id == \volume } { ~boySynth[\mainBell].fader.set(\amp, val); }
 }, \mainBell);
 
 
@@ -132,40 +115,26 @@ OSCdef(\noiseChords, { | msg |
 
 
 OSCdef(\randBell, { | msg |
-
-	var id, val, toggle, vol, end;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	vol = msg.at(4);
-	end = msg.at(5);
-
 	case
-	{ id == \main } { ~boyMake[\randBell].value([val, toggle, vol, end]); }
-	{ id == \toggle } { ~boyMake[\randBellToggle].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, -4.dbamp);
-		~boySynth[\randBell].fader.set(\amp, amp); }
-	{ id == \end } { ~boyMake[\endFade].value(val); }
+	{ id == \main } { ~boyMake[\randBell].value; }
+	{ id == \toggle } { ~boyMake[\randBellToggle].value; }
+	{ id == \volume } { ~boySynth[\randBell].fader.set(\amp, val); }
 }, \randBell);
 
 
 OSCdef(\rowFuzz, { | msg |
 
-	var id, val, mainToggle, lowToggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	mainToggle = msg.at(3);
-	lowToggle = msg.at(4);
-	vol = msg.at(5);
-
 	case
-	{ id == \main } { ~boyMake[\rowFuzz].value([val, mainToggle, lowToggle, vol]); }
-	{ id == \mainToggle } { ~boyMake[\rowFuzzMainToggle].value(val); }
-	{ id == \lowToggle } { ~boyMake[\rowFuzzLowToggle].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, -3.dbamp);
-		~boySynth[\rowFuzz].fader.set(\amp, amp); }
+	{ id == \main } { ~boyMake[\rowFuzz].value; }
+	{ id == \mainToggle } { ~boyMake[\rowFuzzMainToggle].value; }
+	{ id == \lowToggle } { ~boyMake[\rowFuzzLowToggle].value; }
+	{ id == \volume } { ~boySynth[\rowFuzz].fader.set(\amp, val); }
 }, \rowFuzz);
 
 

@@ -11,23 +11,19 @@ prm
 
 	// main bell
 	~ohm.turnGreen(0);
-	MIDIdef.noteOn(\mainBell, { | vel, note, chn, time, toggle = 8, vol = 21 |
-		~scLang.sendMsg(\mainBell, \main, note, toggle, vol);}, 0);
+	MIDIdef.noteOn(\mainBell, { ~scLang.sendMsg(\mainBell, \main);}, 0);
 
 	// row fuzz
 	~ohm.turnGreen(1);
-	MIDIdef.noteOn(\rowFuzz, { | vel, note, chn, time, mainToggle = 9, lowToggle = 17, vol = 23 |
-		~scLang.sendMsg(\rowFuzz, \main, note, mainToggle, lowToggle, vol); }, 1);
+	MIDIdef.noteOn(\rowFuzz, { ~scLang.sendMsg(\rowFuzz, \main); }, 1);
 
 	// rand bells
 	~ohm.turnGreen(2);
-	MIDIdef.noteOn(\randBell, { | vel, note, chn, time, toggle = 10, vol = 19, end = 72 |
-		~scLang.sendMsg(\randBell, \main, note, toggle, vol, end); }, 2);
+	MIDIdef.noteOn(\randBell, { ~scLang.sendMsg(\randBell, \main); }, 2);
 
 	// bassline
 	~ohm.turnGreen(3);
-	MIDIdef.noteOn(\boyBassline, { | vel, note, chn, time, one = 4, two = 12, three = 20, vol = 22, cutoff = 20 |
-		~scLang.sendMsg(\boyBassline, \main, note, one, two, three, vol, cutoff); }, 3);
+	MIDIdef.noteOn(\boyBassline, { ~scLang.sendMsg(\boyBassline, \main); }, 3);
 
 	// noise chords
 	~ohm.turnGreen(5);

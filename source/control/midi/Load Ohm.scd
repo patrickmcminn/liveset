@@ -22,4 +22,4 @@ try
 "/Ohm Livid RGB/ohmStartup.scd".loadRelative;
 }
 
-{ "ohm not present!" }
+{ "Livid Ohm RGB not present!" }

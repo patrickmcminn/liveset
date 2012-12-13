@@ -183,77 +183,52 @@ prm
 	Pbindef(\boyBasslineThreeLow).stop;
 });
 
-~boyMake[\bassline] = r({ | main |
-	var val, basslineOne, basslineTwo, basslineThree, vol, cutoff;
-	val = main.at(0);
-	basslineOne = main.at(1);
-	basslineTwo = main.at(2);
-	basslineThree = main.at(3);
-	vol = main.at(4);
-	cutoff = main.at(5);
-
+~boyMake[\bassline] = r({
 	loop {
 		~boy[\bassline].value;
+		~scLang.sendMsg(\control, \boyBassline);
+		["bassline synths created"].postln.yield;
 
-		~ohm.turnPurple(basslineOne);
-		MIDIdef.noteOn(\boyBasslineOne, { ~scLang.sendMsg(\boyBassline, \one, basslineOne); }, basslineOne);
-		~ohm.turnLavender(basslineTwo);
-		MIDIdef.noteOn(\boyBasslineTwo, { ~scLang.sendMsg(\boyBassline, \two, basslineTwo); }, basslineTwo);
-		~ohm.turnPink(basslineThree);
-		MIDIdef.noteOn(\boyBasslineThree, { ~scLang.sendMsg(\boyBassline, \three, basslineThree); }, basslineThree);
-		MIDIdef.cc(\boyBasslineVolume, { | amp | ~scLang.sendMsg(\boyBassline, \volume, amp); }, vol);
-		MIDIdef.cc(\boyBasslineCutoff, { | cutoff | ~scLang.sendMsg(\boyBassline, \cutoff, cutoff); }, cutoff);
-
-		["bassline synths created"].postln;
-		~ohm.turnPink(val).yield;
 
 		~boy[\bassline].kill;
-		~ohm.turnOff(basslineOne);
-		~ohm.turnOff(basslineTwo);
-		~ohm.turnOff(basslineThree);
-		MIDIdef(\boyBasslineOne).free;
-		MIDIdef(\boyBasslineTwo).free;
-		MIDIdef(\boyBasslineThree).free;
-		MIDIdef(\boyBasslineVolume).free;
-		MIDIdef(\boyBasslineCutoff).free;
-		["bassline synths freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \boyBassline);
+		["bassline synths freed"].postln.yield;
 	};
 });
 
-~boyMake[\basslineOne] = r({ | val |
+~boyMake[\basslineOne] = r({
 	loop {
-
 		~boy[\bassline].playOne;
-		["bassline one playing"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \boyBasslineOne);
+		["bassline one playing"].postln.yield;
+
 
 		~boy[\bassline].stopOne;
+		~scLang.sendMsg(\control, \boyBasslineOne);
 		["bassline one stopped"].postln;
-		~ohm.turnRed(val).yield;
 	};
 });
 
-~boyMake[\basslineTwo] = r ({ | val |
+~boyMake[\basslineTwo] = r ({
 	loop {
 		~boy[\bassline].playTwo;
-		["bassline two playing"].postln;
-		~ohm.turnYellow(val).yield;
+		~scLang.sendMsg(\control, \boyBasslineTwo);
+		["bassline two playing"].postln.yield;
 
 		~boy[\bassline].stopTwo;
+		~scLang.sendMsg(\control, \boyBasslineTwo);
 		["bassline two stopped"].postln;
-		~ohm.turnRed(val).yield;
 	};
 });
 
 ~boyMake[\basslineThree] = r({ | val |
 	loop {
 		~boy[\bassline].playThree;
-		["bassline three playing"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \boyBasslineThree);
+		["bassline three playing"].postln.yield;
 
 		~boy[\bassline].stopThree;
+		~scLang.sendMsg(\control, \boyBasslineThree);
 		["bassline three playing"].postln;
-		~ohm.turnRed(val).yield;
 	};
 });

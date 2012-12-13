@@ -127,59 +127,40 @@ prm
 	Pbindef(\rowFuzzLow).stop;
 });
 
-~boyMake[\rowFuzz] = r ({ | main |
-	var val, mainToggle, lowToggle, play, vol;
-	val = main.at(0);
-	mainToggle = main.at(1);
-	lowToggle = main.at(2);
-	vol = main.at(3);
-
+~boyMake[\rowFuzz] = r ({
 	loop {
 		~boy[\rowFuzz].value;
+		~scLang.sendMsg(\control, \rowFuzz);
+		["row fuzz synths created"].postln.yield;
 
-		~ohm.turnPurple(mainToggle);
-		MIDIdef.noteOn(\rowFuzzMainToggle, { ~scLang.sendMsg(\rowFuzz, \mainToggle, mainToggle); }, mainToggle);
-
-		~ohm.turnLavender(lowToggle);
-		MIDIdef.noteOn(\rowFuzzLowToggle, { ~scLang.sendMsg(\rowFuzz, \lowToggle, lowToggle); }, lowToggle);
-
-		MIDIdef.cc(\rowFuzzVolume, { | amp | ~scLang.sendMsg(\rowFuzz, \volume, amp); }, vol);
-		["row fuzz synths created"].postln;
-		~ohm.turnBlue(val).yield;
 
 		~boy[\rowFuzz].kill;
-		~ohm.turnOff(mainToggle);
-		MIDIdef(\rowFuzzMainToggle).free;
-		~ohm.turnOff(lowToggle);
-		MIDIdef(\rowFuzzLowToggle).free;
-		MIDIdef(\rowFuzzVolume).free;
-		["row fuzz synths freed"].postln;
-		~ohm.turnRed(val).yield;
-
+		~scLang.sendMsg(\control, \rowFuzz);
+		["row fuzz synths freed"].postln.yield;
 	};
 });
 
-~boyMake[\rowFuzzMainToggle] = r ({ | val |
+~boyMake[\rowFuzzMainToggle] = r ({
 	loop{
 		~boy[\rowFuzz].playMain;
-		["main row fuzz playing"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \rowFuzzMainToggle);
+		["main row fuzz playing"].postln.yield;
 
 		~boy[\rowFuzz].stopMain;
-		["main row fuzz stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \rowFuzzMainToggle);
+		["main row fuzz stopped"].postln.yield;
 	};
 });
 
-~boyMake[\rowFuzzLowToggle] = r ({ | val |
+~boyMake[\rowFuzzLowToggle] = r ({
 	loop {
 		~boy[\rowFuzz].playLow;
-		["low row fuzz playing"].postln;
-		~ohm.turnLavender(val).yield;
+		~scLang.sendMsg(\control, \rowFuzzLowToggle);
+		["low row fuzz playing"].postln.yield;
 
 		~boy[\rowFuzz].stopLow;
-		["low row fuzz stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\rowFuzzLowToggle);
+		["low row fuzz stopped"].postln.yield;
 	};
 });
 

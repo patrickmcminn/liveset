@@ -205,35 +205,15 @@ prm
 	Pbindef(\randBellHighG).clear;
 });
 
-~boyMake[\randBell] = r({ | main |
-
-	var val, toggle, vol, end;
-	val = main.at(0);
-	toggle = main.at(1);
-	vol = main.at(2);
-	end = main.at(3);
-
+~boyMake[\randBell] = r({
 	loop {
-
 		~boy[\randBell].value;
-
-		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\randBellToggle, { ~scLang.sendMsg(\randBell, \toggle, toggle); }, toggle);
-		MIDIdef.cc(\randBellVolume, { | amp | ~scLang.sendMsg(\randBell, \volume, amp); }, vol);
-		~ohm.turnYellow(end);
-		MIDIdef.noteOn(\endFade, { ~scLang.sendMsg(\randBell, \end, end); }, end);
-
-		["random bell synths created"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \randBell);
+		["random bell synths created"].postln.yield;
 
 		~boy[\randBell].kill;
-		~ohm.turnOff(end);
-		MIDIdef(\endFade).free;
-		~ohm.turnOff(toggle);
-		MIDIdef(\randBellToggle).free;
-		MIDIdef(\randBellVolume).free;
-		["random bell synths freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \randBell)
+		["random bell synths freed"].postln.yield;
 	};
 });
 
@@ -248,8 +228,8 @@ prm
 		Pbindef(\randBellD).play;
 		Pbindef(\randBellHighFSharp).play;
 		Pbindef(\randBellHighG).play;
-		["rand bells playing"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \randBellToggle);
+		["rand bells playing"].postln.yield;
 
 		Pbindef(\randBellDSharp).stop;
 		Pbindef(\randBellE).stop;
@@ -260,7 +240,8 @@ prm
 		Pbindef(\randBellD).stop;
 		Pbindef(\randBellHighFSharp).stop;
 		Pbindef(\randBellHighG).stop;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \randBellToggle);
+		["rand bells stopped"].postln.yield;
 	};
 });
 
