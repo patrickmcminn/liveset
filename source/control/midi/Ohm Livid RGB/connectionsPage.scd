@@ -9,7 +9,7 @@ prm
 	~ohm.addEssential;
 
 	~ohm.turnGreen(0);
-	MIDIdef.noteOn(\airSputters, { ~scLang.sendMsg(\airSputters, \main, note, toggle, vol)}, 0);
+	MIDIdef.noteOn(\airSputters, { ~scLang.sendMsg(\airSputters, \main)}, 0);
 
 	~ohm.turnGreen(1);
 	MIDIdef.noteOn(\droner, { ~scLang.sendMsg(\droner, \main)}, 1);
@@ -44,16 +44,14 @@ prm
 	MIDIdef.noteOn(\chords, { ~scLang.sendMsg(\chords, \main)}, 32);
 
 	~ohm.turnGreen(33);
-	MIDIdef.noteOn(\stabs, { | vel, note, chn, time, toggle = 41, vol = 0 |
-		~scLang.sendMsg(\stabs, \main, note, toggle, vol)}, 33);
+	MIDIdef.noteOn(\stabs, {
+		~scLang.sendMsg(\stabs, \main)}, 33);
 
 	~ohm.turnGreen(34);
-	MIDIdef.noteOn(\micVerb, { | vel, note, chn, time, toggle = 42, vol = 14, gran = 12  |
-		~scLang.sendMsg(\micVerb, \main, note, toggle, vol, gran) }, 34);
+	MIDIdef.noteOn(\micVerb, { ~scLang.sendMsg(\micVerb, \main) }, 34);
 
 	~ohm.turnGreen(77);
-	MIDIdef.noteOn(\transport, { | vel, note |
-		~scLang.sendMsg(\transport, \main, note) }, 77);
+	MIDIdef.noteOn(\transport, { ~scLang.sendMsg(\transport, \main) }, 77);
 
 
 	/*

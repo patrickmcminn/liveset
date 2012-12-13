@@ -119,21 +119,14 @@ OSCdef(\inlet, { | msg |
 
 
 OSCdef(\micVerb, { | msg |
-	var id, val, toggle, vol, gran;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	vol = msg.at(4);
-	gran = msg.at(5);
 	case
-	{ id == \main } { ~connectMake[\micVerb].value([val, toggle, vol, gran]).postln; }
-	{ id == \toggle } { ~connectMake[\micVerbToggle].value(val).postln; }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, 1);
-		~connectSynth[\micVerb].fader.set(\amp, amp); }
-	{ id == \gran } {
-		var mix = val.linlin(0, 127, 0, 0.3);
-		~connectSynth[\micVerb].gran.set(\mix, mix); }
+	{ id == \main } { ~connectMake[\micVerb].value.postln; }
+	{ id == \toggle } { ~connectMake[\micVerbToggle].value.postln; }
+	{ id == \volume } { ~connectSynth[\micVerb].fader.set(\amp, val); }
+	{ id == \gran } { ~connectSynth[\micVerb].gran.set(\mix, val); }
 }, \micVerb, ~scLang);
 
 
@@ -146,17 +139,13 @@ OSCdef(\noteRecord, { | msg |
 
 
 OSCdef(\stabs, { | msg |
-	var id, val, toggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	vol = msg.at(4);
 	case
-	{ id == \main } { ~connectMake[\stabs].value([val, toggle, vol]).postln; }
-	{ id == \toggle } { ~connectMake[\stabsToggle].value(val).postln; }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, -14.dbamp);
-		~connectSynth[\stabs].fader.set(\amp, amp); }
+	{ id == \main } { ~connectMake[\stabs].value.postln; }
+	{ id == \toggle } { ~connectMake[\stabsToggle].value.postln; }
+	{ id == \volume } { ~connectSynth[\stabs].fader.set(\amp, val); }
 }, \stabs, ~scLang);
 
 OSCdef(\transport, { | msg |
@@ -164,7 +153,7 @@ OSCdef(\transport, { | msg |
 	id = msg.at(1);
 	val = msg.at(2);
 	case
-	{ id == \main } { ~connectMake[\seeTransport].value(val); }
+	{ id == \main } { ~connectMake[\seeTransport].value; }
 }, \transport, ~scLang);
 
 
