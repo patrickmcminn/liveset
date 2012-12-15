@@ -124,74 +124,51 @@ prm
 	Pbindef(\boyChordsThree).stop;
 });
 
-~boyMake[\noiseChords] = r({ | main |
-
-	var val, one, two, three, vol;
-	val = main.at(0);
-	one = main.at(1);
-	two = main.at(2);
-	three = main.at(3);
-	vol = main.at(4);
-
+~boyMake[\noiseChords] = r({
 	loop {
 		~boy[\noiseChords].value;
-
-		~ohm.turnGreen(one);
-		MIDIdef.noteOn(\noiseChordsOne, { ~scLang.sendMsg(\noiseChords, \one, one) }, one);
-		~ohm.turnBlue(two);
-		MIDIdef.noteOn(\noiseChordsTwo, { ~scLang.sendMsg(\noiseChords, \two, two) }, two);
-		~ohm.turnPink(three);
-		MIDIdef.noteOn(\noiseChordsThree, { ~scLang.sendMsg(\noiseChords, \three, three) }, three);
-		MIDIdef.cc(\noiseChordsVolume, { | amp | ~scLang.sendMsg(\noiseChords, \volume, amp) }, vol);
-		["noise chords synths created"].postln;
-		~ohm.turnLavender(val).yield;
+		~scLang.sendMsg(\control, \noiseChords);
+		["noise chords synths created"].postln.yield;
 
 		~boy[\noiseChords].kill;
-		~ohm.turnOff(one);
-		MIDIdef(\noiseChordsOne).free;
-		~ohm.turnOff(two);
-		MIDIdef(\noiseChordsTwo).free;
-		~ohm.turnOff(three);
-		MIDIdef(\noiseChordsThree).free;
-		MIDIdef(\noiseChordsVolume).free;
-		["noise chords synths freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \noiseChords);
+		["noise chords synths freed"].postln.yield;
 
 	};
 });
 
-~boyMake[\noiseChordsOne] = r ({ | val |
+~boyMake[\noiseChordsOne] = r ({
 	loop{
 		~boy[\noiseChords].playOne;
-		["noise chords 1 playing"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \noiseChordsOne);
+		["noise chords 1 playing"].postln.yield;
 
 		~boy[\noiseChords].stopOne;
-		["noise chords 1 stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \noiseChordsOne);
+		["noise chords 1 stopped"].postln.yield;
 	};
 });
 
-~boyMake[\noiseChordsTwo] = r ({ | val |
+~boyMake[\noiseChordsTwo] = r ({
 	loop {
 		~boy[\noiseChords].playTwo;
-		["noise chords 2 playing"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \noiseChordsTwo);
+		["noise chords 2 playing"].postln.yield;
 
 		~boy[\noiseChords].stopTwo;
-		["noise chords 2 stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \noiseChordsTwo);
+		["noise chords 2 stopped"].postln.yield;
 	};
 });
 
-~boyMake[\noiseChordsThree] = r ({ | val |
+~boyMake[\noiseChordsThree] = r ({
 	loop {
 		~boy[\noiseChords].playThree;
+		~scLang.sendMsg(\control, \noisChordsThree);
 		["noise chords three playing"].postln;
-		~ohm.turnYellow(val).yield;
 
 		~boy[\noiseChords].stopThree;
+		~scLang.sendMsg(\conrol, \noiseChordsThree);
 		["noise chords three stopped"].postln;
-		~ohm.turnRed(val).yield;
 	};
 });

@@ -7,6 +7,7 @@ prm
 
 
 
+
 OSCdef(\accompSynth, { | msg |
 	var id, val, one, two, three, vol;
 	id = msg.at(1);
@@ -93,23 +94,15 @@ OSCdef(\mainBell, { | msg |
 
 
 OSCdef(\noiseChords, { | msg |
-
-	var id, val, one, two, three, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	one = msg.at(3);
-	two = msg.at(4);
-	three = msg.at(5);
-	vol = msg.at(6);
-
 	case
-	{ id == \main } { ~boyMake[\noiseChords].value([val, one, two, three, vol]); }
-	{ id == \one } { ~boyMake[\noiseChordsOne].value(val); }
-	{ id == \two } { ~boyMake[\noiseChordsTwo].value(val); }
-	{ id == \three } { ~boyMake[\noiseChordsThree].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, 0.35);
-		~boySynth[\noiseChords].fader.set(\amp, amp); }
+	{ id == \main } { ~boyMake[\noiseChords].value; }
+	{ id == \one } { ~boyMake[\noiseChordsOne].value; }
+	{ id == \two } { ~boyMake[\noiseChordsTwo].value; }
+	{ id == \three } { ~boyMake[\noiseChordsThree].value; }
+	{ id == \volume } { ~boySynth[\noiseChords].fader.set(\amp, val); }
 }, \noiseChords);
 
 

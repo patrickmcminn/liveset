@@ -27,8 +27,7 @@ prm
 
 	// noise chords
 	~ohm.turnGreen(5);
-	MIDIdef.noteOn(\boyNoiseChords, { | vel, note, chn, time, one = 6, two = 14, three = 22, vol = 15 |
-		~scLang.sendMsg(\noiseChords, \main, note, one, two, three, vol); }, 5);
+	MIDIdef.noteOn(\boyNoiseChords, { ~scLang.sendMsg(\noiseChords, \main); }, 5);
 
 	// trumpet
 	~ohm.turnGreen(32);
