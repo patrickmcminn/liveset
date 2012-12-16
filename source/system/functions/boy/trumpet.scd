@@ -48,74 +48,45 @@ prm
 	~boySynth[\trumpet].do({ | i | i.free; });
 });
 
-~boyMake[\trumpet] = r ({ | main |
-	var val, toggle, majorThird, minorThird, offOne, offTwo, octave, vol;
-	val = main.at(0);
-	toggle = main.at(1);
-	minorThird = main.at(2);
-	majorThird = main.at(3);
-	offOne = main.at(4);
-	offTwo = main.at(5);
-	octave = main.at(6);
-	vol = main.at(7);
+~boyMake[\trumpet] = r ({
 
 	loop {
 		~boy[\trumpet].value;
-
-		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\trumpetToggle, { ~scLang.sendMsg(\boyTrumpet, \toggle, toggle); }, toggle);
-		~ohm.turnBlue(minorThird);
-		MIDIdef.noteOn(\trumpetMinor, { ~scLang.sendMsg(\boyTrumpet, \minorThird, minorThird); }, minorThird);
-		~ohm.turnLavender(majorThird);
-		MIDIdef.noteOn(\trumpetMajor, { ~scLang.sendMsg(\boyTrumpet, \majorThird, majorThird); }, majorThird);
-		MIDIdef.noteOff(\noTrumpetShift, { ~scLang.sendMsg(\boyTrumpet, \unison, offOne, offTwo); }, [offOne, offTwo]);
-		~ohm.turnBlue(octave);
-		MIDIdef.noteOn(\trumpetOctave, { ~scLang.sendMsg(\boyTrumpet, \octave, octave); }, octave);
-		MIDIdef.cc(\trumpetVolume, { | amp | ~scLang.sendMsg(\boyTrumpet, \volume, amp); }, vol);
-
-		["trumpet synths on"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \boyTrumpet);
+		["trumpet synths on"].postln.yield;
 
 		~boy[\trumpet].kill;
-		~ohm.turnOff(toggle);
-		~ohm.turnOff(minorThird);
-		~ohm.turnOff(majorThird);
-		~ohm.turnOff(octave);
-		MIDIdef(\trumpetOctave).free;
-		MIDIdef(\trumpetMinor).free;
-		MIDIdef(\trumpetMajor).free;
-		MIDIdef(\noTrumpetShift).free;
-		MIDIdef(\trumpetToggle).free;
-		MIDIdef(\trumpetVolume).free;
-		["trumpet synths off"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \boyTrumpet);
+		["trumpet synths off"].postln.yield;
 	};
 });
 
-~boyMake[\trumpetToggle] = r({ | val |
+~boyMake[\trumpetToggle] = r({
 	loop {
 
 		~boySynth[\trumpet].inFader.set(\mute, 0);
 		~boySynth[\trumpet].pitchShift.set(\amp, 0);
-		["trumpet input muted"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \boyTrumpetToggle);
+		["trumpet input muted"].postln.yield;
 
 		~boySynth[\trumpet].inFader.set(\mute, 1);
 		~boySynth[\trumpet].pitchShift.set(\amp, -5.dbamp);
-		["trumpet input active"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \boyTrumpetToggle);
+		["trumpet input active"].postln.yield;
 	};
 });
 
-~boyMake[\trumpetOctaveToggle] = r({ | val |
+~boyMake[\trumpetOctaveToggle] = r({
 	loop {
 		~boySynth[\trumpet].pitchShift.set(\interval, 12);
+		~scLang.sendMsg(\control, \boyTrumpetOctaveToggle);
 		["octave pitch shifter"].postln;
-		~ohm.turnYellow(val).yield;
+
 
 		~boySynth[\trumpet].pitchShift.set(\interval, 0);
+		~scLang.sendMsg(\control, \boyTrumpetOctaveToggle);
 		["octave pitch shifter off"].postln;
-		~ohm.turnRed(val).yield;
+
 	};
 });
 

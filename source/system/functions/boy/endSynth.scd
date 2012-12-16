@@ -303,188 +303,117 @@ prm
 	Pbindef(\endSynthCSharp).clear
 });
 
-~boyMake[\endSynth] = r({ | main |
-
-	var val, loop, d, dSharp, aOne, cSharpOne, gSharp, aTwo, cSharpTwo, aSix, bMajor, cSharp, vol;
-	val = main.at(0);
-	loop = main.at(1);
-	d = main.at(2);
-	dSharp = main.at(3);
-	aOne = main.at(4);
-	cSharpOne = main.at(5);
-	gSharp = main.at(6);
-	aTwo = main.at(7);
-	cSharpTwo = main.at(8);
-	aSix = main.at(9);
-	bMajor = main.at(10);
-	cSharp = main.at(11);
-	vol = main.at(12);
-
+~boyMake[\endSynth] = r({
 	loop {
 		~boy[\endSynth].value;
-
-		~ohm.turnYellow(loop);
-		MIDIdef.noteOn(\endSynthLoop, { ~scLang.sendMsg(\endSynth, \loop, loop); }, loop);
-		~ohm.turnYellow(d);
-		MIDIdef.noteOn(\endSynthD, { ~scLang.sendMsg(\endSynth, \d, d); }, d);
-		~ohm.turnYellow(dSharp);
-		MIDIdef.noteOn(\endSynthDSharp, { ~scLang.sendMsg(\endSynth, \dSharp, dSharp); }, dSharp);
-		~ohm.turnYellow(aOne);
-		MIDIdef.noteOn(\endSynthAOne, { ~scLang.sendMsg(\endSynth, \aOne, aOne); }, aOne);
-		~ohm.turnYellow(cSharpOne);
-		MIDIdef.noteOn(\endSynthCSharpOne, { ~scLang.sendMsg(\endSynth, \cSharpOne, cSharpOne); }, cSharpOne);
-		~ohm.turnYellow(gSharp);
-		MIDIdef.noteOn(\endSynthGSharp, { ~scLang.sendMsg(\endSynth, \gSharp, gSharp); }, gSharp);
-		~ohm.turnYellow(aTwo);
-		MIDIdef.noteOn(\endSynthATwo, { ~scLang.sendMsg(\endSynth, \aTwo, aTwo); }, aTwo);
-		~ohm.turnYellow(cSharpTwo);
-		MIDIdef.noteOn(\endSynthCSharpTwo, { ~scLang.sendMsg(\endSynth, \cSharpTwo, cSharpTwo); }, cSharpTwo);
-		~ohm.turnYellow(aSix);
-		MIDIdef.noteOn(\endSynthASix, { ~scLang.sendMsg(\endSynth, \aSix, aSix); }, aSix);
-		~ohm.turnYellow(bMajor);
-		MIDIdef.noteOn(\endSynthBMajor, { ~scLang.sendMsg(\endSynth, \bMajor, bMajor); }, bMajor);
-		~ohm.turnYellow(cSharp);
-		MIDIdef.noteOn(\endSynthCSharp, { ~scLang.sendMsg(\endSynth, \cSharp, cSharp); }, cSharp);
-
-		MIDIdef.cc(\endSynthVolume, { | amp | ~scLang.sendMsg(\endSynth, \volume, amp); }, vol);
-
-		["endSynth Synths Active"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \endSynth);
+		["endSynth Synths Active"].postln.yield;
 
 		~boy[\endSynth].kill;
-		MIDIdef(\endSynthLoop).free;
-		MIDIdef(\endSynthD).free;
-		MIDIdef(\endSynthDSharp).free;
-		MIDIdef(\endSynthAOne).free;
-		MIDIdef(\endSynthCSharpOne).free;
-		MIDIdef(\endSynthGSharp).free;
-		MIDIdef(\endSynthATwo).free;
-		MIDIdef(\endSynthCSharpTwo).free;
-		MIDIdef(\endSynthASix).free;
-		MIDIdef(\endSynthBMajor).free;
-		MIDIdef(\endSynthCSharp).free;
-		MIDIdef(\endSynthVolume).free;
-		~ohm.turnOff(loop);
-		~ohm.turnOff(d);
-		~ohm.turnOff(dSharp);
-		~ohm.turnOff(aOne);
-		~ohm.turnOff(cSharpOne);
-		~ohm.turnOff(gSharp);
-		~ohm.turnOff(aTwo);
-		~ohm.turnOff(cSharpTwo);
-		~ohm.turnOff(aSix);
-		~ohm.turnOff(bMajor);
-		~ohm.turnOff(cSharp);
-		["endSynth Synths Freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \endSynth);
+		["endSynth Synths Freed"].postln.yield;
 	};
 });
 
-~boyMake[\endSynthLoop] = r({ | val |
+~boyMake[\endSynthLoop] = r({
 	loop {
 		Pbindef(\endSynthLoop).play(~boy[\transport]);
-		["end synth loop playing"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \endSynthLoop);
+		["end synth loop playing"].postln.yield;
+
 
 		Pbindef(\endSynthLoop).stop;
-		["end synth loop stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \endSynthLoop);
+		["end synth loop stopped"].postln.yield;
 	};
 });
 
-~boyMake[\endSynthD] = r({ | val |
+~boyMake[\endSynthD] = r({
 	loop {
 		Pbindef(\endSynthD).play(~boy[\transport]);
-		["D"].postln;
-		~ohm.turnPink(val);
-		{ ~ohm.turnYellow(val) }.defer(4).yield;
+		~scLang.sendMsg(\control, \endSynthD);
+		["D"].postln.yield;
 	};
 });
 
-~boyMake[\endSynthDSharp] = r({ | val |
+~boyMake[\endSynthDSharp] = r({
 	loop {
 		Pbindef(\endSynthDSharp).play(~boy[\transport]);
-		["d sharp"].postln;
-		~ohm.turnPink(val);
-		{ ~ohm.turnYellow(val); }.defer(6).yield;
+		~scLang.sendMsg(\control, \endSynthDSharp);
+		["d sharp"].yield
 	};
 });
 
-~boyMake[\endSynthAMajorOne] = r({ | val |
+~boyMake[\endSynthAMajorOne] = r({
 	loop {
 		Pbindef(\endSynthAMajorOne).play(~boy[\transport]);
-		["a major"].postln;
-		~ohm.turnPink(val);
-		{ ~ohm.turnYellow(val); }.defer(6).yield;
+		~scLang.sendMsg(\control, \endSynthAOne);
+		["a major"].postln.yield
 	};
 });
 
-~boyMake[\endSynthCSharpMinorOne] = r({ | val |
+~boyMake[\endSynthCSharpMinorOne] = r({
 	loop {
 		Pbindef(\endSynthCSharpMinorOne).play(~boy[\transport]);
-		["c sharp minor"].postln;
-		~ohm.turnPink(val);
-		{ ~ohm.turnYellow(val); }.defer(6).yield;
+		~scLang.sendMsg(\control, \endSynthCSharpOne);
+		["c sharp minor"].postln.yield;
 	}
 });
 
-~boyMake[\endSynthGSharpMinor] = r({ | val |
+~boyMake[\endSynthGSharpMinor] = r({
 	loop {
 		Pbindef(\endSynthGSharpMinor).play(~boy[\transport]);
-		["g sharp minor"].postln;
-		~ohm.turnPink(val);
-		{ ~ohm.turnYellow(val); }.defer(8).yield;
+		~scLang.sendMsg(\control, \endSynthGSharp);
+		["g sharp minor"].postln.yield;
 	};
 });
 
-~boyMake[\endSynthAMajorTwo] = r({ | val |
+~boyMake[\endSynthAMajorTwo] = r({
 	loop{
 		Pbindef(\endSynthAMajorTwo).play(~boy[\transport]);
-		["a major"].postln;
-		~ohm.turnPink(val);
-		{ ~ohm.turnYellow(val); }.defer(6).yield;
+		~scLang.sendMsg(\control, \endSynthATwo);
+		["a major"].postln.yield;
 	};
 });
 
-~boyMake[\endSynthCSharpMinorTwo] = r({ | val |
+~boyMake[\endSynthCSharpMinorTwo] = r({
 	loop {
 		Pbindef(\endSynthCSharpMinorTwo).play(~boy[\transport]);
-		["c sharp minor"].postln;
-		~ohm.turnPink(val);
-		{ ~ohm.turnYellow(val); }.defer(6).yield;
+		~scLang.sendMsg(\control, \endSynthCSharpTwo);
+		["c sharp minor"].postln.yield;
 	};
 });
 
-~boyMake[\endSynthAMajorSix] = r({ | val |
+~boyMake[\endSynthAMajorSix] = r({
 	loop {
 		Pbindef(\endSynthAMajorSix).play(~boy[\transport]);
-		["a major 6 then 7th added"].postln;
-		~ohm.turnPink(val);
-		{ ~ohm.turnYellow(val); }.defer(12).yield;
+		~scLang.sendMsg(\control, \endSynthASix);
+		["a major 6 then 7th added"].postln.yield;
 	};
 });
 
-~boyMake[\endSynthBMajor] = r({ | val |
+~boyMake[\endSynthBMajor] = r({
 	loop {
 		Pbindef(\endSynthBMajor).play(~boy[\transport]);
-		["b major"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \endSynthBMajor);
+		["b major"].postln.yield;
 
 		Pbindef(\endSynthBMajor).stop;
-		["b major stopped"].postln;
-		~ohm.turnYellow(val).yield;
+		~scLang.sendMsg(\control, \endSynthBMajor);
+		["b major stopped"].postln.yield;
 	};
 });
 
-~boyMake[\endSynthCSharp] = r({ | val |
+~boyMake[\endSynthCSharp] = r({
 	loop {
 		Pbindef(\endSynthCSharp).play(~boy[\transport]);
-		["C sharp"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \endSynthCSharp);
+		["C sharp"].postln.yield;
+
 
 		Pbindef(\endSynthCSharp).stop;
-		["C Sharp Stopped"].postln;
-		~ohm.turnYellow(val).yield;
+		~scLang.sendMsg(\control, \endSynthCSharp);
+		["C Sharp Stopped"].postln.yield;
 	};
 });
 

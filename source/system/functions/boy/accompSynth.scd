@@ -160,64 +160,38 @@ prm
 	~boySynth[\accompSynth].do({ | i | i.free; });
 });
 
-~boyMake[\accompSynth] = r({ | main |
-
-	var val, one, two, three, vol;
-	val = main.at(0);
-	one = main.at(1);
-	two = main.at(2);
-	three = main.at(3);
-	vol = main.at(4);
-	one.postln;
-	two.postln;
-	three.postln;
-
+~boyMake[\accompSynth] = r({
 	loop {
 		~boy[\accompSynth].value;
-
-		~ohm.turnPurple(one);
-		MIDIdef.noteOn(\accompSynthPhraseOne, { ~scLang.sendMsg(\accompSynth, \one, one); }, one);
-		~ohm.turnPurple(two);
-		MIDIdef.noteOn(\accompSynthPhraseTwo, { ~scLang.sendMsg(\accompSynth, \two, two);}, two);
-		~ohm.turnPurple(three);
-		MIDIdef.noteOn(\accompSynthPhraseThree, { ~scLang.sendMsg(\accompSynth, \three, three); "dongs".postln; }, three);
-		MIDIdef.cc(\accompSynthVolume, { | amp | ~scLang.sendMsg(\accompSynth, \volume, amp); }, vol);
-		["accomp synths created"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \accompSynth);
+		["accomp synths created"].postln.yield;
 
 		~boy[\accompSynth].kill;
-		~ohm.turnOff(one);
-		~ohm.turnOff(two);
-		~ohm.turnOff(three);
-		MIDIdef(\accompSynthPhraseOne).free;
-		MIDIdef(\accompSynthPhraseTwo).free;
-		MIDIdef(\accompSynthPhraseThree).free;
-		MIDIdef(\accompSynthVolume).free;
-		["accomp synths freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \accompSynth);
+		["accomp synths freed"].postln.yield;
 	};
 });
 
-~boyMake[\accompSynthPhraseOne] = r({ | val |
+~boyMake[\accompSynthPhraseOne] = r({
 	loop {
-		~ohm.turnPink(val);
 		Pdef(\phraseOne).play(~boy[\transport]);
-		{ ~ohm.turnPurple(val); }.defer(7).yield;
+		~scLang.sendMsg(\control, \accompSynthPhraseOne);
+		["phrase one playing"].postln.yield;
 	};
 });
 
-~boyMake[\accompSynthPhraseTwo] = r({ | val |
+~boyMake[\accompSynthPhraseTwo] = r({
 	loop {
-		~ohm.turnPink(val);
 		Pdef(\phraseTwo).play(~boy[\transport]);
-		{ ~ohm.turnPurple(val); }.defer(5).yield;
+		~scLang.sendMsg(\control, \accompSynthPhraseTwo);
+		["phrase two playing"].postln.yield;
 	};
 });
 
-~boyMake[\accompSynthPhraseThree] = r({ | val |
+~boyMake[\accompSynthPhraseThree] = r({
 	loop {
-		~ohm.turnPink(val);
 		Pdef(\phraseThree).play(~boy[\transport]);
-		{ ~ohm.turnPurple(val); }.defer(4.6).yield;
+		~scLang.sendMsg(\control, \accompSynthPhraseThree);
+		["phrase three playing"].postln.yield;
 	};
 });
