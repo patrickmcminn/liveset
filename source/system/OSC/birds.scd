@@ -8,19 +8,14 @@ prm
 // creates OSC defs for where the birds must be drunk to be amidst the unknown spray and skies
 
 OSCdef(\bed, { | msg |
-	var id, val, play, toggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	play = msg.at(3);
-	toggle =  msg.at(4);
-	vol = msg.at(5);
 	case
-	{ id == \main } { ~birdsMake[\bed].value([val, play, toggle, vol]); }
-	{ id == \play } { ~birdsMake[\bedPlay].value(val); }
-	{ id == \toggle } { ~birdsMake[\bedToggle].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, 1.0);
-		~birdsSynth[\bed].fader.set(\amp, amp); }
+	{ id == \main } { ~birdsMake[\bed].value; }
+	{ id == \play } { ~birdsMake[\bedPlay].value; }
+	{ id == \toggle } { ~birdsMake[\bedToggle].value; }
+	{ id == \volume } { ~birdsSynth[\bed].fader.set(\amp, val); }
 }, \bed, ~scLang);
 
 OSCdef(\birdsMicVerb, { | msg |

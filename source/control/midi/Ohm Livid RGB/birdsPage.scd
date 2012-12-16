@@ -10,8 +10,7 @@ prm
 	~ohm.addEssential;
 
 	~ohm.turnGreen(0);
-	MIDIdef.noteOn(\bed, { | vel, note, chn, time, play = 8, toggle = 16, vol = 23 |
-		~scLang.sendMsg(\bed, \main, note, play, toggle, vol);}, 0);
+	MIDIdef.noteOn(\bed, { ~scLang.sendMsg(\bed, \main);}, 0);
 
 
 	~ohm.turnGreen(1);
