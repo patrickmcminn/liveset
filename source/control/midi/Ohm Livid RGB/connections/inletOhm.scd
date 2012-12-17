@@ -19,7 +19,7 @@ OSCdef(\inletOhm, { | msg |
 	loop {
 		MIDIdef.cc(\inletGran, { | val |
 			var mix = val.linlin(0, 127, 1.0, 0.0);
-			~scLang.sendMsg(\inlet, \gran, mix); }, mix);
+			~scLang.sendMsg(\inlet, \gran, mix); }, gran);
 		~ohm.turnPurple(val).yield;
 
 		MIDIdef(\inletGran).free;

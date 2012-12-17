@@ -90,17 +90,17 @@ prm
 ~connectMake[\dronerRater] = r { | val |
 	loop {
 		~connectSynth[\droner].at(\rate).set(\d1, 1, \d2, 1);
-		~scLang.sendMsg(\control, \dronerToggle);
+		~scLang.sendMsg(\control, \dronerRater);
 		["droner rates of 1 added"].postln.yield;
 
 		~connectSynth[\droner].at(\gran).set(\rate, 0.5);
-		~scLang.sendMsg(\control, \dronerToggle);
+		~scLang.sendMsg(\control, \dronerRater);
 		["droner rates to 0.5"].postln.yield;
 
 
 		~connectSynth[\droner].at(\rate).set(\d1, 0.5, \d2, 0.5, \d3, 0.5, \d4, 0.5, \d5, 0.5, \d6, 0.25, \d7, 0.25);
 		~connectSynth[\droner].at(\gran).set(\rate, ~connectBus[\droner].at(\rate).asMap);
-		~scLang.sendMsg(\control, \dronerToggle);
+		~scLang.sendMsg(\control, \dronerRater);
 		["droner rates reset"].postln.yield;
 	}
 };

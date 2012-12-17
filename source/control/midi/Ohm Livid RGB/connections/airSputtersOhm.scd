@@ -46,7 +46,7 @@ OSCdef(\airSputtersOhm, { | msg |
 	};
 };
 
-~connectOhm[\sputterMake] = r {
+~connectOhm[\sputterMake] = r ({
 	loop {
 		~ohm.turnLavender(val).yield;
 

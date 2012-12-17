@@ -56,7 +56,7 @@ OSCdef(\basslinesOhm, { | msg |
 	loop{
 		~ohm.turnPink(toggleOne).yield;
 
-		~ohm.turnRed(toggleOn).yield;
+		~ohm.turnRed(toggleOne).yield;
 	};
 };
 

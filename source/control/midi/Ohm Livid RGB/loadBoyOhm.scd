@@ -4,7 +4,7 @@ loadBoyOhm.scd
 prm
 */
 
-"boy/initOhm.scd".loadRelative;
+
 "boy/mainBellOhm.scd".loadRelative;
 "boy/rowFuzzOhm.scd".loadRelative;
 "boy/randBellOhm.scd".loadRelative;

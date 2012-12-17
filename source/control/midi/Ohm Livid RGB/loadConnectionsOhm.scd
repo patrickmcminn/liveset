@@ -19,5 +19,5 @@ prm
 "/connections/micVerbOhm.scd".loadRelative;
 "/connections/noteRecordOhm.scd".loadRelative;
 "/connections/stabsOhm.scd".loadRelative;
-"/connections/transportOhm".loadRelative;
+"/connections/transportOhm.scd".loadRelative;
 

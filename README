@@ -3,4 +3,86 @@
 12/13/2012 
 	- done editing connections. still untested.
 	- error handling for Ohm added
-	
+
+
+
+12/17/2012 - first round of error testing.
+
+[ ]Global
+
+   * [ ]figure out postln doubling bullshit
+      * only in connections - check OSC page
+[ ]Connections
+
+   * [ ]note record not changing colors
+   * [ ]cascade record seems fine
+
+   * [ ]chord record keeps looping
+
+   * [ ]bassline 1 colors fucked royally
+
+   * [ ]granDelay toggle has sendMsG typo
+
+   * [ ]attackRandomizer seems fine
+
+   * [ ]cascades not firing
+
+   * [ ]chordSum fucked
+
+   * [ ]chords has sendMsG error
+
+   * [ ]stabs toggle fires tempoClock for some ungodly reason
+
+   * [ ]micVerb toggle changes micVerb button
+
+   * [ ]transport won't visually die
+
+[ ]Boy
+
+   * [ ]main bell fucked
+      * in mainBell.scd - at not understood
+   * [ ]main row fuzz good
+
+   * [ ]low row fuzz loop is fucked somewhere
+
+   * [ ]Random Bells fucked, makes craaaazy sound
+
+      * at not understood
+      * but w/ rowFuzz, sounds like some weird bus-stealing bullshit to me
+   * [ ]bassline one fucked in stopping/starting
+
+   * [ ]so is bassline two
+
+   * [ ]bassline three changes colors, but doesn't work
+
+   * [ ]noiseChords three missing a yield somewhere -- infinite loop!
+
+   * [ ]trumpet toggle fucked
+
+      * asInteger not understood in trumpetOhm
+   * [ ]trumpet octave shift has infinite loop
+
+   * [ ]accomp synth 3 doesn't change colors
+
+   * [ ]no D# postln
+
+   * [ ]aMajor doesn't change colors
+
+   * [ ]cSharpMinor doesn't change colors
+   * [ ]gSharpMinor doesn't change colors
+
+   * [ ]none of these other fuckers change colors until BM and C# loop
+
+[ ]Birds
+
+   * [ ]bed kill fucked
+   * [ ]infinite loop in eqgtr toggle
+
+   * [ ]weird loop weirdness with tremgtr
+
+   * [ ]killing the noiseSynth doesn't work
+      * double toggle seems to fix it.
+   * [ ]wobble synths both created and freed in one fell swoop
+
+   * [ ]micVerb seems ok
+
