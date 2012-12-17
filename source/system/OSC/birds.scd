@@ -34,19 +34,14 @@ OSCdef(\birdsMicVerb, { | msg |
 
 
 OSCdef(\eqgtr, { | msg |
-	var id, val, toggle, shift, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	shift = msg.at(4);
-	vol = msg.at(5);
 	case
-	{ id == \main } { ~birdsMake[\eqgtr].value([val, toggle, shift, vol]); }
-	{ id == \toggle } { ~birdsMake[\eqgtrToggle].value(val); }
-	{ id == \shift } { ~birdsMake[\distShift].value(val) }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, 1.0);
-		~birdsSynth[\eqgtr].fader.set(\amp, amp); }
+	{ id == \main } { ~birdsMake[\eqgtr].value; }
+	{ id == \toggle } { ~birdsMake[\eqgtrToggle].value; }
+	{ id == \shift } { ~birdsMake[\distShift].value; }
+	{ id == \volume } {	~birdsSynth[\eqgtr].fader.set(\amp, val); }
 }, \eqgtr, ~scLang);
 
 OSCdef(\noiseSynth, { | msg |

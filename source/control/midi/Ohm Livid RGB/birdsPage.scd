@@ -14,8 +14,7 @@ prm
 
 
 	~ohm.turnGreen(1);
-	MIDIdef.noteOn(\eqgtr, { | vel, note, chn, time, toggle = 9, shift = 55, vol = 22 |
-		~scLang.sendMsg(\eqgtr, \main, note, toggle, shift, vol); }, 1);
+	MIDIdef.noteOn(\eqgtr, { ~scLang.sendMsg(\eqgtr, \main); }, 1);
 
 	~ohm.turnGreen(2);
 	MIDIdef.noteOn(\tremgtr, { | vel, note, chn, time, toggle = 10, shift = 47, vol = 15 |

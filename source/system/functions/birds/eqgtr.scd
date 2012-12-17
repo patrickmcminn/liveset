@@ -36,50 +36,31 @@ prm
 	~birdsSynth[\eqgtr].do({ | i | i.free; });
 });
 
-~birdsMake[\eqgtr] = r({ | main|
-
-	var val, toggle, shift, vol;
-	val = main.at(0);
-	toggle = main.at(1);
-	shift = main.at(2);
-	vol = main.at(3);
-
+~birdsMake[\eqgtr] = r({
 	loop {
 
 		~birds[\eqgtr].value;
-
-		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\eqgtrToggle, { ~scLang.sendMsg(\eqgtr, \toggle, toggle) }, toggle);
-		MIDIdef.cc(\eqgtrVolume, { | amp | ~scLang.sendMsg(\eqgtr, \volume, amp) }, vol);
-
-		~ohm.turnBlue(shift);
-		MIDIdef.noteOn(\eqgtrShift, { ~scLang.sendMsg(\eqgtr, \shift, shift) }, shift);
-
-		["eqgtr synths made"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \eqgtr);
+		["eqgtr synths made"].postln.yield;
 
 
-		~ohm.turnOff(toggle);
-		~ohm.turnOff(shift);
-		MIDIdef(\eqgtrToggle).free;
-		MIDIdef(\eqgtrShift).free;
-		MIDIdef(\eqgtrVolume).free;
 		~birds[\eqgtr].kill;
-		["eqgtr Synths freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \eqgtr);
+		["eqgtr Synths freed"].postln.yield;
 	}
 });
 
 
-~birdsMake[\eqgtrToggle] = r ({ | val |
+~birdsMake[\eqgtrToggle] = r ({
 	loop{
 		~birdsSynth[\eqgtr].inFader.set(\mute, 0);
+		~scLang.sendMsg(\control, \eqgtrToggle);
 		["eqgtr input muted"].postln;
-		~ohm.turnRed(val).yield;
+
 
 		~birdsSynth[\eqgtr].inFader.set(\mute, 1);
+		~scLang.sendMsg(\control, \eqgtrToggle);
 		["eqgtr input active"].postln;
-		~ohm.turnYellow(val).yield;
 	}
 });
 
