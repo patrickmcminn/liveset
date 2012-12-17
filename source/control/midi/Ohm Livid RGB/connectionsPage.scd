@@ -51,7 +51,7 @@ prm
 	MIDIdef.noteOn(\micVerb, { ~scLang.sendMsg(\micVerb, \main) }, 34);
 
 	~ohm.turnGreen(77);
-	MIDIdef.noteOn(\transport, { ~scLang.sendMsg(\transport, \main) }, 77);
+	MIDIdef.noteOn(\transport, { ~scLang.sendMsg(\connectionsTransport, \main) }, 77);
 
 
 	/*

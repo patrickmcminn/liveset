@@ -19,17 +19,13 @@ OSCdef(\bed, { | msg |
 }, \bed, ~scLang);
 
 OSCdef(\birdsMicVerb, { | msg |
-	var id, val, toggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	vol = msg.at(4);
 	case
-	{ id == \main } { ~birdsMake[\birdsMicVerb].value([val, toggle, vol]); }
-	{ id == \toggle } { ~birdsMake[\birdsMicVerbToggle].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0, 1.0);
-		~birdsSynth[\birdsMicVerb].fader.set(\amp, amp); }
+	{ id == \main } { ~birdsMake[\birdsMicVerb].value; }
+	{ id == \toggle } { ~birdsMake[\birdsMicVerbToggle].value; }
+	{ id == \volume } {	~birdsSynth[\birdsMicVerb].fader.set(\amp, val); }
 }, \birdsMicVerb, ~scLang);
 
 
@@ -45,52 +41,36 @@ OSCdef(\eqgtr, { | msg |
 }, \eqgtr, ~scLang);
 
 OSCdef(\noiseSynth, { | msg |
-	var id, val, play, shift, vol, end;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	play = msg.at(3);
-	shift = msg.at(4);
-	vol = msg.at(5);
-	end = msg.at(6);
-
 	case
-	{ id == \main } { ~birdsMake[\noiseSynth].value([val, play, shift, vol, end]); }
-	{ id == \play } { ~birdsMake[\noiseSynthPlay].value(val); }
-	{ id == \shift } { ~birdsMake[\noiseSynthShift].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0.0, -12.dbamp);
-		~birdsSynth[\noiseSynth].fader.set(\amp, amp); }
-	{ id == \end } { ~birdsMake[\endFade].value(val); }
+	{ id == \main } { ~birdsMake[\noiseSynth].value; }
+	{ id == \play } { ~birdsMake[\noiseSynthPlay].value; }
+	{ id == \shift } { ~birdsMake[\noiseSynthShift].value; }
+	{ id == \volume } { ~birdsSynth[\noiseSynth].fader.set(\amp, val); }
 }, \noiseSynth, ~scLang);
 
 OSCdef(\tremgtr, { | msg |
-	var id, val, toggle, shift, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	vol = msg.at(4);
 	case
-	{ id == \main } { ~birdsMake[\tremgtr].value([val, toggle, shift, vol]); }
-	{ id == \toggle } { ~birdsMake[\tremgtrToggle].value(val); }
-	{ id == \shift } { ~birdsMake[\tremShift].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0.0, 1.0);
-		~birdsSynth[\tremgtr].fader.set(\amp, amp); }
+	{ id == \main } { ~birdsMake[\tremgtr].value; }
+	{ id == \toggle } { ~birdsMake[\tremgtrToggle].value; }
+	{ id == \shift } { ~birdsMake[\tremShift].value; }
+	{ id == \volume } { ~birdsSynth[\tremgtr].fader.set(\amp, val); }
 }, \tremgtr, ~scLang);
 
 
 OSCdef(\wobble, { | msg |
-	var id, val, toggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
-	toggle = msg.at(3);
-	vol = msg.at(4);
 	case
-	{ id == \main } { ~birdsMake[\wobble].value([val, toggle, vol]); }
-	{ id == \toggle } { ~birdsMake[\wobbleToggle].value(val); }
-	{ id == \volume } {
-		var amp = val.linlin(0, 127, 0.0, -9.dbamp);
-		~birdsSynth[\wobble].fader.set(\amp, amp); }
+	{ id == \main } { ~birdsMake[\wobble].value; }
+	{ id == \toggle } { ~birdsMake[\wobbleToggle].value; }
+	{ id == \volume } { ~birdsSynth[\wobble].fader.set(\amp, val); }
 }, \wobble, ~scLang);
 
 OSCdef(\birdsTransport, { | msg |
@@ -98,5 +78,5 @@ OSCdef(\birdsTransport, { | msg |
 	id = msg.at(1);
 	val = msg.at(2);
 	case
-	{ id == \main } { ~birdsMake[\seeTransport].value(val); }
-}, \transport, ~scLang);
+	{ id == \main } { ~birdsMake[\seeTransport].value; }
+}, \birdsTransport, ~scLang);

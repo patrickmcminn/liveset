@@ -78,46 +78,29 @@ prm
 	~birdsSynth[\wobble].do({ | i | i.free; });
 });
 
-~birdsMake[\wobble] = r ({ | main |
-
-	var val, toggle, vol;
-	val = main.at(0);
-	toggle = main.at(1);
-	vol = main.at(2);
-
+~birdsMake[\wobble] = r ({
 	loop {
-
 		~birds[\wobble].value;
-
-		MIDIdef.cc(\wobbleVolume, { | amp | ~scLang.sendMsg(\wobble, \volume, amp); }, vol);
-
-		~ohm.turnBlue(toggle);
-		MIDIdef.noteOn(\wobbleToggle, { ~scLang.sendMsg(\wobble, \toggle, toggle); }, toggle);
-
-		["wobble synths created"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \wobble);
+		["wobble synths created"].postln.yield;
 
 
 		~birds[\wobble].kill;
-		~ohm.turnOff(toggle);
-		MIDIdef(\wobbleToggle).free;
-		MIDIdef(\wobbleVolume).free;
-		["wobble synths freed"].postln;
-		~ohm.turnRed(val).yield;
-
+		~scLang.sendMsg(\control, \wobble);
+		["wobble synths freed"].postln.yield;
 	};
 });
 
-~birdsMake[\wobbleToggle] = r({ | val |
+~birdsMake[\wobbleToggle] = r({
 	loop{
 		Pbindef(\wobble).play;
 		Pbindef(\lowDrone).play;
-		["wobble and low drone playing"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \wobbleToggle);
+		["wobble and low drone playing"].postln.yield;
 
 		Pbindef(\wobble).stop;
 		Pbindef(\lowDrone).stop;
-		["wobble and low drone stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \wobbleToggle);
+		["wobble and low drone stopped"].postln.yield;
 	};
 });

@@ -1,33 +1,39 @@
 /*
-Thursday, November 8th 2012
-transport.scd
+Monday, December 17th 2012
+transportOhm.scd
 prm
 */
 
-~birds[\transport] = TempoClock;
-~birds[\transport].tempo = 60/60;
+var val, bar, beat;
+val = 77;
+bar = 69;
+beat = 70;
 
-~birds[\seeTransport] = Routine({
+OSCdef(\birdsTransportOhm, { | msg |
+	var id = msg.at(1);
+	case
+	{ id == \birdsTransport } { ~birdsOhm[\seeTransport].value; }
+}, \control, ~scLang);
+
+
+~birdsOhm[\makeTransport] = Routine({
 	loop{
-		~birds[\transport].schedAbs(~birds[\transport].nextTimeOnGrid, {
-			[~birds[\transport].bar, (~birds[\transport].beatInBar + 1)].postln;});
 		~birds[\transport].schedAbs(~birds[\transport].nextBar, {
-			~ohm.blink(69, \green, 0.5)});
+			~ohm.blink(bar, \green, (~birds[\transport].tempo/2))});
 		~birds[\transport].schedAbs(~birds[\transport].nextTimeOnGrid, {
-			~ohm.blink(70, \blue, 0.5)});
+			~ohm.blink(beat, \blue, (~birds[\transport].tempo/2))});
 		1.wait;
 	};
 });
 
-~birdsMake[\seeTransport] = Routine({ | val |
-	loop {
-		~birds[\seeTransport].play(~birds[\transport]);
-		["transport  visualized"].postln;
+
+~birdsOhm[\seeTransport] = Routine({
+	loop{
+		~birdsOhm[\makeTransport].reset;
+		~birdsOhm[\makeTransport].play(~birds[\transport]);
 		~ohm.turnLavender(val).yield;
 
 		~birds[\seeTransport].stop;
-		~birds[\seeTransport].reset;
 		~ohm.turnRed(val).yield;
 	}
 });
-		

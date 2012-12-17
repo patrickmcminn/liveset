@@ -10,7 +10,7 @@ val = 77;
 bar = 69;
 beat = 70;
 
-OSCdef(\boyTransport, { | msg |
+OSCdef(\boyTransportOhm, { | msg |
 	var id = msg.at(1);
 	case
 	{ id == \boyTransport } { ~boyOhm[\seeTransport].value; }
@@ -31,7 +31,7 @@ OSCdef(\boyTransport, { | msg |
 ~boyOhm[\seeTransport] = Routine({
 	loop{
 		~boyOhm[\makeTransport].reset;
-		~boyOhm[\makeTransport].play(~connections[\transport]);
+		~boyOhm[\makeTransport].play(~boy[\transport]);
 		~ohm.turnLavender(val).yield;
 
 		~boy[\seeTransport].stop;

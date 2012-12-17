@@ -9,7 +9,7 @@ val = 77;
 bar = 69;
 beat = 70;
 
-OSCdef(\connectionsTransport, { | msg |
+OSCdef(\connectionsTransportOhm, { | msg |
 	var id = msg.at(1);
 	case
 	{ id == \connectionsTransport } { ~connectOhm[\seeTransport].value; }

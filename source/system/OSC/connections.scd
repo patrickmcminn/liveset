@@ -154,7 +154,7 @@ OSCdef(\transport, { | msg |
 	val = msg.at(2);
 	case
 	{ id == \main } { ~connectMake[\seeTransport].value; }
-}, \transport, ~scLang);
+}, \connectionsTransport, ~scLang);
 
 
 

@@ -31,45 +31,27 @@ prm
 	~birdsSynth[\birdsMicVerb].do({ | i | i.free });
 });
 
-~birdsMake[\birdsMicVerb] = r ({ | main |
-
-	var val, toggle, vol;
-	val = main.at(0);
-	toggle = main.at(1);
-	vol = main.at(2);
-
+~birdsMake[\birdsMicVerb] = r ({
 	loop {
-
 		~birds[\birdsMicVerb].value;
-
-		~ohm.turnBlue(toggle);
-		MIDIdef.noteOn(\birdsMicVerbToggle, { ~scLang.sendMsg(\birdsMicVerb, \toggle, toggle); }, toggle);
-		MIDIdef.cc(\birdsMicVerbVolume, { | amp | ~scLang.sendMsg(\birdsMicVerb, \volume, amp); }, vol);
-
-		["mic verb synths active"].postln;
-		~ohm.turnPurple(val).yield;
-
+		~scLang.sendMsg(\control, \birdsMicVerb);
+		["mic verb synths active"].postln.yield;
 
 		~birds[\birdsMicVerb].kill;
-		~ohm.turnOff(toggle);
-		MIDIdef(\birdsMicVerbToggle).free;
-		MIDIdef(\birdsMicVerbVolume).free;
-		["mic verb synths freed"].postln;
-		~ohm.turnRed(val).yield;
-
+		~scLang.sendMsg(\control, \birdsMicVerb);
+		["mic verb synths freed"].postln.yield;
 	}
 });
 
-~birdsMake[\birdsMicVerbToggle] = r ({ | val |
+~birdsMake[\birdsMicVerbToggle] = r ({
 	loop {
-
 		~birdsSynth[\birdsMicVerb].inFader.set(\mute, 0);
-		["mic verb input muted"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \birdsMicVerbToggle);
+		["mic verb input muted"].postln.yield;
 
 		~birdsSynth[\birdsMicVerb].inFader.set(\mute, 1);
-		["mic verb input active"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \birdsMicVerbToggle);
+		["mic verb input active"].postln.yield;
 
 	}
 });

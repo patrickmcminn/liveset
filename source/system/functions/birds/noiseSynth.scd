@@ -831,91 +831,62 @@ prm
 });
 
 
-~birdsMake[\noiseSynth] = r ({ | main |
-
-	var val, play, shift, vol, end;
-	val = main.at(0);
-	play = main.at(1);
-	shift = main.at(2);
-	vol = main.at(3);
-	end = main.at(4);
-
+~birdsMake[\noiseSynth] = r ({
 	loop {
 
 		~birds[\noiseSynth].value;
-
-		~ohm.turnBlue(play);
-		MIDIdef.noteOn(\noiseSynthPlay, { ~scLang.sendMsg(\noiseSynth, \play, play) }, play);
-
-		~ohm.turnBlue(shift);
-		MIDIdef.noteOn(\noiseSynthShift, { ~scLang.sendMsg(\noiseSynth, \shift, shift) }, shift);
-
-		MIDIdef.cc(\noiseSynthVolume, { | amp | ~scLang.sendMsg(\noiseSynth, \volume, amp) }, vol);
-
-		~ohm.turnYellow(end);
-		MIDIdef.noteOn(\endShift, { ~scLang.sendMsg(\noiseSynth, \end, end); }, end);
-
-		["noiseSynth Synths Active"].postln;
-		~ohm.turnPink(val).yield;
-
+		~scLang.sendMsg(\control, \noiseSynth);
+		["noiseSynth Synths Active"].postln.yield;
 
 
 		~birds[\noiseSynth].kill;
-		~ohm.turnOff(end);
-		MIDIdef(\endShift).free;
-		~ohm.turnOff(play);
-		MIDIdef(\noiseSynthPlay).free;
-		~ohm.turnOff(shift);
-		MIDIdef(\noiseSynthShift).free;
-		["noiseSynth Synths Freed"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \noisSynth);
+		["noiseSynth Synths Freed"].postln.yield;
 	}
 });
 
-~birdsMake[\noiseSynthPlay] = r({ | val |
+~birdsMake[\noiseSynthPlay] = r({
 	loop {
 
 		Pdef(\phrase1).play;
-		["phrase 1 playing"].postln;
-		~ohm.turnYellow(val).yield;
+		~scLang.sendMsg(\control, \noiseSynthPlay);
+		["phrase 1 playing"].postln.yield;
 
 		Pdef(\phrase2).play;
 		Pdef(\phrase1).stop;
-		["phrase 2 playing"].postln;
-		~ohm.turnLavender(val).yield;
+		~scLang.sendMsg(\control, \noiseSynthPlay);
+		["phrase 2 playing"].postln.yield;
 
 		Pdef(\phrase3).play;
 		Pdef(\phrase2).stop;
-		["phrase 3 playing"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \noiseSynthPlay);
+		["phrase 3 playing"].postln.yield;
 
 		Pdef(\phrase4).play;
 		Pdef(\phrase3).stop;
-		["phrase 4 playing"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \noiseSynthPlay);
+		["phrase 4 playing"].postln.yield;
 
 		Pdef(\phrase4).stop;
-		["all phrases stopped"].postln;
-		~ohm.turnRed(val).yield;
-
+		~scLang.sendMsg(\control, \noiseSynthPlay);
+		["all phrases stopped"].postln.yield;
 	}
 });
 
-~birdsMake[\noiseSynthShift] = r ({ | val |
+~birdsMake[\noiseSynthShift] = r ({
 	loop {
 
 		~birds[\noiseSynth].granShift1;
-		["gran mix from 1 to 0.787 over 15 seconds"].postln;
-		~ohm.turnLavender(val).yield;
+		~scLang.sendMsg(\control, \noiseSynthShift);
+		["gran mix from 1 to 0.787 over 15 seconds"].postln.yield;
 
 		~birds[\noiseSynth].granShift2;
-		["gran mix ferom 0.787 to 0 over 30 seconds"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \noiseSynthShift);
+		["gran mix ferom 0.787 to 0 over 30 seconds"].postln.yield;
 
 		~birds[\noiseSynth].volShift;
-		["volume from -20db to -12db over 4 seconds"].postln;
-		~ohm.turnPink(val).yield;
-
+		~scLang.sendMsg(\control, \noiseSynthShift);
+		["volume from -20db to -12db over 4 seconds"].postln.yield;
 	}
 });
 

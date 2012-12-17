@@ -46,53 +46,28 @@ prm
 	~birdsSynth[\tremgtr].do({ | i | i.free; });
 });
 
-~birdsMake[\tremgtr] = r ({ | main |
-
-	var val, toggle, shift, vol;
-	val = main.at(0);
-	toggle = main.at(1);
-	shift = main.at(2);
-	vol = main.at(3);
-
+~birdsMake[\tremgtr] = r ({
 	loop {
-
 		~birds[\tremgtr].value;
-
-		~ohm.turnBlue(toggle);
-		MIDIdef.noteOn(\tremgtrToggle, { ~scLang.sendMsg(\tremgtr, \toggle, toggle); }, toggle);
-		~ohm.turnGreen(shift);
-		MIDIdef.noteOn(\tremgtrShift, { ~scLang.sendMsg(\tremgtr, \shift, shift); }, shift);
-
-		MIDIdef.cc(\tremgtrVolume, { | amp | ~scLang.sendMsg(\tremgtr, \volume, amp); }, vol);
-
-		["tremgtr active"].postln;
-		~ohm.turnPurple(val).yield;
-
+		~scLang.sendMsg(\control, \tremgtr);
+		["tremgtr active"].postln.yield;
 
 		~birds[\tremgtr].kill;
-		~ohm.turnOff(toggle);
-		~ohm.turnOff(shift);
-		MIDIdef(\tremgtrToggle).free;
-		MIDIdef(\tremgtrShift).free;
-		MIDIdef(\tremgtrVolume).free;
-		["tremgtr synths freed"].postln;
-		~ohm.turnRed(val).yield;
-
+		~scLang.sendMsg(\control, \tremgtrToggle);
+		["tremgtr synths freed"].postln.yield;
 	};
 
 });
 
-~birdsMake[\tremgtrToggle] = r ({ | val |
+~birdsMake[\tremgtrToggle] = r ({
 	loop {
-
 		~birdsSynth[\tremgtr].inFader.set(\mute, 0);
-		["input to tremgtr muted"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \tremgtrToggle);
+		["input to tremgtr muted"].postln.yield;
 
 		~birdsSynth[\tremgtr].inFader.set(\mute, 1);
-		["input to tremgtr active"].postln;
-		~ohm.turnBlue(val).yield;
-
+		~scLang.sendMsg(\control, \tremgtrToggle);
+		["input to tremgtr active"].postln.yield;
 	};
 });
 
