@@ -42,7 +42,13 @@ OSCdef(\chordsOhm, { | msg |
 	};
 };
 
-~connectOhm[\chordsToggle] = r { | val |
+~connectOhm[\chordSum] = r {
+	loop {
+		~ohm.turnPurple(sum).yield;
+	};
+};
+
+~connectOhm[\chordsToggle] = r {
 	loop{
 
 		~ohm.turnYellow(toggle).yield;

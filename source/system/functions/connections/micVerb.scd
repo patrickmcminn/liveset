@@ -57,7 +57,7 @@ prm
 
 		~connections[\micVerb].kill;
 		~scLang.sendMsg(\control, \micVerb);
-		"Mic Verb Freed".postln;
+		"Mic Verb Freed".postln.yield;
 
 	};
 };

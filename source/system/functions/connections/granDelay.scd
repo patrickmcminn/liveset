@@ -66,7 +66,7 @@ prm
 		["input to gran delay muted"].postln.yield;
 
 		~connectSynth[\granDelay].inFader.set(\mute, 1);
-		~scLang.sendMsG(\control, \granDelayToggle);
+		~scLang.sendMsg(\control, \granDelayToggle);
 		["input to gran delay active"].postln.yield;
 	};
 };

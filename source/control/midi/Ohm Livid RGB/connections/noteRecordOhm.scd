@@ -14,15 +14,18 @@ OSCdef(\noteRecordOhm, { | msg |
 
 
 ~connectOhm[\noteRecord] = Routine({
+
+	~ohm.turnLavender(val).yield;
+
+	~ohm.turnPurple(val).yield;
+
+	~ohm.turnYellow(val).yield;
+
+	~ohm.turnPink(val).yield;
+
+	~ohm.turnBlue(val).yield;
 	loop {
-		~ohm.turnLavender(val).yield;
-
-		~ohm.turnPurple(val).yield;
-
-		~ohm.turnYellow(val).yield;
-
-		~ohm.turnPink(val).yield;
-
-		~ohm.turnBlue(val).yield;
+		~ohm.turnRed(val).yield;
 	};
+
 });

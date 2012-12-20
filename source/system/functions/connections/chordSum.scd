@@ -98,8 +98,8 @@ prm
 ~connectMake[\chordSum] = r { | val |
 	loop{
 		~connections[\chordSum].value;
-		["chords summed"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \chordSum);
+		["chords summed"].postln.yield;
 	};
 };
 

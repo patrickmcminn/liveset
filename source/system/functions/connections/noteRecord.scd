@@ -4,7 +4,7 @@ noteRecord.scd
 prm
 */
 
-~connections[\noteRecord] = Routine({ | val |
+~connections[\noteRecord] = Routine({
 
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\note].at(0)],
 		~group[\fx], \addToTail);
@@ -25,15 +25,19 @@ prm
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\note].at(4)],
 		~group[\fx], \addToTail);
 	["B Recorded"].postln.yield;
+
+	loop {
+		["all notes recorded"].postln.yield;
+	};
 });
 
-~connections[\noteRecord].addUniqueMethod(\reset, { | func, val |
+~connections[\noteRecord].addUniqueMethod(\reset, {
 	~connectBuf[\note].do({ | i | i.zero; });
 	~connections[\noteRecord].reset;
 	["note buffers reset"].postln;
 });
 
-~connectMake[\noteRecord] = Routine({ | val |
+~connectMake[\noteRecord] = Routine({
 	loop {
 		~scLang.sendMsg(\control, \noteRecord);
 		~connections[\noteRecord].value.yield;

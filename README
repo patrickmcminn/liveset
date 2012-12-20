@@ -8,33 +8,42 @@
 
 12/17/2012 - first round of error testing.
 
+12/20/2012 - first round of error correction 
+	- fixed what connections functions I could.
+
 [ ]Global
 
    * [ ]figure out postln doubling bullshit
       * only in connections - check OSC page
+      * also, see if control surface behaves differently than calling functions explicitly
+
 [ ]Connections
 
    * [ ]note record not changing colors
-   * [ ]cascade record seems fine
+   * [X]cascade record seems fine
 
-   * [ ]chord record keeps looping
+   * [X]chord record keeps looping
 
-   * [ ]bassline 1 colors fucked royally
+   * [X]bassline 1 colors fucked royally
 
-   * [ ]granDelay toggle has sendMsG typo
+      * changed msg send to bassline two in bassline one loop
+   * [X]granDelay toggle has sendMsG typo
 
    * [ ]attackRandomizer seems fine
 
-   * [ ]cascades not firing
+   * [X]cascades not firing
 
-   * [ ]chordSum fucked
+      * sendMsG error - hopefully will work now.
+   * [X]chordSum fucked
 
-   * [ ]chords has sendMsG error
+      * I think I got it.
+   * [X]chords has sendMsG error
 
    * [ ]stabs toggle fires tempoClock for some ungodly reason
 
-   * [ ]micVerb toggle changes micVerb button
+   * [X]micVerb toggle changes micVerb button
 
+      * I think I got this one.
    * [ ]transport won't visually die
 
 [ ]Boy
@@ -85,4 +94,5 @@
    * [ ]wobble synths both created and freed in one fell swoop
 
    * [ ]micVerb seems ok
+
 

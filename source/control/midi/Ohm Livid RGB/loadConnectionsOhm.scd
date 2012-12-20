@@ -12,7 +12,6 @@ prm
 "/connections/cascadeRecordOhm.scd".loadRelative;
 "/connections/chordRecordOhm.scd".loadRelative;
 "/connections/chordsOhm.scd".loadRelative;
-"/connections/chordSumOhm.scd".loadRelative;
 "/connections/dronerOhm.scd".loadRelative;
 "/connections/granDelayOhm.scd".loadRelative;
 "/connections/inletOhm.scd".loadRelative;

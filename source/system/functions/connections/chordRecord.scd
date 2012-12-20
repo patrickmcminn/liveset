@@ -6,7 +6,7 @@ chordRecord.scd
 prm
 */
 
-~connections[\chordRecord] = Routine({ | val |
+~connections[\chordRecord] = Routine({
 	Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\chord].at(0)],
 		~group[\fx], \addToTail);
 	["F# recorded"].postln.yield;
@@ -43,9 +43,9 @@ prm
 	~connections[\chordRecord].reset;
 });
 
-~connectMake[\chordRecord] = r { | val |
+~connectMake[\chordRecord] = r {
 	loop {
 		~scLang.sendMsg(\control, \chordRecord);
-		~connections[\chordRecord].value.postln.yield;
+		~connections[\chordRecord].value.yield;
 	};
 };

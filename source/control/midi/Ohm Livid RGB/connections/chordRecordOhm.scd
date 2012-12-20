@@ -13,19 +13,21 @@ OSCdef(\chordRecordOhm, { | msg |
 }, \control, ~scLang);
 
 ~connectOhm[\chordRecord] = r {
+
+	~ohm.turnLavender(val).yield;
+
+	~ohm.turnPurple(val).yield;
+
+	~ohm.turnYellow(val).yield;
+
+	~ohm.turnPink(val).yield;
+
+	~ohm.turnGreen(val).yield;
+
+	~ohm.turnBlue(val).yield;
+
 	loop {
-
-		~ohm.turnLavender(val).yield;
-
-		~ohm.turnPurple(val).yield;
-
-		~ohm.turnYellow(val).yield;
-
-		~ohm.turnPink(val).yield;
-
-		~ohm.turnGreen(val).yield;
-
-		~ohm.turnBlue(val).yield;
-
+		~ohm.turnRed(val).yield;
 	};
+
 };

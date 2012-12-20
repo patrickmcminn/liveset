@@ -117,7 +117,7 @@ prm
 		["Bassline One Playing"].postln.yield;
 
 		Pbindef(\basslineOne).stop;
-		~scLang.sendMsg(\control, \basslineTwo);
+		~scLang.sendMsg(\control, \basslineOne);
 		["Bassline One Stopped"].postln.yield;
 	};
 };

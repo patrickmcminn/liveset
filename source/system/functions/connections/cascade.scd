@@ -175,7 +175,7 @@ prm
 ~connectMake[\cascade] = r {
 	loop {
 		~connections[\cascade].value;
-		~scLang.sendMsG(\control, \cascade);
+		~scLang.sendMsg(\control, \cascade);
 		["cascade synths created"].postln.yield;
 
 		~connections[\cascade].kill;

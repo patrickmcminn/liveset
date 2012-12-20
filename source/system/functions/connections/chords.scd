@@ -101,7 +101,7 @@ prm
 
 
 		~connections[\chords].kill;
-		~scLang.sendMsG(\control, \chords);
+		~scLang.sendMsg(\control, \chords);
 		["chord synths freed"].postln.yield;
 	};
 };
@@ -111,8 +111,6 @@ prm
 		~connections[\chords].playRand;
 		~scLang.sendMsg(\control, \chordsToggle);
 		["random chords playing"].postln.yield;
-
-
 
 		~connections[\chords].stopRand;
 		~connections[\chords].playChords;
