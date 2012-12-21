@@ -80,12 +80,12 @@ prm
 	loop {
 		~boySynth[\trumpet].pitchShift.set(\interval, 12);
 		~scLang.sendMsg(\control, \boyTrumpetOctaveToggle);
-		["octave pitch shifter"].postln;
+		["octave pitch shifter"].postln.yield;
 
 
 		~boySynth[\trumpet].pitchShift.set(\interval, 0);
 		~scLang.sendMsg(\control, \boyTrumpetOctaveToggle);
-		["octave pitch shifter off"].postln;
+		["octave pitch shifter off"].postln.yield;
 
 	};
 });

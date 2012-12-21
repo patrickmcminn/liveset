@@ -217,7 +217,7 @@ prm
 	};
 });
 
-~boyMake[\randBellToggle] = r({ | val |
+~boyMake[\randBellToggle] = r({
 	loop {
 		Pbindef(\randBellDSharp).play;
 		Pbindef(\randBellE).play;

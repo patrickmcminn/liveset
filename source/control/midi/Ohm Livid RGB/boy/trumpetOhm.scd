@@ -58,19 +58,19 @@ OSCdef(\boyTrumpetOhm, { | msg |
 	};
 });
 
-~boyOhm[\trumpetToggle] = r({ | val |
+~boyOhm[\trumpetToggle] = r({
 	loop {
-		~ohm.turnRed(val).yield;
+		~ohm.turnRed(toggle).yield;
 
-		~ohm.turnPurple(val).yield;
+		~ohm.turnPurple(toggle).yield;
 	};
 });
 
-~boyOhm[\trumpetOctaveToggle] = r({ | val |
+~boyOhm[\trumpetOctaveToggle] = r({
 	loop {
-		~ohm.turnYellow(val).yield;
+		~ohm.turnYellow(octave).yield;
 
-		~ohm.turnRed(val).yield;
+		~ohm.turnRed(octave).yield;
 	};
 });
 

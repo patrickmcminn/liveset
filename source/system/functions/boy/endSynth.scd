@@ -340,7 +340,7 @@ prm
 	loop {
 		Pbindef(\endSynthDSharp).play(~boy[\transport]);
 		~scLang.sendMsg(\control, \endSynthDSharp);
-		["d sharp"].yield
+		["d sharp"].postln.yield
 	};
 });
 

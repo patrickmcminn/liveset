@@ -159,7 +159,7 @@ prm
 		["low row fuzz playing"].postln.yield;
 
 		~boy[\rowFuzz].stopLow;
-		~scLang.sendMsg(\rowFuzzLowToggle);
+		~scLang.sendMsg(\control, \rowFuzzLowToggle);
 		["low row fuzz stopped"].postln.yield;
 	};
 });

@@ -4,8 +4,6 @@ mainBellOhm.scd
 prm
 */
 
-
-
 var val, toggle, vol;
 val = 0;
 toggle = 8;
@@ -15,7 +13,7 @@ OSCdef(\mainBellOhm, { | msg |
 	var id = msg.at(1);
 	case
 	{ id == \mainBell } { ~boyOhm[\mainBell].value; }
-	{ id == \mainBellToggle } { ~boyOhm[\mainBell].value; }
+	{ id == \mainBellToggle } { ~boyOhm[\mainBellToggle].value; }
 }, \control, ~scLang);
 
 
@@ -40,7 +38,7 @@ OSCdef(\mainBellOhm, { | msg |
 	};
 });
 
-~boyOhm[\mainBellToggle] = r ({ | val |
+~boyOhm[\mainBellToggle] = r ({
 	loop{
 		~ohm.turnPink(toggle).yield;
 

@@ -27,12 +27,12 @@ OSCdef(\endSynthOhm, { | msg |
 	{ id == \endSynthLoop } { ~boyOhm[\endSynthLoop].value; }
 	{ id == \endSynthD } { ~boyOhm[\endSynthD].value; }
 	{ id == \endSynthDSharp } { ~boyOhm[\endSynthDSharp].value; }
-	{ id == \endSynthAOne } { ~boyOhm[\endSynthAOne].value; }
-	{ id == \endSynthCSharpOne } { ~boyOhm[\endSynthCSharpOne].value; }
-	{ id == \endSynthGSharp } { ~boyOhm[\endSynthGSharp].value; }
-	{ id == \endSynthATwo } { ~boyOhm[\endSynthATwo] .value; }
-	{ id == \endSynthCSharpTwo } { ~boyOhm[\endSynthCSharpTwo].value; }
-	{ id == \endSynthASix } { ~boyOhm[\endSynthASix].value; }
+	{ id == \endSynthAOne } { ~boyOhm[\endSynthAMajorOne].value; }
+	{ id == \endSynthCSharpOne } { ~boyOhm[\endSynthCSharpMinorOne].value; }
+	{ id == \endSynthGSharp } { ~boyOhm[\endSynthGSharpMinor].value; }
+	{ id == \endSynthATwo } { ~boyOhm[\endSynthAMajorTwo] .value; }
+	{ id == \endSynthCSharpTwo } { ~boyOhm[\endSynthCSharpMinorTwo].value; }
+	{ id == \endSynthASix } { ~boyOhm[\endSynthAMajorSix].value; }
 	{ id == \endSynthBMajor } { ~boyOhm[\endSynthBMajor].value; }
 	{ id == \endSynthCSharp } { ~boyOhm[\endSynthCSharp].value; }
 }, \control, ~scLang);

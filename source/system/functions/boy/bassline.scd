@@ -205,7 +205,7 @@ prm
 
 		~boy[\bassline].stopOne;
 		~scLang.sendMsg(\control, \boyBasslineOne);
-		["bassline one stopped"].postln;
+		["bassline one stopped"].postln.yield;
 	};
 });
 
@@ -217,11 +217,11 @@ prm
 
 		~boy[\bassline].stopTwo;
 		~scLang.sendMsg(\control, \boyBasslineTwo);
-		["bassline two stopped"].postln;
+		["bassline two stopped"].postln.yield;
 	};
 });
 
-~boyMake[\basslineThree] = r({ | val |
+~boyMake[\basslineThree] = r({
 	loop {
 		~boy[\bassline].playThree;
 		~scLang.sendMsg(\control, \boyBasslineThree);
@@ -229,6 +229,6 @@ prm
 
 		~boy[\bassline].stopThree;
 		~scLang.sendMsg(\control, \boyBasslineThree);
-		["bassline three playing"].postln;
+		["bassline three playing"].postln.yield;
 	};
 });

@@ -33,7 +33,7 @@ OSCdef(\connectionsTransportOhm, { | msg |
 		~connectOhm[\makeTransport].play(~connections[\transport]);
 		~ohm.turnLavender(val).yield;
 
-		~connections[\seeTransport].stop;
+		~connectOhm[\makeTransport].stop;
 		~ohm.turnRed(val).yield;
 	}
 });

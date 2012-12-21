@@ -165,10 +165,10 @@ prm
 	loop {
 		~boy[\noiseChords].playThree;
 		~scLang.sendMsg(\control, \noisChordsThree);
-		["noise chords three playing"].postln;
+		["noise chords three playing"].postln.yield;
 
 		~boy[\noiseChords].stopThree;
 		~scLang.sendMsg(\conrol, \noiseChordsThree);
-		["noise chords three stopped"].postln;
+		["noise chords three stopped"].postln.yield;
 	};
 });

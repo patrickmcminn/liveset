@@ -11,12 +11,14 @@
 12/20/2012 - first round of error correction 
 	- fixed what connections functions I could.
 
+12/21/2012
+	- fixed boy functions
+
 [ ]Global
 
    * [ ]figure out postln doubling bullshit
       * only in connections - check OSC page
       * also, see if control surface behaves differently than calling functions explicitly
-
 [ ]Connections
 
    * [ ]note record not changing colors
@@ -44,43 +46,45 @@
    * [X]micVerb toggle changes micVerb button
 
       * I think I got this one.
-   * [ ]transport won't visually die
+   * [X]transport won't visually die
 
 [ ]Boy
 
-   * [ ]main bell fucked
+   * [X]main bell fucked
       * in mainBell.scd - at not understood
-   * [ ]main row fuzz good
-
-   * [ ]low row fuzz loop is fucked somewhere
+   * [X]low row fuzz loop is fucked somewhere
 
    * [ ]Random Bells fucked, makes craaaazy sound
 
       * at not understood
       * but w/ rowFuzz, sounds like some weird bus-stealing bullshit to me
-   * [ ]bassline one fucked in stopping/starting
+         * this one is a smidge confusing
+   * [X]bassline one fucked in stopping/starting
 
-   * [ ]so is bassline two
+   * [X]so is bassline two
 
    * [ ]bassline three changes colors, but doesn't work
 
-   * [ ]noiseChords three missing a yield somewhere -- infinite loop!
+      * maybe fixed
+   * [X]noiseChords three missing a yield somewhere -- infinite loop!
 
-   * [ ]trumpet toggle fucked
+   * [X]trumpet toggle fucked
 
       * asInteger not understood in trumpetOhm
-   * [ ]trumpet octave shift has infinite loop
+      * this one is a bit baffling
+         * nevermind.  GOTCHA
+   * [X]trumpet octave shift has infinite loop
 
-   * [ ]accomp synth 3 doesn't change colors
+   * [X]accomp synth 3 doesn't change colors
 
-   * [ ]no D# postln
+   * [X]no D# postln
 
-   * [ ]aMajor doesn't change colors
+   * [X]aMajor doesn't change colors
 
-   * [ ]cSharpMinor doesn't change colors
-   * [ ]gSharpMinor doesn't change colors
+   * [X]cSharpMinor doesn't change colors
+   * [X]gSharpMinor doesn't change colors
 
-   * [ ]none of these other fuckers change colors until BM and C# loop
+   * [X]none of these other fuckers change colors until BM and C# loop
 
 [ ]Birds
 
@@ -94,5 +98,4 @@
    * [ ]wobble synths both created and freed in one fell swoop
 
    * [ ]micVerb seems ok
-
 

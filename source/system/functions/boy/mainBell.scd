@@ -51,40 +51,28 @@ prm
 	Pbindef(\mainBell).remove;
 });
 
-~boyMake[\mainBell] = r({ | main |
-	var val, toggle, vol;
-	val = main.at(0);
-	toggle = main.at(1);
-	vol = main.at(2);
-
+~boyMake[\mainBell] = r({
 	loop {
 		~boy[\mainBell].value;
-		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\mainBellToggle, { ~scLang.sendMsg(\mainBell, \toggle, toggle); }, toggle);
-		MIDIdef.cc(\mainBellVolume, { | amp | ~scLang.sendMsg(\mainBell, \volume, amp); }, vol);
-		["main bell synths active"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \mainBell);
+		["main bell synths active"].postln.yield;
 
 
 		~boy[\mainBell].kill;
-		~ohm.turnOff(toggle);
-		MIDIdef(\mainBellToggle).free;
-		MIDIdef(\mainBellVolume).free;
-		["main bell synths freed"].postln;
-		~ohm.turnRed(val).yield;
-
+		~scLang.sendMsg(\control, \mainBell);
+		["main bell synths freed"].postln.yield;
 	};
 });
 
 ~boyMake[\mainBellToggle] = r ({ | val |
 	loop{
 		~boy[\transport].playNextBar({ Pbindef(\mainBell).play(~boy[\transport]) });
-		["main bell playing"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \mainBellToggle);
+		["main bell playing"].postln.yield;
 
 		Pbindef(\mainBell).stop;
-		["main bell stopped"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \mainBellToggle);
+		["main bell stopped"].postln.yield;
 	};
 });
 

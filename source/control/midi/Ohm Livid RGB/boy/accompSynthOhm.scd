@@ -18,7 +18,7 @@ OSCdef(\accompSynthOhm, { | msg |
 	{ id == \accompSynth } { ~boyOhm[\accompSynth].value; }
 	{ id == \accompSynthPhraseOne } { ~boyOhm[\accompSynthPhraseOne].value; }
 	{ id == \accompSynthPhraseTwo } { ~boyOhm[\accompSynthPhraseTwo].value; }
-	{ id == \accompSynthPhraseThree } { ~boyOhm[\accompSynthPhrsaeThree].value; }
+	{ id == \accompSynthPhraseThree } { ~boyOhm[\accompSynthPhraseThree].value; }
 }, \control, ~scLang);
 
 ~boyOhm[\accompSynth] = r({
