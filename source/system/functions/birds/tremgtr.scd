@@ -53,7 +53,7 @@ prm
 		["tremgtr active"].postln.yield;
 
 		~birds[\tremgtr].kill;
-		~scLang.sendMsg(\control, \tremgtrToggle);
+		~scLang.sendMsg(\control, \tremgtr);
 		["tremgtr synths freed"].postln.yield;
 	};
 

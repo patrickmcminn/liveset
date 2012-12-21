@@ -39,7 +39,7 @@ OSCdef(\wobbleOhm, { | msg |
 	};
 });
 
-~birdsOhm[\wobbleToggle] = r({ | val |
+~birdsOhm[\wobbleToggle] = r({
 	loop{
 		~ohm.turnPurple(toggle).yield;
 

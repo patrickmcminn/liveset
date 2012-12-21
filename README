@@ -13,6 +13,7 @@
 
 12/21/2012
 	- fixed boy functions
+	- fixed birds functions
 
 [ ]Global
 
@@ -88,14 +89,16 @@
 
 [ ]Birds
 
-   * [ ]bed kill fucked
-   * [ ]infinite loop in eqgtr toggle
+   * [X]bed kill fucked
+   * [X]infinite loop in eqgtr toggle
 
-   * [ ]weird loop weirdness with tremgtr
+   * [X]weird loop weirdness with tremgtr
 
-   * [ ]killing the noiseSynth doesn't work
+   * [X]killing the noiseSynth doesn't work
       * double toggle seems to fix it.
+         * stupid typo
    * [ ]wobble synths both created and freed in one fell swoop
 
-   * [ ]micVerb seems ok
+      * dunno the problem here, actually.
+   * [X]micVerb seems ok
 

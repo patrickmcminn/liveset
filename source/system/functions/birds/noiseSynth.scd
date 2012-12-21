@@ -840,7 +840,7 @@ prm
 
 
 		~birds[\noiseSynth].kill;
-		~scLang.sendMsg(\control, \noisSynth);
+		~scLang.sendMsg(\control, \noiseSynth);
 		["noiseSynth Synths Freed"].postln.yield;
 	}
 });

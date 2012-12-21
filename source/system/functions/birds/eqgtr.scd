@@ -55,12 +55,12 @@ prm
 	loop{
 		~birdsSynth[\eqgtr].inFader.set(\mute, 0);
 		~scLang.sendMsg(\control, \eqgtrToggle);
-		["eqgtr input muted"].postln;
+		["eqgtr input muted"].postln.yield;
 
 
 		~birdsSynth[\eqgtr].inFader.set(\mute, 1);
 		~scLang.sendMsg(\control, \eqgtrToggle);
-		["eqgtr input active"].postln;
+		["eqgtr input active"].postln.yield;
 	}
 });
 
