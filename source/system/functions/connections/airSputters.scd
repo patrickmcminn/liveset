@@ -120,33 +120,33 @@ prm
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterOne).play; }.defer(0.4);
 		~scLang.sendMsg(\control, \sputterMake);
-		["first breath recorded"].postln.yield;
+		["first breath recorded"].yield;
 
 
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(1)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterTwo).play; }.defer(0.4);
 		~scLang.sendMsg(\control, \sputterMake);
-		["second breath recorded"].postln.yield;
+		["second breath recorded"].yield;
 
 
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(2)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterThree).play; }.defer(0.4);
 		~scLang.sendMsg(\control, \sputterMake);
-		["third breath recorded"].postln.yield;
+		["third breath recorded"].yield;
 
 
 		Synth(\recordBuf, [\in, ~inst[\mute], \bufName, ~connectBuf[\airSputters].at(3)],
 			~group[\fx], \addToTail);
 		{ Pbindef(\sputterFour).play; }.defer(0.4);
 		~scLang.sendMsg(\control, \sputterMake);
-		["fourth breath recorded"].postln.yield;
+		["fourth breath recorded"].yield;
 
 
 		OSCdef(\airRespond).free;
 		~scLang.sendMsg(\control, \sputterMake);
-		["done with breath attacks"].postln.yield;
+		["done with breath attacks"].yield;
 
 	});
 
@@ -188,13 +188,9 @@ prm
 
 
 
-~connectMake[\airSputters] = r { | main |
-	var val, toggle, vol;
-	val = main.at(0);
-	toggle = main.at(1);
-	vol = main.at(2);
+~connectMake[\airSputters] = r {
 	loop {
-		~connections[\airSputters].value(val);
+		~connections[\airSputters].value;
 		~scLang.sendMsg(\control, \airSputters);
 		["Air Sputters Active"].postln.yield;
 
@@ -204,7 +200,7 @@ prm
 	};
 };
 
-~connectMake[\airSputtersToggle] = r { | val |
+~connectMake[\airSputtersToggle] = r {
 	loop {
 		~connections[\airSputters].stopSputters;
 		~scLang.sendMsg(\control, \airSputtersToggle);

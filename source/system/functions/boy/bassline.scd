@@ -108,7 +108,7 @@ prm
 			Pseq([gMajor7, eMajor7], inf)
 		),
 		\dur, Pstutter(
-			Pseq([16, 14, 18, 17], inf),
+			Pseq([16, 14, 18, 7], inf),
 			Pseq([0.25, 0.25, 0.25, 0.5], inf)
 		),
 		\atk, 0.12,

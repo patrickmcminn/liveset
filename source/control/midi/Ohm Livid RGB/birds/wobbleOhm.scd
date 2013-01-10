@@ -14,7 +14,7 @@ OSCdef(\wobbleOhm, { | msg |
 	var id = msg.at(1);
 	case
 	{ id == \wobble } { ~birdsOhm[\wobble].value; }
-	{ id == \wobbleToggle } { ~birdsOhm[\wobble].value; }
+	{ id == \wobbleToggle } { ~birdsOhm[\wobbleToggle].value; }
 }, \control, ~scLang);
 
 

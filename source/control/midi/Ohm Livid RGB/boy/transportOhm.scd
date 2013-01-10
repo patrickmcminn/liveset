@@ -20,9 +20,9 @@ OSCdef(\boyTransportOhm, { | msg |
 ~boyOhm[\makeTransport] = Routine({
 	loop{
 		~boy[\transport].schedAbs(~boy[\transport].nextBar, {
-			~ohm.blink(bar, \green, (~boy[\transport].tempo/2))});
+			~ohm.blink(bar, \green, (~boy[\transport].tempo/3))});
 		~boy[\transport].schedAbs(~boy[\transport].nextTimeOnGrid, {
-			~ohm.blink(beat, \blue, (~boy[\transport].tempo/2))});
+			~ohm.blink(beat, \blue, (~boy[\transport].tempo/3))});
 		1.wait;
 	};
 });
@@ -34,7 +34,7 @@ OSCdef(\boyTransportOhm, { | msg |
 		~boyOhm[\makeTransport].play(~boy[\transport]);
 		~ohm.turnLavender(val).yield;
 
-		~boy[\seeTransport].stop;
+		~boyOhm[\makeTransport].stop;
 		~ohm.turnRed(val).yield;
 	}
 });

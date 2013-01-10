@@ -40,7 +40,7 @@ OSCdef(\boyBasslineOhm, { | msg |
 
 		MIDIdef.cc(\boyBasslineCutoff, { | val |
 			var cutoff = val.linlin(0, 127, 0, 7000);
-			~scLang.sendMsg(\boyBassline, \cutoff, cutoff); }, cutoff);
+			~scLang.sendMsg(\boyBassline, \cutoff, cutoff.lag(0.1)); }, cutoff);
 
 		~ohm.turnPink(val).yield;
 
@@ -74,9 +74,9 @@ OSCdef(\boyBasslineOhm, { | msg |
 	};
 });
 
-~boyMake[\basslineThree] = r({
+~boyOhm[\basslineThree] = r({
 	loop {
-		~ohm.turnPink(three).yield;
+		~ohm.turnBlue(three).yield;
 
 		~ohm.turnRed(three).yield;
 	};

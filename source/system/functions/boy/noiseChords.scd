@@ -164,11 +164,11 @@ prm
 ~boyMake[\noiseChordsThree] = r ({
 	loop {
 		~boy[\noiseChords].playThree;
-		~scLang.sendMsg(\control, \noisChordsThree);
+		~scLang.sendMsg(\control, \noiseChordsThree);
 		["noise chords three playing"].postln.yield;
 
 		~boy[\noiseChords].stopThree;
-		~scLang.sendMsg(\conrol, \noiseChordsThree);
+		~scLang.sendMsg(\control, \noiseChordsThree);
 		["noise chords three stopped"].postln.yield;
 	};
 });

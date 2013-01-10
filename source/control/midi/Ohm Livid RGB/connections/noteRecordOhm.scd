@@ -9,7 +9,7 @@ var val = 3;
 OSCdef(\noteRecordOhm, { | msg |
 	var id = msg.at(1);
 	case
-	{ \id == \noteRecord } { ~connectOhm[\noteRecord].value; }
+	{ id == \noteRecord } { ~connectOhm[\noteRecord].value; }
 }, \control, ~scLang);
 
 

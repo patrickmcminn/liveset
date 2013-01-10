@@ -16,6 +16,7 @@ OSCdef(\bedOhm, { | msg |
 	{ id == \bed } { ~birdsOhm[\bed].value; }
 	{ id == \bedPlay } { ~birdsOhm[\bedPlay].value; }
 	{ id == \bedToggle } { ~birdsOhm[\bedToggle].value; }
+	{ id == \bedTrigger } { ~birdsOhm[\bedTrigger].value; }
 }, \control, ~scLang);
 
 
@@ -76,5 +77,21 @@ OSCdef(\bedOhm, { | msg |
 		// all off
 		~ohm.turnRed(toggle).yield;
 	}
+});
+
+~birdsOhm[\bedTrigger] = r ({
+	loop{
+		~ohm.turnBlue(val).yield;
+
+		~ohm.turnYellow(val).yield;
+
+		~ohm.turnPurple(val).yield;
+
+		~ohm.turnGreen(val).yield;
+
+		~ohm.turnLavender(val).yield;
+
+		~ohm.turnBlue(val).yield;
+	};
 });
 

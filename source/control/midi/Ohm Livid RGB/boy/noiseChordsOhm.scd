@@ -49,7 +49,7 @@ OSCdef(\noiseChordsOhm, { | msg |
 	};
 });
 
-~boyOhm[\noiseChordsOne] = r ({ | val |
+~boyOhm[\noiseChordsOne] = r ({
 	loop{
 		~ohm.turnPink(one).yield;
 
@@ -57,7 +57,7 @@ OSCdef(\noiseChordsOhm, { | msg |
 	};
 });
 
-~boyOhm[\noiseChordsTwo] = r ({ | val |
+~boyOhm[\noiseChordsTwo] = r ({
 	loop {
 		~ohm.turnPurple(two).yield;
 
@@ -65,7 +65,7 @@ OSCdef(\noiseChordsOhm, { | msg |
 	};
 });
 
-~boyOhm[\noiseChordsThree] = r ({ | val |
+~boyOhm[\noiseChordsThree] = r ({
 	loop {
 		~ohm.turnYellow(three).yield;
 

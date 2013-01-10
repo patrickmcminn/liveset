@@ -14,7 +14,7 @@ OSCdef(\chordsOhm, { | msg |
 	var id = msg.at(1);
 	case
 	{ id == \chords } { ~connectOhm[\chords].value; }
-	{ id == \chordsSum } { ~connectOhm[\chordsSum].value; }
+	{ id == \chordSum } { ~connectOhm[\chordSum].value; }
 	{ id == \chordsToggle } { ~connectOhm[\chordsToggle].value; }
 }, \control, ~scLang);
 

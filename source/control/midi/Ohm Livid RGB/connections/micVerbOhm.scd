@@ -14,7 +14,7 @@ OSCdef(\micVerbOhm, { | msg |
 	var id = msg.at(1);
 	case
 	{ id == \micVerb } { ~connectOhm[\micVerb].value; }
-	{ id == \micVerbToggle } { ~connectOhm[\micVerb].value; }
+	{ id == \micVerbToggle } { ~connectOhm[\micVerbToggle].value; }
 }, \control, ~scLang);
 
 ~connectOhm[\micVerb] = r {

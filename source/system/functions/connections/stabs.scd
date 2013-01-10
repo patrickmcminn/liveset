@@ -83,11 +83,13 @@ prm
 	loop {
 		~connections[\transport].playNextBar({
 			~connections[\stabs].playStabs;
+			~scLang.sendMsg(\control, \stabsToggle);
 			["stabs synths playing"].postln;
 		}).yield;
 
 		~connections[\transport].playNextBar({
 			~connections[\stabs].stopStabs;
+			~scLang.sendMsg(\control, \stabsToggle);
 			["stabs synths stopped"].postln;
 		}).yield;
 	};

@@ -128,37 +128,41 @@ prm
 
 		Synth(\recordBuf, [\in, ~inst[\guitar], \bufName, ~birdsBuf[\bed].at(0)],
 			~group[\fx], \addToTail);
-		["C# Recorded"].postln;
-		~ohm.turnLavender(val).yield;
+		~scLang.sendMsg(\control, \bedTrigger);
+		["C# Recorded"].yield;
 
 		Synth(\recordBuf, [\in, ~inst[\guitar], \bufName, ~birdsBuf[\bed].at(1)],
 			~group[\fx], \addToTail);
-		["G# Recorded"].postln;
-		~ohm.turnPink(val).yield;
+		~scLang.sendMsg(\control, \bedTrigger);
+		["G# Recorded"].yield;
 
 		Synth(\recordBuf, [\in, ~inst[\guitar], \bufName, ~birdsBuf[\bed].at(2)],
 			~group[\fx], \addToTail);
-		["F# Recorded"].postln;
-		~ohm.turnPurple(val).yield;
+		~scLang.sendMsg(\control, \bedTrigger);
+		["F# Recorded"].yield;
+
 
 		Synth(\recordBuf, [\in, ~inst[\guitar], \bufName, ~birdsBuf[\bed].at(3)],
 			~group[\fx], \addToTail);
-		["A Recorded"].postln;
-		~ohm.turnYellow(val).yield;
+		~scLang.sendMsg(\control, \bedTrigger);
+		["A Recorded"].yield;
+
 
 		Synth(\recordBuf, [\in, ~inst[\guitar], \bufName, ~birdsBuf[\bed].at(4)],
 			~group[\fx], \addToTail);
-		["B Recorded"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \bedTrigger);
+		["B Recorded"].yield;
+
 
 		Synth(\recordBuf, [\in, ~inst[\guitar], \bufName, ~birdsBuf[\bed].at(5)],
 			~group[\fx], \addToTail);
-		["E Recorded"].postln;
-		~ohm.turnLavender(val).yield;
+		~scLang.sendMsg(\control, \bedTrigger);
+		["E Recorded"].yield;
+
 
 		OSCdef(\bedRespond).free;
-		["done with recording bed buffers"].postln;
-		~ohm.turnBlue(val).yield;
+		["done with recording bed buffers"].postln.yield;
+
 	});
 
 	OSCdef(\bedRespond, { ~birds[\bedMake].next.postln; }, '/tr' );
@@ -263,13 +267,15 @@ prm
 
 ~birdsMake[\bedToggle] = r ({
 	loop{
+		~birds[\bed].stopBed;
+		~scLang.sendMsg(\control, \bedToggle);
+		["all beds off"].postln.yield;
+
 		~birds[\bed].playBed;
 		~scLang.sendMsg(\control, \bedToggle);
 		["all beds on"].postln.yield;
 
-		~birds[\bed].stopBed;
-		~scLang.sendMsg(\control, \bedToggle);
-		["all beds off"].postln.yield;
+
 	}
 });
 

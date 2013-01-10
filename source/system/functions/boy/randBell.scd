@@ -212,7 +212,7 @@ prm
 		["random bell synths created"].postln.yield;
 
 		~boy[\randBell].kill;
-		~scLang.sendMsg(\control, \randBell)
+		~scLang.sendMsg(\control, \randBell);
 		["random bell synths freed"].postln.yield;
 	};
 });

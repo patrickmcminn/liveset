@@ -13,7 +13,7 @@ OSCdef(\cascadeOhm, { | msg |
 	var id = msg.at(1);
 	case
 	{ id == \cascade } { ~connectOhm[\cascade].value; }
-	{ id == \cascadeToggle } { ~connectOhm[\cascade].value; }
+	{ id == \cascadeToggle } { ~connectOhm[\cascadeToggle].value; }
 }, \control, ~scLang);
 
 ~connectOhm[\cascade] = r {
