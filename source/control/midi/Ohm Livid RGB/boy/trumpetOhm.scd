@@ -26,7 +26,7 @@ OSCdef(\boyTrumpetOhmRestore, { | msg |
 	id = msg.at(1);
 	val = msg.at(2);
 	case
-	{ id == \trumpet } {
+	{ id == \boyTrumpet } {
 		if ( val == 1, { ~boyOhmMidi[\trumpet].make; } );
 	}
 }, \restoreOhm);
@@ -34,7 +34,7 @@ OSCdef(\boyTrumpetOhmRestore, { | msg |
 
 ~boyOhm[\trumpet] = r ({
 	loop {
-		~restoreOhm[\boy].trumpet = 1;
+		~restoreOhm[\boy].boyTrumpet = 1;
 		~boyOhmMidi[\trumpet].make;
 		~restoreOhm[\boy].page.put(toggle, \green);
 		~ohm.turnGreen(toggle);
@@ -47,7 +47,7 @@ OSCdef(\boyTrumpetOhmRestore, { | msg |
 		~restoreOhm[\boy].page.put(val, \blue);
 		~ohm.turnBlue(val).yield;
 
-		~restoreOhm[\boy].trumpet = 0;
+		~restoreOhm[\boy].boyTrumpet = 0;
 		~boyOhmMidi[\trumpet].kill;
 		~restoreOhm[\boy].page.put(toggle, \off);
 		~ohm.turnOff(toggle);

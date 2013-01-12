@@ -4,6 +4,9 @@ birdsPage.scd
 prm
 */
 
+~restoreOhm[\birds] = ( );
+~restoreOhm[\birds].page = Array.fill(81, nil);
+
 ~page[\birds] = {
 
 	~ohm.clearAll;
@@ -31,5 +34,18 @@ prm
 	~ohm.turnGreen(69);
 	MIDIdef.noteOn(\birdsTransport, { ~scLang.sendMsg(\birdsTransport, \main); }, 69);
 
+	~restoreOhm[\birds].page.do({ | color, note |
+		case
+		{ color == \off } { ~ohm.turnOff(note); }
+		{ color == \lavender } { ~ohm.turnLavender(note); }
+		{ color == \blue } { ~ohm.turnBlue(note); }
+		{ color == \pink } { ~ohm.turnPink(note) ; }
+		{ color == \red } { ~ohm.turnRed(note); }
+		{ color == \purple } { ~ohm.turnPurple(note); }
+		{ color == \green } { ~ohm.turnGreen(note); }
+		{ color == \yellow } { ~ohm.turnYellow(note); }
+	});
+
+	~restoreOhm[\birds].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 
 }
