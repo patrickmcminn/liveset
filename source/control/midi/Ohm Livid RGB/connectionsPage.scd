@@ -60,13 +60,14 @@ prm
 
 	~restoreOhm[\connections].page.do({ | color, note |
 		case
-		{ color == "off" } { ~ohm.turnOff(note); "yes".postln; }
-		{ color == "lavender" } { ~ohm.turnLavender(note); }
+		{ color == \off } { ~ohm.turnOff(note); }
+		{ color == \lavender } { ~ohm.turnLavender(note); }
 		{ color == \blue } { ~ohm.turnBlue(note); }
 		{ color == \pink } { ~ohm.turnPink(note) ; }
 		{ color == \red } { ~ohm.turnRed(note); }
 		{ color == \purple } { ~ohm.turnPurple(note); }
 		{ color == \green } { ~ohm.turnGreen(note); }
+		{ color == \yellow } { ~ohm.turnYellow(note); }
 	});
 
 	~restoreOhm[\connections].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });

@@ -21,56 +21,84 @@ OSCdef(\boyTrumpetOhm, { | msg |
 	{ id == \boyTrumpetOctaveToggle } { ~boyOhm[\trumpetOctaveToggle].value; }
 }, \control, ~scLang);
 
+OSCdef(\boyTrumpetOhmRestore, { | msg |
+	var id, val;
+	id = msg.at(1);
+	val = msg.at(2);
+	case
+	{ id == \trumpet } {
+		if ( val == 1, { ~boyOhmMidi[\trumpet].make; } );
+	}
+}, \restoreOhm);
+
+
 ~boyOhm[\trumpet] = r ({
 	loop {
+		~restoreOhm[\boy].trumpet = 1;
+		~boyOhmMidi[\trumpet].make;
+		~restoreOhm[\boy].page.put(toggle, \green);
 		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\trumpetToggle, { ~scLang.sendMsg(\boyTrumpet, \toggle); }, toggle);
-
+		~restoreOhm[\boy].page.put(minorThird, \blue);
 		~ohm.turnBlue(minorThird);
-		MIDIdef.noteOn(\trumpetMinor, { ~scLang.sendMsg(\boyTrumpet, \minorThird); }, minorThird);
-
+		~restoreOhm[\boy].page.put(majorThird, \lavender);
 		~ohm.turnLavender(majorThird);
-		MIDIdef.noteOn(\trumpetMajor, { ~scLang.sendMsg(\boyTrumpet, \majorThird); }, majorThird);
-		MIDIdef.noteOff(\noTrumpetShift, { ~scLang.sendMsg(\boyTrumpet, \unison); }, [minorThird, majorThird]);
-
+		~restoreOhm[\boy].page.put(octave, \blue);
 		~ohm.turnBlue(octave);
-		MIDIdef.noteOn(\trumpetOctave, { ~scLang.sendMsg(\boyTrumpet, \octave, octave); }, octave);
-
-		MIDIdef.cc(\trumpetVolume, { | val |
-			var amp = val.linlin(0, 127, 0, -4.dbamp);
-			~scLang.sendMsg(\boyTrumpet, \volume, amp); }, vol);
-
+		~restoreOhm[\boy].page.put(val, \blue);
 		~ohm.turnBlue(val).yield;
 
-
+		~restoreOhm[\boy].trumpet = 0;
+		~boyOhmMidi[\trumpet].kill;
+		~restoreOhm[\boy].page.put(toggle, \off);
 		~ohm.turnOff(toggle);
+		~restoreOhm[\boy].page.put(minorThird, \off);
 		~ohm.turnOff(minorThird);
+		~restoreOhm[\boy].page.put(majorThird, \off);
 		~ohm.turnOff(majorThird);
+		~restoreOhm[\boy].page.put(octave, \off);
 		~ohm.turnOff(octave);
-		MIDIdef(\trumpetOctave).free;
-		MIDIdef(\trumpetMinor).free;
-		MIDIdef(\trumpetMajor).free;
-		MIDIdef(\noTrumpetShift).free;
-		MIDIdef(\trumpetToggle).free;
-		MIDIdef(\trumpetVolume).free;
-
+		~restoreOhm[\boy].page.put(val, \red);
 		~ohm.turnRed(val).yield;
 	};
 });
 
 ~boyOhm[\trumpetToggle] = r({
 	loop {
+		~restoreOhm[\boy].page.put(toggle, \red);
 		~ohm.turnRed(toggle).yield;
 
+		~restoreOhm[\boy].page.put(toggle, \purple);
 		~ohm.turnPurple(toggle).yield;
 	};
 });
 
 ~boyOhm[\trumpetOctaveToggle] = r({
 	loop {
+		~restoreOhm[\boy].page.put(octave, \yellow);
 		~ohm.turnYellow(octave).yield;
 
+		~restoreOhm[\boy].page.put(octave, \red);
 		~ohm.turnRed(octave).yield;
 	};
+});
+
+~boyOhmMidi[\trumpet] = { };
+~boyOhmMidi[\trumpet].addUniqueMethod(\make, {
+	MIDIdef.noteOn(\trumpetToggle, { ~scLang.sendMsg(\boyTrumpet, \toggle); }, toggle);
+	MIDIdef.noteOn(\trumpetMinor, { ~scLang.sendMsg(\boyTrumpet, \minorThird); }, minorThird);
+	MIDIdef.noteOn(\trumpetMajor, { ~scLang.sendMsg(\boyTrumpet, \majorThird); }, majorThird);
+	MIDIdef.noteOff(\noTrumpetShift, { ~scLang.sendMsg(\boyTrumpet, \unison); }, [minorThird, majorThird]);
+	MIDIdef.noteOn(\trumpetOctave, { ~scLang.sendMsg(\boyTrumpet, \octave, octave); }, octave);
+	MIDIdef.cc(\trumpetVolume, { | val |
+		var amp = val.linlin(0, 127, 0, -4.dbamp);
+		~scLang.sendMsg(\boyTrumpet, \volume, amp); }, vol);
+});
+~boyOhmMidi[\trumpet].addUniqueMethod(\kill, {
+	MIDIdef(\trumpetOctave).free;
+	MIDIdef(\trumpetMinor).free;
+	MIDIdef(\trumpetMajor).free;
+	MIDIdef(\noTrumpetShift).free;
+	MIDIdef(\trumpetToggle).free;
+	MIDIdef(\trumpetVolume).free;
 });
 

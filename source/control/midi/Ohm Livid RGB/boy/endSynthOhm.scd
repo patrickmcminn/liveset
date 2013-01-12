@@ -37,72 +37,84 @@ OSCdef(\endSynthOhm, { | msg |
 	{ id == \endSynthCSharp } { ~boyOhm[\endSynthCSharp].value; }
 }, \control, ~scLang);
 
+OSCdef(\endSynthRestore, { | msg |
+	var id, val;
+	id = msg.at(1);
+	val = msg.at(2);
+	case
+	{ id == \endSynth } {
+		if ( val == 1, { ~boyOhmMidi[\endSynth].make; } );
+	}
+}, \restoreOhm);
+
+
 
 ~boyOhm[\endSynth] = r({
 	loop {
-
-
+		~restoreOhm[\boy].endSynth = 1;
+		~boyOhmMidi[\endSynth].make;
+		~restoreOhm[\boy].page.put(loop, \yellow);
 		~ohm.turnYellow(loop);
-		MIDIdef.noteOn(\endSynthLoop, { ~scLang.sendMsg(\endSynth, \loop); }, loop);
+		~restoreOhm[\boy].page.put(d, \yellow);
 		~ohm.turnYellow(d);
-		MIDIdef.noteOn(\endSynthD, { ~scLang.sendMsg(\endSynth, \d); }, d);
+		~restoreOhm[\boy].page.put(dSharp, \yellow);
 		~ohm.turnYellow(dSharp);
-		MIDIdef.noteOn(\endSynthDSharp, { ~scLang.sendMsg(\endSynth, \dSharp); }, dSharp);
+		~restoreOhm[\boy].page.put(aOne, \yellow);
 		~ohm.turnYellow(aOne);
-		MIDIdef.noteOn(\endSynthAOne, { ~scLang.sendMsg(\endSynth, \aOne); }, aOne);
+		~restoreOhm[\boy].page.put(cSharpOne, \yellow);
 		~ohm.turnYellow(cSharpOne);
-		MIDIdef.noteOn(\endSynthCSharpOne, { ~scLang.sendMsg(\endSynth, \cSharpOne); }, cSharpOne);
+		~restoreOhm[\boy].page.put(gSharp, \yellow);
 		~ohm.turnYellow(gSharp);
-		MIDIdef.noteOn(\endSynthGSharp, { ~scLang.sendMsg(\endSynth, \gSharp); }, gSharp);
+		~restoreOhm[\boy].page.put(aTwo, \yellow);
 		~ohm.turnYellow(aTwo);
-		MIDIdef.noteOn(\endSynthATwo, { ~scLang.sendMsg(\endSynth, \aTwo); }, aTwo);
+		~restoreOhm[\boy].page.put(cSharpTwo, \yellow);
 		~ohm.turnYellow(cSharpTwo);
-		MIDIdef.noteOn(\endSynthCSharpTwo, { ~scLang.sendMsg(\endSynth, \cSharpTwo); }, cSharpTwo);
+		~restoreOhm[\boy].page.put(aSix, \yellow);
 		~ohm.turnYellow(aSix);
-		MIDIdef.noteOn(\endSynthASix, { ~scLang.sendMsg(\endSynth, \aSix); }, aSix);
+		~restoreOhm[\boy].page.put(bMajor, \yellow);
 		~ohm.turnYellow(bMajor);
-		MIDIdef.noteOn(\endSynthBMajor, { ~scLang.sendMsg(\endSynth, \bMajor); }, bMajor);
+		~restoreOhm[\boy].page.put(cSharp, \yellow);
 		~ohm.turnYellow(cSharp);
-		MIDIdef.noteOn(\endSynthCSharp, { ~scLang.sendMsg(\endSynth, \cSharp); }, cSharp);
-
-		MIDIdef.cc(\endSynthVolume, { | val |
-			var amp = val.linlin(0, 127, 0, 1);
-			~scLang.sendMsg(\endSynth, \volume, amp); }, vol);
-
+		~restoreOhm[\boy].page.put(val, \pink);
 		~ohm.turnPink(val).yield;
 
-
-		MIDIdef(\endSynthLoop).free;
-		MIDIdef(\endSynthD).free;
-		MIDIdef(\endSynthDSharp).free;
-		MIDIdef(\endSynthAOne).free;
-		MIDIdef(\endSynthCSharpOne).free;
-		MIDIdef(\endSynthGSharp).free;
-		MIDIdef(\endSynthATwo).free;
-		MIDIdef(\endSynthCSharpTwo).free;
-		MIDIdef(\endSynthASix).free;
-		MIDIdef(\endSynthBMajor).free;
-		MIDIdef(\endSynthCSharp).free;
-		MIDIdef(\endSynthVolume).free;
+		~restoreOhm[\boy].endSynth = 0;
+		~boyOhmMidi[\endSynth].kill;
+		~restoreOhm[\boy].page.put(loop, \off);
 		~ohm.turnOff(loop);
+		~restoreOhm[\boy].page.put(d, \off);
 		~ohm.turnOff(d);
+		~restoreOhm[\boy].page.put(dSharp, \off);
 		~ohm.turnOff(dSharp);
+		~restoreOhm[\boy].page.put(aOne, \off);
 		~ohm.turnOff(aOne);
+		~restoreOhm[\boy].page.put(cSharpOne, \off);
 		~ohm.turnOff(cSharpOne);
+		~restoreOhm[\boy].page.put(gSharp, \off);
 		~ohm.turnOff(gSharp);
+		~restoreOhm[\boy].page.put(aTwo, \off);
 		~ohm.turnOff(aTwo);
+		~restoreOhm[\boy].page.put(cSharpTwo, \off);
 		~ohm.turnOff(cSharpTwo);
+		~restoreOhm[\boy].page.put(aSix, \off);
 		~ohm.turnOff(aSix);
+		~restoreOhm[\boy].page.put(bMajor, \off);
 		~ohm.turnOff(bMajor);
+		~restoreOhm[\boy].page.put(cSharp, \off);
 		~ohm.turnOff(cSharp);
+		~restoreOhm[\boy].page.put(val, \red);
 		~ohm.turnRed(val).yield;
 	};
 });
 
+
+
 ~boyOhm[\endSynthLoop] = r({
 	loop {
+		~restoreOhm[\boy].page.put(loop, \blue);
 		~ohm.turnBlue(loop).yield;
 
+		~restoreOhm[\boy].page.put(loop, \red);
 		~ohm.turnRed(loop).yield;
 	};
 });
@@ -173,8 +185,44 @@ OSCdef(\endSynthOhm, { | msg |
 
 ~boyOhm[\endSynthCSharp] = r({
 	loop {
+		~restoreOhm[\boy].page.put(cSharp, \pink);
 		~ohm.turnPink(cSharp).yield;
 
+		~restoreOhm[\boy].page.put(cSharp, \yellow);
 		~ohm.turnYellow(cSharp).yield;
 	};
 });
+
+~boyOhmMidi[\endSynth] = { };
+~boyOhmMidi[\endSynth].addUniqueMethod(\make, {
+	MIDIdef.noteOn(\endSynthLoop, { ~scLang.sendMsg(\endSynth, \loop); }, loop);
+	MIDIdef.noteOn(\endSynthD, { ~scLang.sendMsg(\endSynth, \d); }, d);
+	MIDIdef.noteOn(\endSynthDSharp, { ~scLang.sendMsg(\endSynth, \dSharp); }, dSharp);
+	MIDIdef.noteOn(\endSynthAOne, { ~scLang.sendMsg(\endSynth, \aOne); }, aOne);
+	MIDIdef.noteOn(\endSynthCSharpOne, { ~scLang.sendMsg(\endSynth, \cSharpOne); }, cSharpOne);
+	MIDIdef.noteOn(\endSynthGSharp, { ~scLang.sendMsg(\endSynth, \gSharp); }, gSharp);
+	MIDIdef.noteOn(\endSynthATwo, { ~scLang.sendMsg(\endSynth, \aTwo); }, aTwo);
+	MIDIdef.noteOn(\endSynthCSharpTwo, { ~scLang.sendMsg(\endSynth, \cSharpTwo); }, cSharpTwo);
+	MIDIdef.noteOn(\endSynthASix, { ~scLang.sendMsg(\endSynth, \aSix); }, aSix);
+	MIDIdef.noteOn(\endSynthBMajor, { ~scLang.sendMsg(\endSynth, \bMajor); }, bMajor);
+	MIDIdef.noteOn(\endSynthCSharp, { ~scLang.sendMsg(\endSynth, \cSharp); }, cSharp);
+	MIDIdef.cc(\endSynthVolume, { | val |
+		var amp = val.linlin(0, 127, 0, 1);
+		~scLang.sendMsg(\endSynth, \volume, amp); }, vol);
+});
+
+~boyOhmMidi[\endSynth].addUniqueMethod(\kill, {
+	MIDIdef(\endSynthLoop).free;
+	MIDIdef(\endSynthD).free;
+	MIDIdef(\endSynthDSharp).free;
+	MIDIdef(\endSynthAOne).free;
+	MIDIdef(\endSynthCSharpOne).free;
+	MIDIdef(\endSynthGSharp).free;
+	MIDIdef(\endSynthATwo).free;
+	MIDIdef(\endSynthCSharpTwo).free;
+	MIDIdef(\endSynthASix).free;
+	MIDIdef(\endSynthBMajor).free;
+	MIDIdef(\endSynthCSharp).free;
+	MIDIdef(\endSynthVolume).free;
+});
+

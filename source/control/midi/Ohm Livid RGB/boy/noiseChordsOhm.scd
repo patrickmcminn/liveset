@@ -20,55 +20,84 @@ OSCdef(\noiseChordsOhm, { | msg |
 	{ id == \noiseChordsThree } { ~boyOhm[\noiseChordsThree].value; }
 }, \control, ~scLang);
 
+OSCdef(\noiseChordsRestore, { | msg |
+	var id, val;
+	id = msg.at(1);
+	val = msg.at(2);
+	case
+	{ id == \noiseChords } {
+		if (val == 1, { ~boyOhmMidi[\noiseChords].make } );
+	}
+}, \restoreOhm);
+
 ~boyOhm[\noiseChords] = r({
 	loop {
-
+		~restoreOhm[\boy].noiseChords = 1;
+		~boyOhmMidi[\noiseChords].make;
+		~restoreOhm[\boy].page.put(one, \green);
 		~ohm.turnGreen(one);
-		MIDIdef.noteOn(\noiseChordsOne, { ~scLang.sendMsg(\noiseChords, \one) }, one);
+		~restoreOhm[\boy].page.put(two, \blue);
 		~ohm.turnBlue(two);
-		MIDIdef.noteOn(\noiseChordsTwo, { ~scLang.sendMsg(\noiseChords, \two) }, two);
+		~restoreOhm[\boy].page.put(three, \pink);
 		~ohm.turnPink(three);
-		MIDIdef.noteOn(\noiseChordsThree, { ~scLang.sendMsg(\noiseChords, \three) }, three);
-		MIDIdef.cc(\noiseChordsVolume, { | val |
-			var amp = val.linlin(0, 127, 0, 0.35);
-			~scLang.sendMsg(\noiseChords, \volume, amp) }, vol);
-
+		~restoreOhm[\boy].page.put(val, \lavender);
 		~ohm.turnLavender(val).yield;
 
-
+		~restoreOhm[\boy].noiseChords = 1;
+		~boyOhmMidi[\noiseChords].kill;
+		~restoreOhm[\boy].page.put(one, \off);
 		~ohm.turnOff(one);
-		MIDIdef(\noiseChordsOne).free;
+		~restoreOhm[\boy].page.put(two, \off);
 		~ohm.turnOff(two);
-		MIDIdef(\noiseChordsTwo).free;
+		~restoreOhm[\boy].page.put(three, \off);
 		~ohm.turnOff(three);
-		MIDIdef(\noiseChordsThree).free;
-		MIDIdef(\noiseChordsVolume).free;
-
+		~restoreOhm[\boy].page.put(val, \red);
 		~ohm.turnRed(val).yield;
-
 	};
 });
 
 ~boyOhm[\noiseChordsOne] = r ({
 	loop{
+		~restoreOhm[\boy].page.put(one, \pink);
 		~ohm.turnPink(one).yield;
 
+		~restoreOhm[\boy].page.put(one, \red);
 		~ohm.turnRed(one).yield;
 	};
 });
 
 ~boyOhm[\noiseChordsTwo] = r ({
 	loop {
+		~restoreOhm[\boy].page.put(two, \purple);
 		~ohm.turnPurple(two).yield;
 
+		~restoreOhm[\boy].page.put(two, \red);
 		~ohm.turnRed(two).yield;
 	};
 });
 
 ~boyOhm[\noiseChordsThree] = r ({
 	loop {
+		~restoreOhm[\boy].page.put(three, \yellow);
 		~ohm.turnYellow(three).yield;
 
+		~restoreOhm[\boy].page.put(three, \red);
 		~ohm.turnRed(three).yield;
 	};
+});
+
+~boyOhmMidi[\noiseChords] = { };
+~boyOhmMidi[\noiseChords].addUniqueMethod(\make, {
+	MIDIdef.noteOn(\noiseChordsOne, { ~scLang.sendMsg(\noiseChords, \one) }, one);
+	MIDIdef.noteOn(\noiseChordsTwo, { ~scLang.sendMsg(\noiseChords, \two) }, two);
+	MIDIdef.noteOn(\noiseChordsThree, { ~scLang.sendMsg(\noiseChords, \three) }, three);
+	MIDIdef.cc(\noiseChordsVolume, { | val |
+			var amp = val.linlin(0, 127, 0, 0.35);
+			~scLang.sendMsg(\noiseChords, \volume, amp) }, vol);
+});
+~boyOhmMidi[\noiseChords].addUniqueMethod(\kill, {
+	MIDIdef(\noiseChordsOne).free;
+	MIDIdef(\noiseChordsTwo).free;
+	MIDIdef(\noiseChordsThree).free;
+	MIDIdef(\noiseChordsVolume).free;
 });

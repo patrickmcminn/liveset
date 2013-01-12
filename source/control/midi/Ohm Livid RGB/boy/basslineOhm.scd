@@ -21,63 +21,93 @@ OSCdef(\boyBasslineOhm, { | msg |
 	{ id == \boyBasslineThree } { ~boyOhm[\basslineThree].value; }
 }, \control, ~scLang);
 
+OSCdef(\boyBasslineOhmRestore, { | msg |
+	var id, val;
+	id = msg.at(1);
+	val = msg.at(2);
+	case
+	{ id == \boyBassline } {
+		if ( val == 1, { ~boyOhmMidi[\bassline].make; } );
+	}
+}, \restoreOhm);
+
 
 ~boyOhm[\bassline] = r({
 	loop {
-
+		~restoreOhm[\boy].boyBassline = 1;
+		~boyOhmMidi[\bassline].make;
+		~restoreOhm[\boy].page.put(one, \purple);
 		~ohm.turnPurple(one);
-		MIDIdef.noteOn(\boyBasslineOne, { ~scLang.sendMsg(\boyBassline, \one); }, one);
-
+		~restoreOhm[\boy].page.put(two, \lavender);
 		~ohm.turnLavender(two);
-		MIDIdef.noteOn(\boyBasslineTwo, { ~scLang.sendMsg(\boyBassline, \two); }, two);
-
+		~restoreOhm[\boy].page.put(three, \pink);
 		~ohm.turnPink(three);
-		MIDIdef.noteOn(\boyBasslineThree, { ~scLang.sendMsg(\boyBassline, \three); }, three);
-
-		MIDIdef.cc(\boyBasslineVolume, { | val |
-			var amp = val.linlin(0, 127, 0, 1);
-			~scLang.sendMsg(\boyBassline, \volume, amp); }, vol);
-
-		MIDIdef.cc(\boyBasslineCutoff, { | val |
-			var cutoff = val.linlin(0, 127, 0, 7000);
-			~scLang.sendMsg(\boyBassline, \cutoff, cutoff.lag(0.1)); }, cutoff);
-
+		~restoreOhm[\boy].page.put(val, \pink);
 		~ohm.turnPink(val).yield;
 
-
+		~restoreOhm[\boy].boyBassline = 0;
+		~boyOhmMidi[\bassline].kill;
+		~restoreOhm[\boy].page.put(one, \off);
 		~ohm.turnOff(one);
+		~restoreOhm[\boy].page.put(two, \off);
 		~ohm.turnOff(two);
+		~restoreOhm[\boy].page.put(three, \off);
 		~ohm.turnOff(three);
-		MIDIdef(\boyBasslineOne).free;
-		MIDIdef(\boyBasslineTwo).free;
-		MIDIdef(\boyBasslineThree).free;
-		MIDIdef(\boyBasslineVolume).free;
-		MIDIdef(\boyBasslineCutoff).free;
-
+		~restoreOhm[\boy].page.put(val, \red);
 		~ohm.turnRed(val).yield;
 	};
 });
 
+
+
 ~boyOhm[\basslineOne] = r({
 	loop {
+		~restoreOhm[\boy].page.put(one, \blue);
 		~ohm.turnBlue(one).yield;
 
+		~restoreOhm[\boy].page.put(one, \red);
 		~ohm.turnRed(one).yield;
 	};
 });
 
 ~boyOhm[\basslineTwo] = r ({
 	loop {
+		~restoreOhm[\boy].page.put(two, \yellow);
 		~ohm.turnYellow(two).yield;
 
+		~restoreOhm[\boy].page.put(two, \red);
 		~ohm.turnRed(two).yield;
 	};
 });
 
 ~boyOhm[\basslineThree] = r({
 	loop {
+		~restoreOhm[\boy].page.put(three, \blue);
 		~ohm.turnBlue(three).yield;
 
+		~restoreOhm[\boy].page.put(three, \red);
 		~ohm.turnRed(three).yield;
 	};
 });
+
+
+~boyOhmMidi[\bassline] = { };
+~boyOhmMidi[\bassline].addUniqueMethod(\make, {
+	MIDIdef.noteOn(\boyBasslineOne, { ~scLang.sendMsg(\boyBassline, \one); }, one);
+	MIDIdef.noteOn(\boyBasslineTwo, { ~scLang.sendMsg(\boyBassline, \two); }, two);
+	MIDIdef.noteOn(\boyBasslineThree, { ~scLang.sendMsg(\boyBassline, \three); }, three);
+	MIDIdef.cc(\boyBasslineVolume, { | val |
+			var amp = val.linlin(0, 127, 0, 1);
+			~scLang.sendMsg(\boyBassline, \volume, amp); }, vol);
+	MIDIdef.cc(\boyBasslineCutoff, { | val |
+			var cutoff = val.linlin(0, 127, 0, 7000);
+			~scLang.sendMsg(\boyBassline, \cutoff, cutoff.lag(0.1)); }, cutoff);
+});
+~boyOhmMidi[\bassline].addUniqueMethod(\kill, {
+	MIDIdef(\boyBasslineOne).free;
+	MIDIdef(\boyBasslineTwo).free;
+	MIDIdef(\boyBasslineThree).free;
+	MIDIdef(\boyBasslineVolume).free;
+	MIDIdef(\boyBasslineCutoff).free;
+});
+

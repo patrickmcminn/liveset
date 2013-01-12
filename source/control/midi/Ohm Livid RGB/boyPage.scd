@@ -4,6 +4,9 @@ boyPage.scd
 prm
 */
 
+~restoreOhm[\boy] = ( );
+~restoreOhm[\boy].page = Array.fill(81, nil);
+
 ~page[\boy] = {
 
 	~ohm.clearAll;
@@ -41,4 +44,19 @@ prm
 
 	~ohm.turnGreen(77);
 	MIDIdef.noteOn(\boyTransport, { ~scLang.sendMsg(\boyTransport, \main); }, 77);
+
+	~restoreOhm[\boy].page.do({ | color, note |
+		case
+		{ color == \off } { ~ohm.turnOff(note); }
+		{ color == \lavender } { ~ohm.turnLavender(note); }
+		{ color == \blue } { ~ohm.turnBlue(note); }
+		{ color == \pink } { ~ohm.turnPink(note) ; }
+		{ color == \red } { ~ohm.turnRed(note); }
+		{ color == \purple } { ~ohm.turnPurple(note); }
+		{ color == \green } { ~ohm.turnGreen(note); }
+		{ color == \yellow } { ~ohm.turnYellow(note); }
+	});
+
+	~restoreOhm[\boy].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
+
 };
