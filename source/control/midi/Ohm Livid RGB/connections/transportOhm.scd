@@ -26,7 +26,6 @@ OSCdef(\connectionsTransportOhm, { | msg |
 	};
 });
 
-
 ~connectOhm[\seeTransport] = Routine({
 	loop{
 		~connectOhm[\makeTransport].reset;

@@ -1,8 +1,13 @@
 /*
 Thursday, October 18th 2012
+edited 1/11/2013
 connectionsPage.scd
 prm
 */
+
+~restoreOhm[\connections] = ( );
+~restoreOhm[\connections].page = Array.fill(81, nil);
+
 
 ~page[\connections] = {
 	~ohm.clearAll;
@@ -53,39 +58,24 @@ prm
 	~ohm.turnGreen(77);
 	MIDIdef.noteOn(\transport, { ~scLang.sendMsg(\connectionsTransport, \main) }, 77);
 
+	~restoreOhm[\connections].page.do({ | color, note |
+		case
+		{ color == "off" } { ~ohm.turnOff(note); "yes".postln; }
+		{ color == "lavender" } { ~ohm.turnLavender(note); }
+		{ color == \blue } { ~ohm.turnBlue(note); }
+		{ color == \pink } { ~ohm.turnPink(note) ; }
+		{ color == \red } { ~ohm.turnRed(note); }
+		{ color == \purple } { ~ohm.turnPurple(note); }
+		{ color == \green } { ~ohm.turnGreen(note); }
+	});
 
-	/*
-
-	~ohm.turnGreen(7);
-	MIDIdef.noteOn(\cascade, { | vel, note |
-		~scLang.sendMsg(\cascade, \main, note)}, 7);
-	~ohm.turnBlue(15);
-	MIDIdef.noteOn(\cascadeToggle, { | vel, note |
-		~scLang.sendMsg(\cascade, \toggle, note)}, 15);
-	*/
-
-
+	~restoreOhm[\connections].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 
 
 }
 
 
 
-/*
-~page[\connections] = {
-	~ohm.clearAll;
-	~ohm.addEssential;
 
-	~ohm.turnGreen(0);
-	~toggler = Routine({ | val |
-		loop{
-			"Hey I work!".postln;
-			~ohm.turnBlue(val).yield;
 
-			"I am toggling!".postln;
-			~ohm.turnRed(val).yield;
-		};
-		});
-	MIDIdef.noteOn(\tester, { ~toggler.value(0); }, 0);
-};
-*/
+

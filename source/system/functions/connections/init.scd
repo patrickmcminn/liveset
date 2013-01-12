@@ -27,12 +27,6 @@ prm
 
 Pbindef.removeAll;
 
-// creates a dictionary to store Restore functions
-~connectionsRestore = ( );
-
-// creates a dictionary to hold the states of each ~connectMake function
-~connectRestore = ( );
-
 
 // sets up a function to clear the piece
 ~connections[\clear] = {

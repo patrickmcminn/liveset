@@ -14,19 +14,26 @@ OSCdef(\chordRecordOhm, { | msg |
 
 ~connectOhm[\chordRecord] = r {
 
+	~restoreOhm[\connections].page.put(val, \lavender);
 	~ohm.turnLavender(val).yield;
 
+	~restoreOhm[\connections].page.put(val, \purple);
 	~ohm.turnPurple(val).yield;
 
+	~restoreOhm[\connections].page.put(val, \yellow);
 	~ohm.turnYellow(val).yield;
 
+	~restoreOhm[\connections].page.put(val, \pink);
 	~ohm.turnPink(val).yield;
 
+	~restoreOhm[\connections].page.put(val, \green);
 	~ohm.turnGreen(val).yield;
 
+	~restoreOhm[\connections].page.put(val, \blue);
 	~ohm.turnBlue(val).yield;
 
 	loop {
+		~restoreOhm[\connections].page.put(val, \red);
 		~ohm.turnRed(val).yield;
 	};
 

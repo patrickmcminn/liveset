@@ -55,5 +55,12 @@ prm
 //creates function dictionaries to hold song functions specific to the Ohm control surface:
 
 ~connectOhm = ( );
+~connectOhmMidi = ( );
 ~boyOhm = ( );
+~boyOhmMidi = ( );
 ~birdsOhm = ( );
+~birdsOhmMidi = ( );
+
+// creates dictionary to hold restore data
+
+~restoreOhm = ( );

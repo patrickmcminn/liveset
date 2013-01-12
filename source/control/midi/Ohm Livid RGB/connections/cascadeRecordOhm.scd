@@ -12,12 +12,16 @@ OSCdef(\cascadeRecordOhm, { | msg |
 	{ id == \cascadeRecord } { ~connectOhm[\cascadeRecord].value; }
 }, \control, ~scLang);
 
+
 ~connectOhm[\cascadeRecord] = r {
 	loop {
+		~restoreOhm[\connections].page.put(val, \lavender);
 		~ohm.turnLavender(val).yield;
 
+		~restoreOhm[\connections].page.put(val, \purple);
 		~ohm.turnPurple(val).yield;
 
+		~restoreOhm[\connections].page.put(val, \yellow);
 		~ohm.turnYellow(val).yield;
 	};
 };
