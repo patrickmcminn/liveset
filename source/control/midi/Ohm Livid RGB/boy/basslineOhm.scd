@@ -100,8 +100,8 @@ OSCdef(\boyBasslineOhmRestore, { | msg |
 			var amp = val.linlin(0, 127, 0, 1);
 			~scLang.sendMsg(\boyBassline, \volume, amp); }, vol);
 	MIDIdef.cc(\boyBasslineCutoff, { | val |
-			var cutoff = val.linlin(0, 127, 0, 7000);
-			~scLang.sendMsg(\boyBassline, \cutoff, cutoff.lag(0.1)); }, cutoff);
+		var cutoff = val.linlin(0, 127, 40, 7000);
+		~scLang.sendMsg(\boyBassline, \cutoff, cutoff;) }, cutoff);
 });
 ~boyOhmMidi[\bassline].addUniqueMethod(\kill, {
 	MIDIdef(\boyBasslineOne).free;

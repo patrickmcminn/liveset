@@ -9,3 +9,4 @@ prm
 "/functions/Load Connections Functions.scd".loadRelative;
 "/functions/Load boy Functions.scd".loadRelative;
 "/functions/Load birds Functions.scd".loadRelative;
+"/functions/Load improv Functions.scd".loadRelative;

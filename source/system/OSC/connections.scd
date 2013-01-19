@@ -9,7 +9,7 @@ prm
 
 
 OSCdef(\airSputters, { | msg |
-	var id, val, toggle, vol;
+	var id, val;
 	id = msg.at(1);
 	val = msg.at(2);
 	case

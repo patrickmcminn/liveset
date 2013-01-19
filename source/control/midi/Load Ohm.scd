@@ -18,6 +18,8 @@ try
 "/Ohm Livid RGB/loadBoyOhm.scd".loadRelative;
 "/Ohm Livid RGB/birdsPage.scd".loadRelative;
 "/Ohm Livid RGB/loadBirdsOhm.scd".loadRelative;
+"/Ohm Livid RGB/improvPage.scd".loadRelative;
+"/Ohm Livid RGB/loadImprovOhm.scd".loadRelative;
 
 "/Ohm Livid RGB/ohmStartup.scd".loadRelative;
 }

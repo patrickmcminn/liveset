@@ -5,3 +5,4 @@ prm
 */
 
 "/Machine Listening SynthDefs/onsetDetectorTrig.scd".loadRelative;
+"/Machine Listening SynthDefs/amplitudeFollow.scd".loadRelative;

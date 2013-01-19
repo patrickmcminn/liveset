@@ -24,3 +24,5 @@ prm
 "/Effects SynthDefs/nebula.scd".loadRelative;
 "/Effects SynthDefs/distortion3.scd".loadRelative;
 "/Effects SynthDefs/brokenAntenna.scd".loadRelative;
+"/Effects SynthDefs/gendyIn.scd".loadRelative;
+"/Effects SynthDefs/sustainerPlayer.scd".loadRelative;

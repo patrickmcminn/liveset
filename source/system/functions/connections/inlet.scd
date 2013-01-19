@@ -14,7 +14,7 @@ prm
 	);
 	~connectSynth[\inlet] = (
 		\verb: Synth(\convReverbStereo, [\in, ~connectBus[\inlet].verb, \out, ~connectBus[\inlet].gran,
-			\buffer, ~impulse[\cathedral1], \mix, 0.77], ~group[\fx], \addToTail),
+			\buffer, ~impulse[\cathedral1], \mix, 0.5], ~group[\fx], \addToTail),
 
 		\gran: Synth(\granulator,
 			[

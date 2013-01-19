@@ -5,6 +5,7 @@ prm
 */
 
 "/Control SynthDefs/controlScalerLinExp.scd".loadRelative;
+"/Control SynthDefs/controlScalerLinLin.scd".loadRelative;
 "/Control SynthDefs/ctlExpLine.scd".loadRelative;
 "/Control SynthDefs/ctlLinLine.scd".loadRelative;
 "/Control SynthDefs/demandRand7.scd".loadRelative;

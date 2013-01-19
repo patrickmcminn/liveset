@@ -60,6 +60,8 @@ prm
 ~boyOhmMidi = ( );
 ~birdsOhm = ( );
 ~birdsOhmMidi = ( );
+~improvOhm = ( );
+~improvOhmMidi = ( );
 
 // creates dictionary to hold restore data
 
