@@ -36,6 +36,11 @@ prm
 		self;
 	},
 
+	freeOSC: { | self, name |
+		OSCdef(name.asSymbol).free;
+		self;
+	},
+
 	spawn: { | self, in, out, group, amp = 0.5, bufLength = 3, loScale = 4, hiScale = 20 |
 		if ( self.state == 0,
 			{ self.init(in, out, group, amp, bufLength, loScale, hiScale); },

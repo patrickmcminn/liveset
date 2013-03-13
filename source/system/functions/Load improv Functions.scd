@@ -6,4 +6,5 @@ prm
 
 "improv/init.scd".loadRelative;
 "improv/gendy.scd".loadRelative;
+"improv/granulator.scd".loadRelative;
 "improv/pings.scd".loadRelative;
