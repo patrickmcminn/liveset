@@ -8,3 +8,6 @@ prm
 "improv/gendy.scd".loadRelative;
 "improv/granulator.scd".loadRelative;
 "improv/pings.scd".loadRelative;
+"improv/noiseSynth.scd".loadRelative;
+
+~improv.noiseSynth.makeOSC;

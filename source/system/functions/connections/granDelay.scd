@@ -24,8 +24,8 @@ prm
 		\gran: Synth(\granulator,
 			[
 				\in, ~connectBus[\granDelay].gran, \out, ~connectBus[\granDelay].del,
-				\bufLength, 1.5, \panOffset, 0, \grainDur, 0.05,
-				\grainDurOffset, 0.01, \trigRate, 40, \amp, 1.5, \posOffset, 1
+				\bufLength, 2, \panOffset, 0, \grainDur, 0.05,
+				\grainDurOffset, 0.01, \trigRate, 40, \amp, 1.5, \posOffset, 0.8
 			],
 			~group[\fx], \addToTail),
 

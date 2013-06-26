@@ -9,19 +9,20 @@ prm
 
 try
 {
-"/Ohm Livid RGB/ohmInit.scd".loadRelative;
-"/Ohm Livid RGB/livesetOhm.scd".loadRelative;
-"/Ohm Livid RGB/topPage.scd".loadRelative;
-"/Ohm Livid RGB/connectionsPage.scd".loadRelative;
-"/Ohm Livid RGB/loadConnectionsOhm.scd".loadRelative;
-"/Ohm Livid RGB/boyPage.scd".loadRelative;
-"/Ohm Livid RGB/loadBoyOhm.scd".loadRelative;
-"/Ohm Livid RGB/birdsPage.scd".loadRelative;
-"/Ohm Livid RGB/loadBirdsOhm.scd".loadRelative;
-"/Ohm Livid RGB/improvPage.scd".loadRelative;
-"/Ohm Livid RGB/loadImprovOhm.scd".loadRelative;
+	"/Livid Ohm RGB/ohmInit.scd".loadRelative;
+	"/Livid Ohm RGB/livesetOhm.scd".loadRelative;
+	"/Livid Ohm RGB/topPage.scd".loadRelative;
+	"/Livid Ohm RGB/loadStructural.scd".loadRelative;
+	"/Livid Ohm RGB/connectionsPage.scd".loadRelative;
+	"/Livid Ohm RGB/loadConnectionsOhm.scd".loadRelative;
+	"/Livid Ohm RGB/boyPage.scd".loadRelative;
+	"/Livid Ohm RGB/loadBoyOhm.scd".loadRelative;
+	"/Livid Ohm RGB/birdsPage.scd".loadRelative;
+	"/Livid Ohm RGB/loadBirdsOhm.scd".loadRelative;
+	"/Livid Ohm RGB/improvPage.scd".loadRelative;
+	"/Livid Ohm RGB/loadImprovOhm.scd".loadRelative;
 
-"/Ohm Livid RGB/ohmStartup.scd".loadRelative;
+	"/Livid Ohm RGB/ohmStartup.scd".loadRelative;
 }
 
 { "Livid Ohm RGB not present!" }

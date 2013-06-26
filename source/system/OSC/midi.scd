@@ -14,6 +14,6 @@ OSCdef(\page, { | msg |
 	{ id == \connections } { ~page[\connections].value; }
 	{ id == \boy } { ~page[\boy].value; }
 	{ id == \birds } { ~page[\birds].value; }
-	{ id == \improv } { ~page[\improv].value; }
+	{ id == \improv } { ~page.improv.top.value; }
 
 }, \page, ~scLang);

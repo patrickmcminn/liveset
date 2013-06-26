@@ -26,3 +26,6 @@ prm
 "/Effects SynthDefs/brokenAntenna.scd".loadRelative;
 "/Effects SynthDefs/gendyIn.scd".loadRelative;
 "/Effects SynthDefs/sustainerPlayer.scd".loadRelative;
+"/Effects SynthDefs/warpEnv.scd".loadRelative;
+"/Effects SynthDefs/autoFilter.scd".loadRelative;
+"/Effects SynthDefs/looper.scd".loadRelative;
