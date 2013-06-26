@@ -25,7 +25,9 @@ defines function for making the top layer of the tree
 	~ohm.turnPink(3);
 	MIDIdef.noteOn(\improvBranch, { ~scLang.sendMsg(\page, \improv) }, 3);
 
-	//soundcheck:
-	~ohm.turnLavender(56);
-	MIDIdef.noteOn(\soundcheck, { | vel, note | ~mixer[\soundcheckMake].value(note); }, 56);
+	// input volume:
+	MIDIdef.cc(\inputVol, { | val |
+		var amp = val.linlin(0, 127, 0, 1);
+		~scLang.sendMsg(\mixer, \input, amp);
+	}, 14);
 };

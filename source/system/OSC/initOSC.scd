@@ -26,6 +26,7 @@ OSCdef(\mixer, { | msg |
 	{ id == \s1 } { ~mixerSynth[\s1].set(\amp, val); }
 	{ id == \s2 } { ~mixerSynth[\s2].set(\amp, val); }
 	{ id == \s3 } { ~mixerSynth[\s3].set(\amp, val); }
+	{ id == \input } {  ~instI[\mute].set(\amp, val); }
 }, '\mixer', ~scLang);
 
 OSCdef(\clear, { | msg |
