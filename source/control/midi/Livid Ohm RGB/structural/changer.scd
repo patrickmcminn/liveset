@@ -32,13 +32,11 @@ OSCdef(\changerOhmRestore, { | msg |
 		~scLang.sendMsg(\control, \looper);
 		~scLang.sendMsg(\control, \looperCtrl);
 		~restoreOhm.structure.page.put(changer, \pink);
-		~restoreOhm.structure.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 		~ohm.turnPink(changer).yield;
 
 		~scLang.sendMsg(\control, \looperCtrl);
 		~scLang.sendMsg(\control, \loopFree);
 		~restoreOhm.structure.page.put(changer, \red);
-		~restoreOhm.structure.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 		~ohm.turnRed(changer).yield;
 
 		~scLang.sendMsg(\control, \loopFree);

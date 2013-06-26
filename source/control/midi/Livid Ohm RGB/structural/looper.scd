@@ -24,10 +24,10 @@ OSCdef(\looperOhm, { | msg |
 	{ id == \looper } { ~structureOhm.looper.value; }
 	{ id == \looperCtrl } { ~structureOhm.looperCtrl.value; }
 	{ id == \loopFree } { ~structureOhm.loopFree.value; }
-	{ id == \masterLoop } { ~structureOhm.masterLoop }
-	{ id == \s1Loop } { ~structureOhm.s1Loop }
-	{ id == \s2Loop } { ~structureOhm.s2Loop }
-	{ id == \s3Loop } { ~stuctureOhm.s3Loop }
+	{ id == \masterLoop } { ~structureOhm.masterLoop.value; }
+	{ id == \s1Loop } { ~structureOhm.s1Loop.value; }
+	{ id == \s2Loop } { ~structureOhm.s2Loop.value; }
+	{ id == \s3Loop } { ~structureOhm.s3Loop.value; }
 }, \control, ~scLang);
 
 
@@ -51,19 +51,19 @@ OSCdef(\looperOhmRestore, { | msg |
 	}
 
 	{ id == \masterLoop } {
-		if ( val == 1, { ~structureOhmMidi.masterLoopBlue.value; } )
+		if ( val == 1, { ~structureOhmMidi.masterLoopGreen.value; } )
 	}
 
 	{ id == \s1Loop } {
-		if ( val == 1, { ~structureOhmMidi.s1LoopBlue.value; } )
+		if ( val == 1, { ~structureOhmMidi.s1LoopGreen.value; } )
 	}
 
 	{ id == \s2Loop } {
-		if ( val == 1, { ~structureOhmMidi.s2LoopBlue.value; } )
+		if ( val == 1, { ~structureOhmMidi.s2LoopGreen.value; } )
 	}
 
 	{ id == \s3Loop } {
-		if ( val == 1, { ~structureOhmMidi.s3LoopBlue.value; } )
+		if ( val == 1, { ~structureOhmMidi.s3LoopGreen.value; } )
 	}
 }, \restoreOhm, ~scLang);
 
@@ -98,81 +98,81 @@ OSCdef(\looperOhmRestore, { | msg |
 ~structureOhm.masterLoop = r {
 	loop {
 		~structureOhmMidi.masterLoopGreen;
-		~restoreOhm.structure.masterLoop = 1.yield;
+		(~restoreOhm.structure.masterLoop = 1).yield;
 
-		~structureOhmMidi.masterLoopBlue.value;
-		~restoreOhm.structure.masterLoop = 0.yield;
+		~structureOhmMidi.masterLoopPurple.value;
+		(~restoreOhm.structure.masterLoop = 0).yield;
 	}
 };
 
 ~structureOhmMidi.masterLoopGreen =  {
 		~restoreOhm.structure.page.put(masterLoop, \green);
-		~ohm.turnGreen(masterLoop).yield;
+		~ohm.turnGreen(masterLoop);
 };
 
-~structureOhmMidi.masterLoopBlue =  {
-		~restoreOhm.structure.page.put(masterLoop, \blue);
-		~ohm.turnBlue(masterLoop).yield;
+~structureOhmMidi.masterLoopPurple =  {
+		~restoreOhm.structure.page.put(masterLoop, \purple);
+		~ohm.turnPurple(masterLoop);
 };
 
 ~structureOhm.s1Loop = r {
 	loop {
 		~structureOhmMidi.s1LoopGreen;
-		~restoreOhm.structure.s1Loop = 1.yield;
+		(~restoreOhm.structure.s1Loop = 1).yield;
 
-		~structureOhmMidi.s1LoopBlue.value;
-		~restoreOhm.structure.s1Loop = 0.yield;
+		~structureOhmMidi.s1LoopPurple.value;
+		(~restoreOhm.structure.s1Loop = 0).yield;
 	}
 };
 
 ~structureOhmMidi.s1LoopGreen =  {
-		~restoreOhm.structure.page.put(s1Loop, \green);
-		~ohm.turnGreen(s1Loop).yield;
+	~restoreOhm.structure.page.put(s1Loop, \green);
+	~ohm.turnGreen(s1Loop);
 };
 
-~structureOhmMidi.s1LoopBlue =  {
-		~restoreOhm.structure.page.put(s1Loop, \blue);
-		~ohm.turnBlue(s1Loop).yield;
+~structureOhmMidi.s1LoopPurple =  {
+	~restoreOhm.structure.page.put(s1Loop, \purple);
+	~ohm.turnPurple(s1Loop);
 };
 
 ~structureOhm.s2Loop = r {
 	loop {
 		~structureOhmMidi.s2LoopGreen;
-		~restoreOhm.structure.s2Loop = 1.yield;
+		(~restoreOhm.structure.s2Loop = 1).yield;
 
-		~structureOhmMidi.s2LoopBlue.value;
-		~restoreOhm.structure.s2Loop = 0.yield;
+		~structureOhmMidi.s2LoopPurple.value;
+		(~restoreOhm.structure.s2Loop = 0).yield;
 	}
 };
 
 ~structureOhmMidi.s2LoopGreen =  {
-		~restoreOhm.structure.page.put(s2Loop, \green);
-		~ohm.turnGreen(s2Loop).yield;
+	~restoreOhm.structure.page.put(s2Loop, \green);
+	~ohm.turnGreen(s2Loop);
 };
 
-~structureOhmMidi.s2LoopBlue =  {
-		~restoreOhm.structure.page.put(s2Loop, \blue);
-		~ohm.turnBlue(s2Loop).yield;
+~structureOhmMidi.s2LoopPurple =  {
+	~restoreOhm.structure.page.put(s2Loop, \purple);
+	~ohm.turnPurple(s2Loop);
 };
 
 ~structureOhm.s3Loop = r {
 	loop {
 		~structureOhmMidi.s3LoopGreen;
-		~restoreOhm.structure.s3Loop = 1.yield;
+		(~restoreOhm.structure.s3Loop = 1).yield;
 
-		~structureOhmMidi.s3LoopBlue.value;
-		~restoreOhm.structure.s3Loop = 0.yield;
+		~structureOhmMidi.s3LoopPurple.value;
+		(~restoreOhm.structure.s3Loop = 0).yield;
 	}
 };
 
 ~structureOhmMidi.s3LoopGreen =  {
-		~restoreOhm.structure.page.put(s3Loop, \green);
-		~ohm.turnGreen(s3Loop).yield;
+	~restoreOhm.structure.page.put(s3Loop, \green);
+	~ohm.turnGreen(s3Loop);
 };
 
-~structureOhmMidi.s3LoopBlue =  {
-		~restoreOhm.structure.page.put(s3Loop, \blue);
-		~ohm.turnBlue(s3Loop).yield;
+~structureOhmMidi.s3LoopPurple =  {
+	~restoreOhm.structure.page.put(s3Loop, \purple);
+	~ohm.turnPurple(s3Loop);
 };
 
 
