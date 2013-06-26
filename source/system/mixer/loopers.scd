@@ -111,6 +111,7 @@ prm
 
 	masterLoop: { | self |
 		self.master.set(\t_trig, 1);
+		~scLang.sendMsg(\control, \masterLoop);
 		self;
 	},
 
@@ -122,6 +123,7 @@ prm
 
 	s1Loop: { | self |
 		self.s1.set(\t_trig, 1);
+		~scLang.sendMsg(\control, \s1Loop);
 		self;
 	},
 
@@ -133,6 +135,7 @@ prm
 
 	s2Loop: { | self |
 		self.s2.set(\t_trig, 1);
+		~scLang.sendMsg(\control, \s2Loop);
 		self;
 	},
 
@@ -144,6 +147,7 @@ prm
 
 	s3Loop: { | self |
 		self.s3.set(\t_trig, 1);
+		~scLang.sendMsg(\control, \s3Loop);
 		self;
 	},
 
