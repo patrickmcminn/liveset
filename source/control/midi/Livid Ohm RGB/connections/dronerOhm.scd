@@ -41,7 +41,7 @@ OSCdef(\dronerOhmRestoer, { | msg |
 	loop {
 		~restoreOhm[\connections].droner = 1;
 		~connectOhmMidi[\droner].make;
-		~connectOhm[\dronerToggle].reset;
+
 		~connectOhm[\dronerRater].reset;
 		~restoreOhm[\connections].page.put(toggle, \green);
 		~ohm.turnGreen(toggle);
@@ -54,6 +54,7 @@ OSCdef(\dronerOhmRestoer, { | msg |
 
 		~restoreOhm[\connections].droner = 0;
 		~connectOhmMidi[\droner].kill;
+		~connectOhm[\dronerToggle].reset;
 		~restoreOhm[\connections].page.put(toggle, \off);
 		~ohm.turnOff(toggle);
 		~restoreOhm[\connections].page.put(erode, \off);
