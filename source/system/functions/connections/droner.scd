@@ -67,6 +67,7 @@ prm
 
 
 		~connections[\droner].kill;
+		~connectMake[\dronerToggle].reset;
 		~scLang.sendMsg(\control, \droner);
 		["Droner Freed"].postln.yield;
 	};
