@@ -98,6 +98,7 @@ prm
 			~group[\audioFader], \addToHead);
 		self.s3 = Synth(\looper, [\in, ~mixer[\s3], \out, ~mixer[\master], \amp, 0.5, \buffer, self.s3Buf],
 			~group[\audioFader], \addToHead);
+		["looper synths created"].postln;
 		self;
 	},
 
@@ -106,54 +107,63 @@ prm
 		self.s1.free;
 		self.s2.free;
 		self.s3.free;
+		["looper synths freed"].postln;
 		self;
 	},
 
 	masterLoop: { | self |
 		self.master.set(\t_trig, 1);
 		~scLang.sendMsg(\control, \masterLoop);
+		["master bus loop trigger"].postln;
 		self;
 	},
 
 	masterReset: { | self |
 		self.master.set(\t_reset, 1);
 		{ self.masterBuf.zero; }.defer(0.1);
+		["master bus loop cleared"].postln;
 		self;
 	},
 
 	s1Loop: { | self |
 		self.s1.set(\t_trig, 1);
 		~scLang.sendMsg(\control, \s1Loop);
+		["s1 bus loop trigger"].postln;
 		self;
 	},
 
 	s1Reset: { | self |
 		self.s1.set(\t_reset, 1);
 		{ self.s1Buf.zero; }.defer(0.1);
+		["s1 bus loop cleared"].postln;
 		self;
 	},
 
 	s2Loop: { | self |
 		self.s2.set(\t_trig, 1);
 		~scLang.sendMsg(\control, \s2Loop);
+		["s2 bus loop trigger"].postln;
 		self;
 	},
 
 	s2Reset: { | self |
 		self.s2.set(\t_reset, 1);
 		{ self.s2Buf.zero; }.defer(0.1);
+		["s2 bus loop cleared"].postln;
 		self;
 	},
 
 	s3Loop: { | self |
 		self.s3.set(\t_trig, 1);
 		~scLang.sendMsg(\control, \s3Loop);
+		["s3 bus loop trigger"].postln;
 		self;
 	},
 
 	s3Reset: { | self |
 		self.s3.set(\t_reset, 1);
 		{ self.s3Buf.zero; }.defer(0.1);
+		["s3 bus loop cleared"].postln;
 		self;
 	},
 
@@ -161,19 +171,24 @@ prm
 
 ~looper.s1Beat = r { | self |
 	loop {
+		["play s1 loop from beat 0"].postln;
 		~looper.s1.set(\t_switch, 1);
 		~looper.s1.set(\frombeat, 0);
 		~scLang.sendMsg(\control, \s1LoopSwitch).yield;
 
+		["play s1 loop from beat 1"].postln;
 		~looper.s1.set(\frombeat, 1);
 		~scLang.sendMsg(\control, \s1LoopSwitch).yield;
 
+		["play s1 loop from beat 3"].postln;
 		~looper.s1.set(\frombeat, 2);
 		~scLang.sendMsg(\control, \s1LoopSwitch).yield;
 
+		["play s1 loop from beat 3"].postln;
 		~looper.s1.set(\frombeat, 3);
 		~scLang.sendMsg(\control, \s1LoopSwitch).yield;
 
+		["play s1 loop in entirety"].postln;
 		~looper.s1.set(\t_switch, 1);
 		~scLang.sendMsg(\control, \s1LoopSwitch).yield;
 	}
@@ -181,19 +196,24 @@ prm
 
 ~looper.s2Beat = r { | self |
 	loop {
+		["play s2 loop from beat 0"].postln;
 		~looper.s2.set(\t_switch, 1);
 		~looper.s2.set(\frombeat, 0);
 		~scLang.sendMsg(\control, \s2LoopSwitch).yield;
 
+		["play s2 loop from beat 1"].postln;
 		~looper.s2.set(\frombeat, 1);
 		~scLang.sendMsg(\control, \s2LoopSwitch).yield;
 
+		["play s2 loop from beat 2"].postln;
 		~looper.s2.set(\frombeat, 2);
 		~scLang.sendMsg(\control, \s2LoopSwitch).yield;
 
+		["play s2 loop from beat 3"].postln;
 		~looper.s2.set(\frombeat, 3);
 		~scLang.sendMsg(\control, \s2LoopSwitch).yield;
 
+		["play s2 loop in entirety"].postln;
 		~looper.s2.set(\t_switch, 1);
 		~scLang.sendMsg(\control, \s2LoopSwitch).yield;
 	}
@@ -201,19 +221,24 @@ prm
 
 ~looper.s3Beat = r { | self |
 	loop {
+		["play s3 loop from beat 0"].postln;
 		~looper.s3.set(\t_switch, 1);
 		~looper.s3.set(\frombeat, 0);
 		~scLang.sendMsg(\control, \s3LoopSwitch).yield;
 
+		["play s3 loop from beat 1"].postln;
 		~looper.s3.set(\frombeat, 1);
 		~scLang.sendMsg(\control, \s3LoopSwitch).yield;
 
+		["play s3 loop from beat 2"].postln;
 		~looper.s3.set(\frombeat, 2);
 		~scLang.sendMsg(\control, \s3LoopSwitch).yield;
 
+		["play s3 loop from beat 3"].postln;
 		~looper.s3.set(\frombeat, 3);
 		~scLang.sendMsg(\control, \s3LoopSwitch).yield;
 
+		["play s3 loop in entirety"].postln;
 		~looper.s3.set(\t_switch, 1);
 		~scLang.sendMsg(\control, \s3LoopSwitch).yield;
 	}
@@ -221,19 +246,24 @@ prm
 
 ~looper.masterBeat = r { | self |
 	loop {
+		["play master loop from beat 0"].postln;
 		~looper.master.set(\t_switch, 1);
 		~looper.master.set(\frombeat, 0);
 		~scLang.sendMsg(\control, \masterLoopSwitch).yield;
 
+		["play master loop from beat 1"].postln;
 		~looper.master.set(\frombeat, 1);
 		~scLang.sendMsg(\control, \masterSwitch).yield;
 
+		["play master loop from beat 2"].postln;
 		~looper.master.set(\frombeat, 2);
 		~scLang.sendMsg(\control, \masterSwitch).yield;
 
+		["play master loop from beat 3"].postln;
 		~looper.master.set(\frombeat, 3);
 		~scLang.sendMsg(\control, \masterSwitch).yield;
 
+		["play master loop in entirety"].postln;
 		~looper.master.set(\t_switch, 1);
 		~scLang.sendMsg(\control, \masterSwitch).yield;
 	}

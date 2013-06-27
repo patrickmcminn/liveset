@@ -80,6 +80,7 @@ OSCdef(\looperOhmRestore, { | msg |
 			~restoreOhm.structure.page.put(s3Loop, \purple);
 			~ohm.turnPurple(s3Loop);
 			~restoreOhm.structure.page.put(masterLoop, \purple);
+		["created looper MIDI Funcs on Ohm"].postln;
 			~ohm.turnPurple(masterLoop).yield;
 
 			~restoreOhm.structure.looper = 0;
@@ -91,6 +92,7 @@ OSCdef(\looperOhmRestore, { | msg |
 			~restoreOhm.structure.page.put(s2Loop, \off);
 			~ohm.turnOff(s3Loop);
 			~restoreOhm.structure.page.put(masterLoop, \off);
+		["killed looper MIDI Funcs on Ohm"].postln;
 			~ohm.turnOff(masterLoop).yield;
 	};
 };
@@ -108,11 +110,14 @@ OSCdef(\looperOhmRestore, { | msg |
 ~structureOhmMidi.masterLoopGreen =  {
 		~restoreOhm.structure.page.put(masterLoop, \green);
 		~ohm.turnGreen(masterLoop);
+	["Ohm: Recording Master"].postln;
+
 };
 
 ~structureOhmMidi.masterLoopPurple =  {
 		~restoreOhm.structure.page.put(masterLoop, \purple);
 		~ohm.turnPurple(masterLoop);
+	["Ohm: Stopped Recording Master"].postln;
 };
 
 ~structureOhm.s1Loop = r {
@@ -128,11 +133,14 @@ OSCdef(\looperOhmRestore, { | msg |
 ~structureOhmMidi.s1LoopGreen =  {
 	~restoreOhm.structure.page.put(s1Loop, \green);
 	~ohm.turnGreen(s1Loop);
+	["Ohm: Recording s1"].postln;
+
 };
 
 ~structureOhmMidi.s1LoopPurple =  {
 	~restoreOhm.structure.page.put(s1Loop, \purple);
 	~ohm.turnPurple(s1Loop);
+	["Ohm: Stopped Recording s1"].postln;
 };
 
 ~structureOhm.s2Loop = r {
@@ -148,11 +156,13 @@ OSCdef(\looperOhmRestore, { | msg |
 ~structureOhmMidi.s2LoopGreen =  {
 	~restoreOhm.structure.page.put(s2Loop, \green);
 	~ohm.turnGreen(s2Loop);
+	["Ohm: Recording s2"].postln;
 };
 
 ~structureOhmMidi.s2LoopPurple =  {
 	~restoreOhm.structure.page.put(s2Loop, \purple);
 	~ohm.turnPurple(s2Loop);
+	["Ohm: Stopped Recording s2"].postln;
 };
 
 ~structureOhm.s3Loop = r {
@@ -168,11 +178,13 @@ OSCdef(\looperOhmRestore, { | msg |
 ~structureOhmMidi.s3LoopGreen =  {
 	~restoreOhm.structure.page.put(s3Loop, \green);
 	~ohm.turnGreen(s3Loop);
+	["Ohm:  Recording s3"].postln;
 };
 
 ~structureOhmMidi.s3LoopPurple =  {
 	~restoreOhm.structure.page.put(s3Loop, \purple);
 	~ohm.turnPurple(s3Loop);
+	["Ohm: Stopped Recording s3"].postln;
 };
 
 
@@ -187,7 +199,9 @@ OSCdef(\looperOhmRestore, { | msg |
 		~ohm.turnPink(s3Loop);
 		~restoreOhm.structure.page.put(masterLoop, \pink);
 		~ohm.turnPink(masterLoop);
+		["Ohm: Page to Control Loops"].postln;
 		~restoreOhm.structure.looperCtrl = 1.yield;
+
 
 		~structureOhmMidi.looperCtrl.kill;
 		~restoreOhm.structure.page.put(s1Loop, \off);
@@ -198,7 +212,9 @@ OSCdef(\looperOhmRestore, { | msg |
 		~ohm.turnOff(s3Loop);
 		~restoreOhm.structure.page.put(masterLoop, \off);
 		~ohm.turnOff(masterLoop);
+		["Ohm: Turned Off Page to Control Loops"].postln;
 		~restoreOhm.structure.looperCtrl = 0.yield;
+
 	}
 };
 
@@ -213,6 +229,7 @@ OSCdef(\looperOhmRestore, { | msg |
 		~ohm.turnRed(s3Loop);
 		~restoreOhm.structure.page.put(masterLoop, \red);
 		~ohm.turnRed(masterLoop);
+		["Ohm: Page to Free Loops"].postln;
 		~restoreOhm.structure.loopFree = 1.yield;
 
 		~structureOhmMidi.loopFree.kill;
@@ -224,6 +241,7 @@ OSCdef(\looperOhmRestore, { | msg |
 		~ohm.turnOff(s3Loop);
 		~restoreOhm.structure.page.put(masterLoop, \off);
 		~ohm.turnOff(masterLoop);
+		["Ohm: Turned Off Page to Free Loops"].postln;
 		~restoreOhm.structure.loopFree = 0.yield;
 	};
 };
