@@ -45,6 +45,8 @@ prm
 	~ohm.turnGreen(77);
 	MIDIdef.noteOn(\boyTransport, { ~scLang.sendMsg(\boyTransport, \main); }, 77);
 
+	~restoreOhm[\boy].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
+
 	~restoreOhm[\boy].page.do({ | color, note |
 		case
 		{ color == \off } { ~ohm.turnOff(note); }
@@ -56,7 +58,4 @@ prm
 		{ color == \green } { ~ohm.turnGreen(note); }
 		{ color == \yellow } { ~ohm.turnYellow(note); }
 	});
-
-	~restoreOhm[\boy].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
-
 };

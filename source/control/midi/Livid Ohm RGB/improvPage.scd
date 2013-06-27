@@ -21,6 +21,8 @@ prm
 	~ohm.turnYellow(2);
 	MIDIdef.noteOn(\improvNoiseSynth, { ~scLang.sendMsg(\improvNoiseSynth, \main) }, 2);
 
+	~restoreOhm[\improv].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
+
 	~restoreOhm[\improv].page.do({ | color, note |
 		case
 		{ color == \off } { ~ohm.turnOff(note); }
@@ -32,7 +34,5 @@ prm
 		{ color == \green } { ~ohm.turnGreen(note); }
 		{ color == \yellow } { ~ohm.turnYellow(note); }
 	});
-
-	~restoreOhm[\improv].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 
 };

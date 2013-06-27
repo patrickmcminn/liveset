@@ -34,6 +34,9 @@ prm
 	~ohm.turnGreen(69);
 	MIDIdef.noteOn(\birdsTransport, { ~scLang.sendMsg(\birdsTransport, \main); }, 69);
 
+
+	~restoreOhm[\birds].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
+
 	~restoreOhm[\birds].page.do({ | color, note |
 		case
 		{ color == \off } { ~ohm.turnOff(note); }
@@ -45,7 +48,5 @@ prm
 		{ color == \green } { ~ohm.turnGreen(note); }
 		{ color == \yellow } { ~ohm.turnYellow(note); }
 	});
-
-	~restoreOhm[\birds].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 
 }

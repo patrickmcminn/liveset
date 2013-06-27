@@ -12,6 +12,8 @@ prm
 	~scLang.sendMsg(\control, \improvNoiseSynthControls);
 	~scLang.sendMsg(\control, \improvNoiseSynthOutput);
 
+	~restoreOhm.improv.noiseSynth.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
+
 	~restoreOhm.improv.noiseSynth.page.do({ | color, note |
 		case
 		{ color == \off } { ~ohm.turnOff(note); }
@@ -23,7 +25,5 @@ prm
 		{ color == \green } { ~ohm.turnGreen(note); }
 		{ color == \yellow } { ~ohm.turnYellow(note); }
 	});
-
-	~restoreOhm.improv.noiseSynth.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 
 };
