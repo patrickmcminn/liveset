@@ -57,11 +57,13 @@ OSCdef(\changerOhmRestore, { | msg |
 
 ~structureOhmMidi.changer = (
 	init: { | self |
+		["Ohm: Changer MIDI Function Created"].postln;
 		MIDIdef.noteOn(\changer, { ~scLang.sendMsg(\control, \changer); }, changer);
 		self;
 	},
 
 	kill: { | self |
+		["Ohm: Changer MIDI Function Killed"].postln;
 		MIDIdef(\changer).free;
 	},
 );

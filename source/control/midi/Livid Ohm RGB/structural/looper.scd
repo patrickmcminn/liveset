@@ -71,6 +71,7 @@ OSCdef(\looperOhmRestore, { | msg |
 
 ~structureOhm.looper = r {
 	loop{
+		["Ohm: Page to Loop"].postln;
 			~restoreOhm.structure.looper = 1;
 			~structureOhmMidi.looper.init;
 			~restoreOhm.structure.page.put(s1Loop, \purple);
@@ -80,9 +81,9 @@ OSCdef(\looperOhmRestore, { | msg |
 			~restoreOhm.structure.page.put(s3Loop, \purple);
 			~ohm.turnPurple(s3Loop);
 			~restoreOhm.structure.page.put(masterLoop, \purple);
-		["created looper MIDI Funcs on Ohm"].postln;
 			~ohm.turnPurple(masterLoop).yield;
 
+		["Ohm: Turned Off Page to Loop"].postln;
 			~restoreOhm.structure.looper = 0;
 			~structureOhmMidi.looper.kill;
 			~restoreOhm.structure.page.put(s1Loop, \off);
@@ -92,7 +93,6 @@ OSCdef(\looperOhmRestore, { | msg |
 			~restoreOhm.structure.page.put(s2Loop, \off);
 			~ohm.turnOff(s3Loop);
 			~restoreOhm.structure.page.put(masterLoop, \off);
-		["killed looper MIDI Funcs on Ohm"].postln;
 			~ohm.turnOff(masterLoop).yield;
 	};
 };
@@ -108,16 +108,16 @@ OSCdef(\looperOhmRestore, { | msg |
 };
 
 ~structureOhmMidi.masterLoopGreen =  {
+	["Ohm: Recording Master"].postln;
 		~restoreOhm.structure.page.put(masterLoop, \green);
 		~ohm.turnGreen(masterLoop);
-	["Ohm: Recording Master"].postln;
 
 };
 
 ~structureOhmMidi.masterLoopPurple =  {
+	["Ohm: Stopped Recording Master"].postln;
 		~restoreOhm.structure.page.put(masterLoop, \purple);
 		~ohm.turnPurple(masterLoop);
-	["Ohm: Stopped Recording Master"].postln;
 };
 
 ~structureOhm.s1Loop = r {
@@ -131,16 +131,18 @@ OSCdef(\looperOhmRestore, { | msg |
 };
 
 ~structureOhmMidi.s1LoopGreen =  {
+	["Ohm: Recording s1"].postln;
 	~restoreOhm.structure.page.put(s1Loop, \green);
 	~ohm.turnGreen(s1Loop);
-	["Ohm: Recording s1"].postln;
+
 
 };
 
 ~structureOhmMidi.s1LoopPurple =  {
+	["Ohm: Stopped Recording s1"].postln;
 	~restoreOhm.structure.page.put(s1Loop, \purple);
 	~ohm.turnPurple(s1Loop);
-	["Ohm: Stopped Recording s1"].postln;
+
 };
 
 ~structureOhm.s2Loop = r {
@@ -154,15 +156,15 @@ OSCdef(\looperOhmRestore, { | msg |
 };
 
 ~structureOhmMidi.s2LoopGreen =  {
+	["Ohm: Recording s2"].postln;
 	~restoreOhm.structure.page.put(s2Loop, \green);
 	~ohm.turnGreen(s2Loop);
-	["Ohm: Recording s2"].postln;
 };
 
 ~structureOhmMidi.s2LoopPurple =  {
+	["Ohm: Stopped Recording s2"].postln;
 	~restoreOhm.structure.page.put(s2Loop, \purple);
 	~ohm.turnPurple(s2Loop);
-	["Ohm: Stopped Recording s2"].postln;
 };
 
 ~structureOhm.s3Loop = r {
@@ -176,20 +178,22 @@ OSCdef(\looperOhmRestore, { | msg |
 };
 
 ~structureOhmMidi.s3LoopGreen =  {
+	["Ohm:  Recording s3"].postln;
 	~restoreOhm.structure.page.put(s3Loop, \green);
 	~ohm.turnGreen(s3Loop);
-	["Ohm:  Recording s3"].postln;
+
 };
 
 ~structureOhmMidi.s3LoopPurple =  {
+	["Ohm: Stopped Recording s3"].postln;
 	~restoreOhm.structure.page.put(s3Loop, \purple);
 	~ohm.turnPurple(s3Loop);
-	["Ohm: Stopped Recording s3"].postln;
 };
 
 
 ~structureOhm.looperCtrl = r {
 	loop {
+		["Ohm: Page to Control Loops"].postln;
 		~structureOhmMidi.looperCtrl.init;
 		~restoreOhm.structure.page.put(s1Loop, \pink);
 		~ohm.turnPink(s1Loop);
@@ -199,10 +203,10 @@ OSCdef(\looperOhmRestore, { | msg |
 		~ohm.turnPink(s3Loop);
 		~restoreOhm.structure.page.put(masterLoop, \pink);
 		~ohm.turnPink(masterLoop);
-		["Ohm: Page to Control Loops"].postln;
 		~restoreOhm.structure.looperCtrl = 1.yield;
 
 
+		["Ohm: Turned Off Page to Control Loops"].postln;
 		~structureOhmMidi.looperCtrl.kill;
 		~restoreOhm.structure.page.put(s1Loop, \off);
 		~ohm.turnOff(s1Loop);
@@ -212,7 +216,6 @@ OSCdef(\looperOhmRestore, { | msg |
 		~ohm.turnOff(s3Loop);
 		~restoreOhm.structure.page.put(masterLoop, \off);
 		~ohm.turnOff(masterLoop);
-		["Ohm: Turned Off Page to Control Loops"].postln;
 		~restoreOhm.structure.looperCtrl = 0.yield;
 
 	}
@@ -220,6 +223,7 @@ OSCdef(\looperOhmRestore, { | msg |
 
 ~structureOhm.loopFree = r {
 	loop{
+		["Ohm: Page to Free Loops"].postln;
 		~structureOhmMidi.loopFree.init;
 		~restoreOhm.structure.page.put(s1Loop, \red);
 		~ohm.turnRed(s1Loop);
@@ -229,9 +233,9 @@ OSCdef(\looperOhmRestore, { | msg |
 		~ohm.turnRed(s3Loop);
 		~restoreOhm.structure.page.put(masterLoop, \red);
 		~ohm.turnRed(masterLoop);
-		["Ohm: Page to Free Loops"].postln;
 		~restoreOhm.structure.loopFree = 1.yield;
 
+		["Ohm: Turned Off Page to Free Loops"].postln;
 		~structureOhmMidi.loopFree.kill;
 		~restoreOhm.structure.page.put(s1Loop, \off);
 		~ohm.turnOff(s1Loop);
@@ -241,7 +245,6 @@ OSCdef(\looperOhmRestore, { | msg |
 		~ohm.turnOff(s3Loop);
 		~restoreOhm.structure.page.put(masterLoop, \off);
 		~ohm.turnOff(masterLoop);
-		["Ohm: Turned Off Page to Free Loops"].postln;
 		~restoreOhm.structure.loopFree = 0.yield;
 	};
 };
@@ -264,6 +267,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	makeButtons: { | self |
+		["Ohm: Looper Buttons Created"].postln;
 		MIDIdef.noteOn(\s1Loop, { ~scLang.sendMsg(\looper, \s1Loop); }, s1Loop);
 		MIDIdef.noteOn(\s2Loop, { ~scLang.sendMsg(\looper, \s2Loop); }, s2Loop);
 		MIDIdef.noteOn(\s3Loop, { ~scLang.sendMsg(\looper, \s3Loop); }, s3Loop);
@@ -272,6 +276,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	killButtons: { | self |
+		["Ohm: Looper Buttons Freed"].postln;
 		MIDIdef(\s1Loop).free;
 		MIDIdef(\s2Loop).free;
 		MIDIdef(\s3Loop).free;
@@ -280,6 +285,8 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	makeKnobs: { | self |
+
+		["Ohm: Loop Knobs Created"].postln;
 
 		MIDIdef.cc(\s1LoopVol, { | val |
 			var amp = val.linlin(0, 127, 0, -2.dbamp);
@@ -305,6 +312,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	killKnobs: { | self |
+		["Ohm: Loop Knobs Killed"].postln;
 		MIDIdef(\s1LoopVol).free;
 		MIDIdef(\s2LoopVol).free;
 		MIDIdef(\s3LoopVol).free;
@@ -340,6 +348,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	makeButtons: { | self |
+		["Ohm: Looper Control Buttons Created"].postln;
 		MIDIdef.noteOn(\s1Beat, { ~scLang.sendMsg(\looper, \s1Beat); }, s1Loop);
 		MIDIdef.noteOn(\s2Beat, { ~scLang.sendMsg(\looper, \s2Beat); }, s2Loop);
 		MIDIdef.noteOn(\s3Beat, { ~scLang.sendMsg(\looper, \s3Beat); }, s3Loop);
@@ -348,6 +357,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	killButtons: { | self |
+		["Ohm: Looper Control Buttons Killed"].postln;
 		MIDIdef(\s1Beat).free;
 		MIDIdef(\s2Beat).free;
 		MIDIdef(\s3Beat).free;
@@ -356,6 +366,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	makeKnobs: { | self |
+		["Ohm: Looper Control Knobs Created"].postln;
 		MIDIdef.cc(\s1Grain, { | val |
 			var size = val.linlin(0, 127, 0, 5).asInteger;
 			~scLang.sendMsg(\looper, \s1Grain, size);
@@ -376,6 +387,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	killKnobs: { | self |
+		["Ohm: Looper Knobs Killed"].postln;
 		MIDIdef(\s1Grain).free;
 		MIDIdef(\s2Grain).free;
 		MIDIdef(\s3Grain).free;
@@ -414,6 +426,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	makeButtons: { | self |
+		["Ohm: Loop Free Buttons Created"].postln;
 		MIDIdef.noteOn(\s1Reset, { ~scLang.sendMsg(\looper, \s1Reset); }, s1Loop);
 		MIDIdef.noteOn(\s2Reset, { ~scLang.sendMsg(\looper, \s2Reset); }, s2Loop);
 		MIDIdef.noteOn(\s3Reset, { ~scLang.sendMsg(\looper, \s3Reset); }, s3Loop);
@@ -422,6 +435,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	killButtons: { | self |
+		["Ohm: Loop Free Buttons Killed"].postln;
 		MIDIdef(\s1Reset).free;
 		MIDIdef(\s2Reset).free;
 		MIDIdef(\s3Reset).free;
@@ -430,6 +444,8 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	makeKnobs: { | self |
+
+		["Ohm: Loop Volume Knobs Created"].postln;
 
 		MIDIdef.cc(\s1LoopVol, { | val |
 			var amp = val.linlin(0, 127, 0, -2.dbamp);
@@ -455,6 +471,7 @@ OSCdef(\looperOhmRestore, { | msg |
 	},
 
 	killKnobs: { | self |
+		["Ohm: Loop Volume Knobs Killed"].postln;
 		MIDIdef(\s1LoopVol).free;
 		MIDIdef(\s2LoopVol).free;
 		MIDIdef(\s3LoopVol).free;
