@@ -12,6 +12,7 @@ out3 = 74;
 ~improvOhm.noiseSynth.outputSet = (
 
 	state: 0,
+	output: 2,
 
 	spawn: { | self |
 		if( self.state == 0, { self.init; }, { self.kill; });
@@ -21,6 +22,10 @@ out3 = 74;
 	init: { | self |
 		self.state = 1;
 		self.makeButtons;
+		case
+		{ self.output == 1 } { self.change1; }
+		{ self.output == 2 } { self.change2; }
+		{ self.output == 3 } { self.change3; }
 		self;
 	},
 
@@ -47,13 +52,22 @@ out3 = 74;
 	make1: { | self |
 		~ohm.turnPurple(out1);
 		~restoreOhm.improv.noiseSynth.page.put(out1, \purple);
-		MIDIdef.noteOn(\noiseSynthOutput1, { self.set1; }, out1);
+		self.midiMake1;
 		self;
+	},
+
+	midiMake1: { | self |
+		MIDIdef.noteOn(\noiseSynthOutput1, { self.set1; }, out1);
 	},
 
 	kill1: { | self |
 		~ohm.turnOff(out1);
 		~restoreOhm.improv.noiseSynth.page.put(out1, \off);
+		self.midiKill1;
+		self;
+	},
+
+	midiKill1: { | self |
 		MIDIdef(\noiseSynthOutput1).free;
 		self;
 	},
@@ -61,6 +75,12 @@ out3 = 74;
 	make2: { | self |
 		~ohm.turnGreen(out2);
 		~restoreOhm.improv.noiseSynth.page.put(out2, \green);
+		self.midiMake2;
+
+		self;
+	},
+
+	midiMake2: { | self |
 		MIDIdef.noteOn(\noiseSynthOutput2, { self.set2; }, out2);
 		self;
 	},
@@ -68,6 +88,11 @@ out3 = 74;
 	kill2: { | self |
 		~ohm.turnOff(out2);
 		~restoreOhm.improv.noiseSynth.page.put(out2, \off);
+		self.midiKill2;
+		self;
+	},
+
+	midiKill2: { | self |
 		MIDIdef(\noiseSynthOutput2).free;
 		self;
 	},
@@ -75,13 +100,23 @@ out3 = 74;
 	make3: { | self |
 		~ohm.turnPurple(out3);
 		~restoreOhm.improv.noiseSynth.page.put(out3, \purple);
+		self.midiMake3;
+		self;
+	},
+
+	midiMake3: { | self |
 		MIDIdef.noteOn(\noiseSynthOutput3, { self.set3; }, out3);
 		self;
 	},
 
-	kill2: { | self |
+	kill3: { | self |
 		~ohm.turnOff(out3);
 		~restoreOhm.improv.noiseSynth.page.put(out3, \off);
+		self.midiKill3;
+		self;
+	},
+
+	midiKill3: { | self |
 		MIDIdef(\noiseSynthOutput3).free;
 		self;
 	},
@@ -110,6 +145,7 @@ out3 = 74;
 	},
 
 	change1: { | self |
+		self.output = 1;
 		~ohm.turnGreen(out1);
 		~restoreOhm.improv.noiseSynth.page.put(out1, \green);
 		~ohm.turnPurple(out2);
@@ -120,6 +156,7 @@ out3 = 74;
 	},
 
 	change2: { | self |
+		self.output = 2;
 		~ohm.turnGreen(out2);
 		~restoreOhm.improv.noiseSynth.page.put(out2, \green);
 		~ohm.turnPurple(out1);
@@ -130,6 +167,7 @@ out3 = 74;
 	},
 
 	change3: { | self |
+		self.output = 3;
 		~ohm.turnGreen(out3);
 		~restoreOhm.improv.noiseSynth.page.put(out3, \green);
 		~ohm.turnPurple(out2);

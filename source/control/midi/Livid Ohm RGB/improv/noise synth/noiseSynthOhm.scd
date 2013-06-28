@@ -51,6 +51,11 @@ page = 10;
 			case
 			{ id == \noiseSynthPage } {
 				if ( val == 1, { self.makePageButton; });}
+			{ id == \noiseSynthKeyboard } {
+				case
+				{ val == 1 } { self.make1; }
+				{ val == 2 } { self.make2; }
+				{ val == 3 } { self.make3; }
 		}, \restoreOhm );
 		self;
 	},
