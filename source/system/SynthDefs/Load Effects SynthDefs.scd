@@ -12,6 +12,7 @@ prm
 "/Effects SynthDefs/digitalClip2Stereo.scd".loadRelative;
 "/Effects SynthDefs/droneDelay.scd".loadRelative;
 "/Effects SynthDefs/erosion.scd".loadRelative;
+"/Effects SynthDefs/freezePlayer.scd".loadRelative;
 "/Effects SynthDefs/granulator.scd".loadRelative;
 "/Effects SynthDefs/holder.scd".loadRelative;
 "/Effects SynthDefs/reverb1.scd".loadRelative;
