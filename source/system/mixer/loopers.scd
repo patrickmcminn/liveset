@@ -119,6 +119,7 @@ prm
 	},
 
 	masterReset: { | self |
+		~looper.masterBeat.reset;
 		self.master.set(\t_reset, 1);
 		{ self.masterBuf.zero; }.defer(0.1);
 		["master bus loop cleared"].postln;
@@ -133,6 +134,7 @@ prm
 	},
 
 	s1Reset: { | self |
+		~looper.s1Beat.reset;
 		self.s1.set(\t_reset, 1);
 		{ self.s1Buf.zero; }.defer(0.1);
 		["s1 bus loop cleared"].postln;
@@ -147,6 +149,7 @@ prm
 	},
 
 	s2Reset: { | self |
+		~looper.s2Beat.reset;
 		self.s2.set(\t_reset, 1);
 		{ self.s2Buf.zero; }.defer(0.1);
 		["s2 bus loop cleared"].postln;
@@ -161,6 +164,7 @@ prm
 	},
 
 	s3Reset: { | self |
+		~looper.s3Beat.reset;
 		self.s3.set(\t_reset, 1);
 		{ self.s3Buf.zero; }.defer(0.1);
 		["s3 bus loop cleared"].postln;
