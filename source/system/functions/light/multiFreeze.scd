@@ -106,7 +106,7 @@ prm
 	},
 
 	stopFrozen: { | self, name |
-		self.name.set(\gate, 0);
+		self[name.asSymbol].set(\gate, 0);
 		self;
 	},
 )
