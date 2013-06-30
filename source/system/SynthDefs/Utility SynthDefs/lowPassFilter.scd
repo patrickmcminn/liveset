@@ -13,5 +13,14 @@ SynthDef(\lowPassFilter, {
 	sig = ReplaceOut.ar(out, sig);
 }).add;
 
+SynthDef(\lowPassFilterS, {
+	| in, out, cutoff = 1000, amp = 1 |
+	var input, filter, sig;
+	input = In.ar(in, 2);
+	filter = LPF.ar(input, cutoff);
+	sig = filter * amp;
+	sig = ReplaceOut.ar(out, sig);
+}).add;
+
 "lowPassFilter SynthDef Added".postln;
 "      args: in, out, cutoff = 1000, amp = 1".postln;

@@ -15,3 +15,10 @@ SynthDef(\randTrig, {	// control SynthDef for sending triggers using Dust
 
 "randTrig SynthDef added".postln;
 "     args: out, freq = 1".postln;
+
+SynthDef(\randTrigA, {	// control SynthDef for sending triggers using Dust at Audio Rate
+	| out, freq = 1 |
+	var sig;
+	sig = Dust.ar(freq);
+	sig = Out.ar(out, sig);
+}).add;
