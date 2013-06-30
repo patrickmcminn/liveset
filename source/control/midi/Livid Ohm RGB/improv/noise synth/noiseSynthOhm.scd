@@ -56,6 +56,7 @@ page = 10;
 				{ val == 1 } { self.make1; }
 				{ val == 2 } { self.make2; }
 				{ val == 3 } { self.make3; }
+			}
 		}, \restoreOhm );
 		self;
 	},

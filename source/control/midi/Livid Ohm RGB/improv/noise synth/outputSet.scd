@@ -26,7 +26,6 @@ out3 = 74;
 		{ self.output == 1 } { self.change1; }
 		{ self.output == 2 } { self.change2; }
 		{ self.output == 3 } { self.change3; }
-		self;
 	},
 
 	kill: { | self |
