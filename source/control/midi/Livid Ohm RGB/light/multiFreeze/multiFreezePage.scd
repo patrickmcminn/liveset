@@ -1,25 +1,19 @@
 /*
-Sunday, June 30th 2013
-lightPage.scd
+Sunday, June 20th 2013
+multiFreezePage.scd
 prm
 */
 
-var multiFreeze;
-multiFreeze = 1;
 
-~page.light = ( );
-
-~page.light.top = {
+~page.light.multiFreeze = {
 	~ohm.clearAll;
 	~ohm.addEssential;
 
-	// page defs go here
-	~ohm.turnYellow(multiFreeze);
-	MIDIdef.noteOn(\lightMultiFreeze, { ~scLang.sendMsg(\lightControl, \multiFreeze); }, multiFreeze);
+	// functions go here
 
-	~restoreOhm.light.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhmLight, name, state); });
+	~restoreOhm.light.multiFreeze.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhmMultiFreeze, name, state); });
 
-	~restoreOhm.light.page.do({ | color, note |
+	~restoreOhm.light.multiFreeze.page.do({ | color, note |
 		case
 		{ color == \off } { ~ohm.turnOff(note); }
 		{ color == \lavender } { ~ohm.turnLavender(note); }
@@ -30,3 +24,4 @@ multiFreeze = 1;
 		{ color == \green } { ~ohm.turnGreen(note); }
 		{ color == \yellow } { ~ohm.turnYellow(note); }
 	});
+};

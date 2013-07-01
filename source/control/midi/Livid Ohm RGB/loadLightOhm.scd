@@ -7,12 +7,12 @@ prm
 
 {
 	s.sync;
-	"/light/Load multiFreeze.scd".loadRelative;
-
-
-	s.sync;
+	~lightOhm = ( );
 	~restoreOhm.light = ( );
 	~restoreOhm.light.page = Array.fill(81, nil);
+
+	s.sync;
+	"/light/Load multiFreeze.scd".loadRelative;
 
 }.fork;
 

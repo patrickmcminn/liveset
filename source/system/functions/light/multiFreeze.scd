@@ -20,6 +20,7 @@ prm
 	atk: 5,
 	sus: 0,
 	rel: 0.01,
+	curve: -12,
 	envAmp: 1,
 
 	spawn: { | self |
@@ -53,6 +54,7 @@ prm
 			val2 = msg.at(3);
 			msg.postln;
 			case
+			{ id == \output } { self.setOutput(val); }
 			{ id == \volume } { self.fader.set(\amp, val); }
 			{ id == \cutoff } { self.filter.set(\cutoff, val); }
 			{ id == \record } { self.record(val); }
@@ -64,6 +66,12 @@ prm
 			{ id == \killTrig } { self.killTriggers; }
 			{ id == \trigRate } { self.trigRateChange(val); }
 			{ id == \trigSet } { self.trigGroup.set(\trigger, val); }
+			{ id == \susAtk } { self.susAtk = val; }
+			{ id == \susRel } { self.susRel = val; }
+			{ id == \atk } { self.atk = val; }
+			{ id == \sus } { self.sus = val; }
+			{ id == \rel } { self.rel = val; }
+			{ id == \curve } { self.curve = val; }
 			{ val == 1 } { self.playEnv(val2); }
 		}, \lightMultiFreeze);
 
@@ -168,6 +176,7 @@ prm
 
 	record: { | self, bufNum |
 		Synth(\recordBuf, [\in, self.input, \bufName, self.buffer[bufNum]], self.freezeGroup, \addToTail);
+		~scLang.sendMsg(\lightControl, \record, bufNum);
 		self;
 	},
 
