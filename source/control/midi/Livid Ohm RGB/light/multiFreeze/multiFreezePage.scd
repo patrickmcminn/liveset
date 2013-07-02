@@ -12,6 +12,7 @@ prm
 	// functions go here
 	~scLang.sendMsg(\lightControl, \multiFreezeInterface);
 	~scLang.sendMsg(\lightControl, \multiFreezeControls);
+	~scLang.sendMsg(\lightControl, \multiFreezeOutput);
 
 	~restoreOhm.light.multiFreeze.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhmMultiFreeze, name, state); });
 

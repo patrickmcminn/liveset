@@ -170,21 +170,21 @@ prm
 	set1: { | self |
 		self.output = ~mixer.s1;
 		self.fader.set(\out, self.output);
-		~scLang.sendMsg(\lightControl, \multiFreezeOutput, 1);
+		~scLang.sendMsg(\lightControl, \multiFreezeChangeOutput, 1);
 		self;
 	},
 
 	set2: { | self |
 		self.output = ~mixer.s2;
 		self.fader.set(\out, self.output);
-		~scLang.sendMsg(\lightControl, \multiFreezeOutput, 2);
+		~scLang.sendMsg(\lightControl, \multiFreezeChangeOutput, 2);
 		self;
 	},
 
 	set3: { | self |
 		self.output = ~mixer.s3;
 		self.fader.set(\out, self.output);
-		~scLang.sendMsg(\lightControl, \multiFreezeOutput, 3);
+		~scLang.sendMsg(\lightControl, \multiFreezeChangeOutput, 3);
 		self;
 	},
 
