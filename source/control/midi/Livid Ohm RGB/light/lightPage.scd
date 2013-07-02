@@ -15,7 +15,7 @@ multiFreeze = 1;
 
 	// page defs go here
 	~ohm.turnYellow(multiFreeze);
-	MIDIdef.noteOn(\lightMultiFreeze, { ~scLang.sendMsg(\lightControl, \multiFreeze); }, multiFreeze);
+	MIDIdef.noteOn(\lightMultiFreeze, { ~scLang.sendMsg(\lightMultiFreeze, \main); }, multiFreeze);
 
 	~restoreOhm.light.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhmLight, name, state); });
 
@@ -30,3 +30,4 @@ multiFreeze = 1;
 		{ color == \green } { ~ohm.turnGreen(note); }
 		{ color == \yellow } { ~ohm.turnYellow(note); }
 	});
+}; 

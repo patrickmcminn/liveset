@@ -12,6 +12,7 @@ prm
 	~restoreOhm.light.page = Array.fill(81, nil);
 
 	s.sync;
+	"/light/LightPage.scd".loadRelative;
 	"/light/Load multiFreeze.scd".loadRelative;
 
 }.fork;

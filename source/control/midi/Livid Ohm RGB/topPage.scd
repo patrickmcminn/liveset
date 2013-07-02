@@ -21,9 +21,13 @@ defines function for making the top layer of the tree
 	~ohm.turnPurple(2);
 	MIDIdef.noteOn(\birdsBranch, { ~scLang.sendMsg(\page, \birds) }, 2);
 
-	// various other functions"
+	// various other functions
 	~ohm.turnPink(3);
 	MIDIdef.noteOn(\improvBranch, { ~scLang.sendMsg(\page, \improv) }, 3);
+
+	// Light
+	~ohm.turnYellow(4);
+	MIDIdef.noteOn(\lightBranch, { ~scLang.sendMsg(\page, \light) }, 4);
 
 	// input volume:
 	MIDIdef.cc(\inputVol, { | val |

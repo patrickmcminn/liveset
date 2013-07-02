@@ -7,17 +7,18 @@ prm
 var vol;
 var susAtk, susRel, atk, sus, rel, curve;
 var cutoff, tremRate, tremDepth;
+var trigRate;
 vol = 15;
-cutoff = 20;
-tremRate = 13;
-tremDepth = 12;
+cutoff = 17;
+tremRate = 21;
+tremDepth = 20;
 susAtk = 9;
 susRel = 8;
 atk = 19;
 sus = 18;
 rel = 11;
 curve = 10;
-
+trigRate = 16;
 
 ~lightOhm.multiFreeze.controls = (
 
@@ -52,6 +53,7 @@ curve = 10;
 		self.makeADSR;
 		self.makeTrem;
 		self.makeFilter;
+		self.makeTrigRate;
 		self;
 	},
 
@@ -59,28 +61,29 @@ curve = 10;
 		self.killADSR;
 		self.killTrem;
 		self.killFilter;
+		self.killTrigRate;
 		self;
 	},
 
 	makeADSR: { | self |
 		MIDIdef.cc(\multiFreezeSusAtk, { | val |
-			var attack = val.linlin(0, 127, 0, 15);
+			var attack = val.linlin(0, 127, 0.01, 15);
 			~scLang.sendMsg(\lightMultiFreeze, \susAtk, attack);
 		}, susAtk);
 		MIDIdef.cc(\multiFreezeSusRel, { | val |
-			var release = val.linlin(0, 127, 0, 60);
+			var release = val.linlin(0, 127, 0.01, 60);
 			~scLang.sendMsg(\lightMultiFreeze, \susRel, release);
 		}, susRel);
 		MIDIdef.cc(\multiFreezeAtk, { | val |
-			var attack = val.linlin(0, 127, 0, 4);
+			var attack = val.linlin(0, 127, 0.01, 4);
 			~scLang.sendMsg(\lightMultiFreeze, \atk, attack);
 		}, atk);
 		MIDIdef.cc(\multiFreezeSus, { | val |
-			var sustain = val.linlin(0, 127, 0, 10);
+			var sustain = val.linlin(0, 127, 0, 2);
 			~scLang.sendMsg(\lightMultiFreeze, \sus, sustain);
 		}, sus);
 		MIDIdef.cc(\multiFreezeRel, { | val |
-			var release = val.linlin(0, 127, 0, 20);
+			var release = val.linlin(0, 127, 0.01, 4);
 			~scLang.sendMsg(\lightMultiFreeze, \rel, release);
 		}, rel);
 		self;
@@ -98,11 +101,11 @@ curve = 10;
 	makeTrem: { | self |
 		MIDIdef.cc(\multiFreezeTremRate, { | val |
 			var rate = val.linexp(0, 127, 0.1, 100);
-			~scLang.sendMsg(\lightMultiFreeze, \tremRate, rate);
+			~scLang.sendMsg(\lightMultiFreeze, \groupTremRate, rate);
 		}, tremRate);
 		MIDIdef.cc(\multiFreezeTremDepth, { | val |
-			var depth = val.linexp(0, 127, 0.00000001, 1000);
-			~scLang.sendMsg(\lightMultiFreeze, \tremDepth, depth);
+			var depth = val.linlin(0, 127, 0, 1);
+			~scLang.sendMsg(\lightMultiFreeze, \groupTremDepth, depth);
 		}, tremDepth);
 		self;
 	},
@@ -117,13 +120,25 @@ curve = 10;
 		MIDIdef.cc(\mutliFreezeCutoff, { | val |
 			var cutoff = val.linexp(0, 127, 100, 20000);
 			~scLang.sendMsg(\lightMultiFreeze, \cutoff, cutoff);
-			self;
 		}, cutoff);
 		self;
 	},
 
 	killFilter: { | self |
 		MIDIdef(\multiFreezeCutoff).free;
+		self;
+	},
+
+	makeTrigRate: { | self |
+		MIDIdef.cc(\trigRate, { | val |
+			var rate = val.linlin(0, 127, 0, 4);
+			~scLang.sendMsg(\lightMultiFreeze, \trigRate, rate);
+		}, trigRate);
+		self;
+	},
+
+	killTrigRate: { | self |
+		MIDIdef(\trigRate).free;
 		self;
 	}
 

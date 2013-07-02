@@ -4,20 +4,24 @@ interface.scd
 prm
 */
 
-var record, freeze, env, vol, trem, trig, freeAll, clearAll;
+var record, freeze, env, vol, trem, trig, freeAll, clearAll, singleVol, singleTremRate, singleTremDepth;
 record = 0;
 freeze = 1;
 env = 2;
 vol = 3;
+singleVol = 14;
+singleTremRate = 13;
+singleTremDepth = 12;
 trem = 4;
 trig = 64;
 freeAll = 55;
 clearAll = 63;
 
 
-~light.multiFreeze.interface = (
+~lightOhm.multiFreeze.interface = (
 
 	state: 0,
+	freezeState: Array.fill(8, 0),
 
 	spawn: { | self |
 		if ( self.state == 0, { self.init; }, { self.kill; });
@@ -58,7 +62,8 @@ clearAll = 63;
 
 	makeRecord: { | self, num = 8 |
 		num.do({ | i |
-			~ohm.turnGreen((i * 8) + record);
+			~ohm.turnYellow((i * 8) + record);
+			~restoreOhm.light.multiFreeze.page.put(((i * 8) + record), \yellow);
 			MIDIdef.noteOn("record" ++ i, { ~scLang.sendMsg(\lightMultiFreeze, \record, i); }, (i * 8) + record; );
 		});
 		self;
@@ -76,20 +81,19 @@ clearAll = 63;
 		num.do({ | i |
 			~ohm.turnBlue((i * 8) + freeze);
 			MIDIdef.noteOn("frozen" ++ i, {
-				var toggle = 0;
-				if ( toggle == 0,
+				if ( self.freezeState[i] == 0,
 
 					{
 						~scLang.sendMsg(\lightMultiFreeze, \playFrozen, ("freeze" ++ i).asSymbol, i);
 						~ohm.turnGreen((i * 8) + freeze);
 						~restoreOhm.light.multiFreeze.page.put(((i * 8) + freeze), \green);
-						toggle = 1;
+						self.freezeState[i] = 1;
 					},
 					{
-						~scLang.sendMsg(\lightMultiFreeze, \stopFrozen, i);
+						~scLang.sendMsg(\lightMultiFreeze, \stopFrozen, ("freeze" ++ i). asSymbol);
 						~ohm.turnRed((i * 8) + freeze);
 						~restoreOhm.light.multiFreeze.page.put(((i*8) + freeze), \red);
-						toggle = 0;
+						self.freezeState[i] = 0;
 					}
 				);
 
@@ -117,4 +121,68 @@ clearAll = 63;
 		num.do({ | i | MIDIdef("playEnv" ++ i).free; });
 		self;
 	},
+
+	makeVol: { | self, num = 8 |
+		num.do({ | i |
+			~ohm.turnPink((i * 8) + vol);
+			MIDIdef.noteOn("volCntrl" ++ i, { | val |
+				self.singleVolume(i);
+				8.do({ | i | ~ohm.turnPink((i * 8) + vol) });
+				~ohm.turnGreen((i * 8) + vol);
+				~restoreOhm.light.multiFreeze.page.put((i * 8) + vol, \green);
+			}, ((i * 8) + vol));
+		});
+		self;
+	},
+
+	killVol: { | self, num = 8 |
+		num.do({ | i | MIDIdef("volCntrl" ++ i).free; });
+		self;
+	},
+
+	singleVolume: { | self, num |
+		MIDIdef.cc(\singleVolume, { | val |
+			var amp = val.linlin(0, 127, 0.0, 1.0);
+			~scLang.sendMsg(\lightMultiFreeze, \singleVolume, ("freeze" ++ num).asSymbol, amp);
+			amp.postln;
+		}, singleVol);
+		self;
+	},
+
+	makeTrem: { | self, num = 8 |
+		num.do({ | i |
+			~ohm.turnLavender((i * 8) + trem);
+			MIDIdef.noteOn("tremCntrl" ++ i, { | val |
+				self.singleTrem(i);
+				8.do({ | i | ~ohm.turnLavender((i * 8) + trem) });
+				~ohm.turnGreen((i * 8) + trem);
+				~restoreOhm.light.multiFreeze.page.put((i * 8) + trem, \green);
+			}, ((i * 8) + trem));
+		});
+		self;
+	},
+
+	killTrem: { | self, num = 8 |
+		num.do({ | i | MIDIdef("tremCntrl" ++ i).free; });
+		self;
+	},
+
+	singleTrem: { | self, num |
+		MIDIdef.cc(\singleTremRate, { | val |
+			var rate = val.linexp(0, 127, 0.1, 100);
+			~scLang.sendMsg(\lightMultiFreeze, \tremRate, ("freeze" ++ num).asSymbol, rate);
+		}, singleTremRate);
+		MIDIdef.cc(\singleTremDepth, { | val |
+			var depth = val.linlin(0, 127, 0, 1);
+			~scLang.sendMsg(\lightMultiFreeze, \tremDepth, ("freeze" ++ num).asSymbol, depth);
+		}, singleTremDepth);
+		self;
+	},
+
+	makeTrigger: { | self |
+		~ohm.turnYellow(trig);
+		MIDIdef.noteOn(\trigToggle, { ~scLang.sendMsg(\lightMultiFreeze, \trig); }, trig);
+		self;
+	},
+
 );

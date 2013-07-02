@@ -4,9 +4,10 @@ multiFreezeOhm.scd
 prm
 */
 
-var main, page;
+var main, page, trigger;
 main = 1;
 page = 9;
+trigger = 64;
 
 ~lightOhm.multiFreeze = (
 
@@ -41,9 +42,10 @@ page = 9;
 			{ id == \multiFreeze } { self.spawn; }
 			{ id == \multiFreezePage } { ~page.light.multiFreeze.value; }
 			{ id == \multiFreezeControls } { ~lightOhm.multiFreeze.controls.init; }
-			{ id == \multiFreezeinterface } { ~lightOhm.multiFreeze.interface.init; }
+			{ id == \multiFreezeInterface } { ~lightOhm.multiFreeze.interface.init; }
 			{ id == \multiFreezeOutput } { ~lightOhm.multiFreeze.outputSet.init; }
 			{ id == \multiFreezeChangeOutput } { ~lightOhm.multiFreeze.outputSet.changeOutput(val); }
+			{ id == \multiFreezeTrigger } { self.triggerToggle(val); }
 
 		}, \lightControl, ~scLang);
 
@@ -51,7 +53,8 @@ page = 9;
 			var id, val;
 			id = msg.at(1);
 			val = msg.at(2);
-
+			case
+			{ id == \multiFreezeToggle } { if( val == 1, { self.makePageButton; } );}
 		},\restoreOhmLight, ~scLang);
 
 		self;
@@ -64,12 +67,14 @@ page = 9;
 	},
 
 	makeButtons: { | self |
+		~restoreOhm.light.multiFreezeToggle = 1;
 		self.makeMainButton;
 		self.makePageButton;
 		self;
 	},
 
 	killButtons: { | self |
+		~restoreOhm.light.multiFreezeToggle = 0;
 		self.killMainButton;
 		self.killPageButton;
 		self;
@@ -81,7 +86,7 @@ page = 9;
 		self;
 	},
 
-	killMainButtons: { | self |
+	killMainButton: { | self |
 		~ohm.turnRed(main);
 		~restoreOhm.light.page.put(main, \red);
 		self;
@@ -110,4 +115,9 @@ page = 9;
 
 		self;
 	},
+
+	triggerToggle: { | self, val |
+		if( val == 1, { ~ohm.turnBlue(trigger); }, { ~ohm.turnLavender(trigger); });
+		self;
+	}
 )

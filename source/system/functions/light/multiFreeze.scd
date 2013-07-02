@@ -6,11 +6,14 @@ prm
 
 ~light.multiFreeze = (
 
+	state: 0,
+	triggerState: 0,
+
 	input: ~inst.mute,
 	output: ~mixer.s2,
 	state: 0,
 	toggle: 1,
-	trigRate: 5,
+	trigRate: 0.05,
 
 	susAtk: 0.01,
 	susDec: 0,
@@ -23,6 +26,9 @@ prm
 	curve: -12,
 	envAmp: 1,
 
+	tremRate: 0,
+	tremDepth: 0,
+
 	spawn: { | self |
 		if( self.state == 0, { self.init }, { self.kill; } );
 		self;
@@ -33,16 +39,20 @@ prm
 		self.makeBusses;
 		self.makeSynths;
 		self.makeGroups;
+		self.state = 1;
+		~scLang.sendMsg(\lightControl, \multiFreeze);
 		self;
 	},
 
 	kill: { | self |
 		self.freezeGroup.freeAll;
-		self.triggerGroup.freeAll;
+		//self.triggerGroup.freeAll;
 		self.killBuffers;
 		self.killBusses;
 		self.killSynths;
 		self.killGroups;
+		self.state = 0;
+		~scLang.sendMsg(\lightControl, \multiFreeze);
 		self;
 	},
 
@@ -54,16 +64,20 @@ prm
 			val2 = msg.at(3);
 			msg.postln;
 			case
+			{ id == \main } { self.spawn }
 			{ id == \output } { self.setOutput(val); }
 			{ id == \volume } { self.fader.set(\amp, val); }
+			{ id == \singleVolume } { self[val.asSymbol].set(\amp, val2); }
 			{ id == \cutoff } { self.filter.set(\cutoff, val); }
 			{ id == \record } { self.record(val); }
 			{ id == \playFrozen } { self.playFrozen(val, val2); }
 			{ id == \stopFrozen } { self.stopFrozen(val); }
-			{ id == \tremRate } { self.tremRate(val, val2); }
-			{ id == \tremDepth } { self.tremDepth(val, val2); }
-			{ id == \makeTrig } { self.makeTriggers(val); }
-			{ id == \killTrig } { self.killTriggers; }
+			{ id == \playEnv } { self.playEnv(val); }
+			{ id == \tremRate } { self.tremRateSingle(val, val2); }
+			{ id == \tremDepth } { self.tremDepthSingle(val, val2); }
+			{ id == \groupTremRate } { self.groupTremRate(val); }
+			{ id == \groupTremDepth } { self.groupTremDepth(val); }
+			{ id == \trig } { self.triggers(val); }
 			{ id == \trigRate } { self.trigRateChange(val); }
 			{ id == \trigSet } { self.trigGroup.set(\trigger, val); }
 			{ id == \susAtk } { self.susAtk = val; }
@@ -79,7 +93,7 @@ prm
 	},
 
 	killOSC: { | self |
-		OSCdef(\lightMultiFreeze).kill;
+		OSCdef(\lightMultiFreeze).free;
 		self;
 	},
 
@@ -182,7 +196,9 @@ prm
 
 	playFrozen: { | self, name, bufNum |
 		self.put(name.asSymbol,
-			Synth(\freezePlayerSus, [\buffer, self.buffer[bufNum], \out, self.filterBus, \amp, 1],
+			Synth(\freezePlayerSus, [\buffer, self.buffer[bufNum], \out, self.filterBus, \amp, 1,
+				\atk, self.susAtk, \rel, self.susRel, \sus, self.susSus, \dec, self.susDec,
+				\tremRate, self.tremRate, \tremDepth, self.tremDepth],
 				self.freezeGroup, \addToTail)
 		);
 		~scLang.sendMsg(\lightControl, \multiFreezePlay, name.asSymbol);
@@ -200,13 +216,34 @@ prm
 		self;
 	},
 
-	tremRate: { | self, name, rate |
+	clearAll: { | self |
+		self.buffer.size.do({ | i | self.buffer[i].free; });
+		self;
+	},
+
+	tremRateSingle: { | self, name, rate |
 		self[name.asSymbol].set(\tremRate, rate);
 		self;
 	},
 
-	tremDepth: { | self, name, depth |
+	tremDepthSingle: { | self, name, depth |
 		self[name.asSymbol].set(\tremDepth, depth);
+		self;
+	},
+
+	groupTremRate: { | self, rate |
+		self.freezeGroup.set(\tremRate, rate);
+		self.tremRate = rate;
+		self;
+	},
+
+	groupTremDepth: { | self, depth |
+		self.freezeGroup.set(\tremDepth, depth);
+		self.tremDepth = depth;
+	},
+
+	triggers: { | self |
+		if ( self.triggerState == 0, { self.makeTriggers }, { self.killTriggers});
 		self;
 	},
 
@@ -214,11 +251,15 @@ prm
 		num.do({ | i |
 			Synth(\lightFreezeTr, [\trigRate, self.trigRate, \trigVal, i], self.trigGroup, \addToTail);
 		});
+		~scLang.sendMsg(\lightControl, \multiFreezeTrigger, 1);
+		self.triggerState = 1;
 		self;
 	},
 
 	killTriggers: { | self |
 		self.trigGroup.freeAll;
+		~scLang.sendMsg(\lightControl, \multiFreezeTrigger, 0);
+		self.triggerState = 0;
 		self;
 	},
 

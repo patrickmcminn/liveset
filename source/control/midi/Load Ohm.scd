@@ -21,6 +21,7 @@ try
 	"/Livid Ohm RGB/loadBirdsOhm.scd".loadRelative;
 	"/Livid Ohm RGB/improvPage.scd".loadRelative;
 	"/Livid Ohm RGB/loadImprovOhm.scd".loadRelative;
+	"/Livid Ohm RGB/loadLightOhm.scd".loadRelative;
 
 	"/Livid Ohm RGB/ohmStartup.scd".loadRelative;
 }
