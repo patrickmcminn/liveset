@@ -49,8 +49,8 @@ out3 = 74;
 	},
 
 	make1: { | self |
-		~ohm.turnPurple(out1);
-		~restoreOhm.improv.noiseSynth.page.put(out1, \purple);
+		~ohm.turnBlue(out1);
+		~restoreOhm.improv.noiseSynth.page.put(out1, \blue);
 		self.midiMake1;
 		self;
 	},
@@ -97,8 +97,8 @@ out3 = 74;
 	},
 
 	make3: { | self |
-		~ohm.turnPurple(out3);
-		~restoreOhm.improv.noiseSynth.page.put(out3, \purple);
+		~ohm.turnBlue(out3);
+		~restoreOhm.improv.noiseSynth.page.put(out3, \blue);
 		self.midiMake3;
 		self;
 	},
@@ -147,10 +147,10 @@ out3 = 74;
 		self.output = 1;
 		~ohm.turnGreen(out1);
 		~restoreOhm.improv.noiseSynth.page.put(out1, \green);
-		~ohm.turnPurple(out2);
-		~restoreOhm.improv.noiseSynth.page.put(out2, \purple);
-		~ohm.turnPurple(out3);
-		~restoreOhm.improv.noiseSynth.page.put(out3, \purple);
+		~ohm.turnBlue(out2);
+		~restoreOhm.improv.noiseSynth.page.put(out2, \blue);
+		~ohm.turnBlue(out3);
+		~restoreOhm.improv.noiseSynth.page.put(out3, \blue);
 		self;
 	},
 
@@ -158,10 +158,10 @@ out3 = 74;
 		self.output = 2;
 		~ohm.turnGreen(out2);
 		~restoreOhm.improv.noiseSynth.page.put(out2, \green);
-		~ohm.turnPurple(out1);
-		~restoreOhm.improv.noiseSynth.page.put(out1, \purple);
-		~ohm.turnPurple(out3);
-		~restoreOhm.improv.noiseSynth.page.put(out3, \purple);
+		~ohm.turnBlue(out1);
+		~restoreOhm.improv.noiseSynth.page.put(out1, \blue);
+		~ohm.turnBlue(out3);
+		~restoreOhm.improv.noiseSynth.page.put(out3, \blue);
 		self;
 	},
 
@@ -169,10 +169,10 @@ out3 = 74;
 		self.output = 3;
 		~ohm.turnGreen(out3);
 		~restoreOhm.improv.noiseSynth.page.put(out3, \green);
-		~ohm.turnPurple(out2);
-		~restoreOhm.improv.noiseSynth.page.put(out2, \purple);
-		~ohm.turnPurple(out1);
-		~restoreOhm.improv.noiseSynth.page.put(out1, \purple);
+		~ohm.turnBlue(out2);
+		~restoreOhm.improv.noiseSynth.page.put(out2, \blue);
+		~ohm.turnBlue(out1);
+		~restoreOhm.improv.noiseSynth.page.put(out1, \blue);
 		self;
 	},
 );

@@ -25,6 +25,8 @@ ohm.latency = 0;
 	ohm.noteOn(16, val, 64)});
 ~ohm.addUniqueMethod(\turnCyan, { | func, val |
 	ohm.noteOn(16, val, 4)});
+~ohm.addUniqueMethod(\turnPurple, { | func, val |
+	ohm.noteOn(16, val, 8)});
 ~ohm.addUniqueMethod(\turnWhite, { | func, val |
 	ohm.noteOn(16, val, 1)});
 
@@ -34,8 +36,6 @@ ohm.latency = 0;
 	ohm.noteOn(16, val, 1)});
 ~ohm.addUniqueMethod(\turnPink, { | func, val |
 	ohm.noteOn(16, val, 8)});
-~ohm.addUniqueMethod(\turnPurple, { | func, val |
-	ohm.noteOn(16, val, 32)});
 
 
 ~ohm.addUniqueMethod(\clearAll, { | func, val |
