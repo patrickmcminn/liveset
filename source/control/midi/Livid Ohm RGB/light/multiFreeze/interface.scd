@@ -109,7 +109,7 @@ clearAll = 63;
 
 	makePlayEnv: { | self, num = 8 |
 		num.do({ | i |
-			~ohm.turnPurple((i * 8) + env);
+			~ohm.turnCyan((i * 8) + env);
 			MIDIdef.noteOn("playEnv" ++ i, {
 				~scLang.sendMsg(\lightMultiFreeze, \playEnv, i);
 			}, (i * 8) + env);

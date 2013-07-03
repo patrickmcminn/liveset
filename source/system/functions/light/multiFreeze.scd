@@ -19,12 +19,13 @@ prm
 	susDec: 0,
 	susSus: 1,
 	susRel: 6,
+	amp: 0.2,
 
 	atk: 5,
 	sus: 0,
 	rel: 0.01,
 	curve: -12,
-	envAmp: 1,
+	envAmp: 0.2,
 
 	tremRate: 0,
 	tremDepth: 0,
@@ -45,7 +46,7 @@ prm
 	},
 
 	kill: { | self |
-		self.freezeGroup.freeAll;
+		self.freeAll;
 		//self.triggerGroup.freeAll;
 		self.killBuffers;
 		self.killBusses;
@@ -103,7 +104,7 @@ prm
 	},
 
 	killBuffers: { | self |
-		self.buffer.size.do({ | i | self.buffer.[i].free; });
+		self.buffer.size.do({ | i | self.buffer[i].free; });
 		self;
 	},
 
@@ -196,7 +197,7 @@ prm
 
 	playFrozen: { | self, name, bufNum |
 		self.put(name.asSymbol,
-			Synth(\freezePlayerSus, [\buffer, self.buffer[bufNum], \out, self.filterBus, \amp, 1,
+			Synth(\freezePlayerSus, [\buffer, self.buffer[bufNum], \out, self.filterBus, \amp, self.amp,
 				\atk, self.susAtk, \rel, self.susRel, \sus, self.susSus, \dec, self.susDec,
 				\tremRate, self.tremRate, \tremDepth, self.tremDepth],
 				self.freezeGroup, \addToTail)
@@ -211,8 +212,13 @@ prm
 		self;
 	},
 
-	freeAll: { | self |
+	releaseAll: { | self |
 		self.freezeGroup.set(\gate, 0);
+		self;
+	},
+
+	freeAll: { | self |
+		self.freezeGroup.freeAll;
 		self;
 	},
 
