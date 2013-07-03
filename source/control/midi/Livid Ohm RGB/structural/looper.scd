@@ -73,14 +73,14 @@ OSCdef(\looperOhmRestore, { | msg |
 	loop{
 			~restoreOhm.structure.looper = 1;
 			~structureOhmMidi.looper.init;
-			~restoreOhm.structure.page.put(s1Loop, \purple);
-			~ohm.turnPurple(s1Loop);
-			~restoreOhm.structure.page.put(s2Loop, \purple);
-			~ohm.turnPurple(s2Loop);
-			~restoreOhm.structure.page.put(s3Loop, \purple);
-			~ohm.turnPurple(s3Loop);
-			~restoreOhm.structure.page.put(masterLoop, \purple);
-			~ohm.turnPurple(masterLoop).yield;
+			~restoreOhm.structure.page.put(s1Loop, \blue);
+			~ohm.turnBlue(s1Loop);
+			~restoreOhm.structure.page.put(s2Loop, \blue);
+			~ohm.turnBlue(s2Loop);
+			~restoreOhm.structure.page.put(s3Loop, \blue);
+			~ohm.turnBlue(s3Loop);
+			~restoreOhm.structure.page.put(masterLoop, \blue);
+			~ohm.turnBlue(masterLoop).yield;
 
 			~restoreOhm.structure.looper = 0;
 			~structureOhmMidi.looper.kill;
@@ -100,7 +100,7 @@ OSCdef(\looperOhmRestore, { | msg |
 		~structureOhmMidi.masterLoopGreen;
 		(~restoreOhm.structure.masterLoop = 1).yield;
 
-		~structureOhmMidi.masterLoopPurple.value;
+		~structureOhmMidi.masterLoopBlue.value;
 		(~restoreOhm.structure.masterLoop = 0).yield;
 	}
 };
@@ -110,9 +110,9 @@ OSCdef(\looperOhmRestore, { | msg |
 		~ohm.turnGreen(masterLoop);
 };
 
-~structureOhmMidi.masterLoopPurple =  {
-		~restoreOhm.structure.page.put(masterLoop, \purple);
-		~ohm.turnPurple(masterLoop);
+~structureOhmMidi.masterLoopBlue =  {
+		~restoreOhm.structure.page.put(masterLoop, \blue);
+		~ohm.turnBlue(masterLoop);
 };
 
 ~structureOhm.s1Loop = r {
@@ -120,7 +120,7 @@ OSCdef(\looperOhmRestore, { | msg |
 		~structureOhmMidi.s1LoopGreen;
 		(~restoreOhm.structure.s1Loop = 1).yield;
 
-		~structureOhmMidi.s1LoopPurple.value;
+		~structureOhmMidi.s1LoopBlue.value;
 		(~restoreOhm.structure.s1Loop = 0).yield;
 	}
 };
@@ -130,9 +130,9 @@ OSCdef(\looperOhmRestore, { | msg |
 	~ohm.turnGreen(s1Loop);
 };
 
-~structureOhmMidi.s1LoopPurple =  {
-	~restoreOhm.structure.page.put(s1Loop, \purple);
-	~ohm.turnPurple(s1Loop);
+~structureOhmMidi.s1LoopBlue =  {
+	~restoreOhm.structure.page.put(s1Loop, \blue);
+	~ohm.turnBlue(s1Loop);
 };
 
 ~structureOhm.s2Loop = r {
@@ -140,7 +140,7 @@ OSCdef(\looperOhmRestore, { | msg |
 		~structureOhmMidi.s2LoopGreen;
 		(~restoreOhm.structure.s2Loop = 1).yield;
 
-		~structureOhmMidi.s2LoopPurple.value;
+		~structureOhmMidi.s2LoopBlue.value;
 		(~restoreOhm.structure.s2Loop = 0).yield;
 	}
 };
@@ -150,9 +150,9 @@ OSCdef(\looperOhmRestore, { | msg |
 	~ohm.turnGreen(s2Loop);
 };
 
-~structureOhmMidi.s2LoopPurple =  {
-	~restoreOhm.structure.page.put(s2Loop, \purple);
-	~ohm.turnPurple(s2Loop);
+~structureOhmMidi.s2LoopBlue =  {
+	~restoreOhm.structure.page.put(s2Loop, \blue);
+	~ohm.turnBlue(s2Loop);
 };
 
 ~structureOhm.s3Loop = r {
@@ -160,7 +160,7 @@ OSCdef(\looperOhmRestore, { | msg |
 		~structureOhmMidi.s3LoopGreen;
 		(~restoreOhm.structure.s3Loop = 1).yield;
 
-		~structureOhmMidi.s3LoopPurple.value;
+		~structureOhmMidi.s3LoopBlue.value;
 		(~restoreOhm.structure.s3Loop = 0).yield;
 	}
 };
@@ -170,9 +170,9 @@ OSCdef(\looperOhmRestore, { | msg |
 	~ohm.turnGreen(s3Loop);
 };
 
-~structureOhmMidi.s3LoopPurple =  {
-	~restoreOhm.structure.page.put(s3Loop, \purple);
-	~ohm.turnPurple(s3Loop);
+~structureOhmMidi.s3LoopBlue =  {
+	~restoreOhm.structure.page.put(s3Loop, \blue);
+	~ohm.turnBlue(s3Loop);
 };
 
 
