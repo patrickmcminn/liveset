@@ -15,20 +15,27 @@ ohm.latency = 0;
 ~ohm = { };
 ~ohm.addUniqueMethod(\turnOff, { | func, val |
 	ohm.noteOn(16, val, 0)});
-~ohm.addUniqueMethod(\turnLavender, { | func, val |
-	ohm.noteOn(16, val, 1)});
-~ohm.addUniqueMethod(\turnBlue, { | func, val |
-	ohm.noteOn(16, val, 4)});
-~ohm.addUniqueMethod(\turnPink, { | func, val |
-	ohm.noteOn(16, val, 8)});
 ~ohm.addUniqueMethod(\turnRed, { | func, val |
 	ohm.noteOn(16, val, 16)});
-~ohm.addUniqueMethod(\turnPurple, { | func, val |
+~ohm.addUniqueMethod(\turnGreen, { | func, val |
+	ohm.noteOn(16, val, 127)});
+~ohm.addUniqueMethod(\turnBlue, { | func, val |
 	ohm.noteOn(16, val, 32)});
 ~ohm.addUniqueMethod(\turnYellow, { | func, val |
 	ohm.noteOn(16, val, 64)});
-~ohm.addUniqueMethod(\turnGreen, { | func, val |
-	ohm.noteOn(16, val, 127)});
+~ohm.addUniqueMethod(\turnCyan, { | func, val |
+	ohm.noteOn(16, val, 4)});
+~ohm.addUniqueMethod(\turnWhite, { | func, val |
+	ohm.noteOn(16, val, 1)});
+
+
+// 'legacy' values:
+~ohm.addUniqueMethod(\turnLavender, { | func, val |
+	ohm.noteOn(16, val, 1)});
+~ohm.addUniqueMethod(\turnPink, { | func, val |
+	ohm.noteOn(16, val, 8)});
+~ohm.addUniqueMethod(\turnPurple, { | func, val |
+	ohm.noteOn(16, val, 32)});
 
 
 ~ohm.addUniqueMethod(\clearAll, { | func, val |
@@ -62,16 +69,14 @@ ohm.latency = 0;
 });
 
 
-
-
 ~ohm.addUniqueMethod(\splash, { | func, val |
 	Routine({
-		127.do({ | i |
+		64.do({ | i |
 		~ohm.turnRed(i);
 		0.01.wait;
 	});
 	0.25.wait;
-	127.do({ | i | ~ohm.turnGreen(i); });
+	64.do({ | i | ~ohm.turnGreen(i); });
 	0.5.wait;
 	127.do({ | i | ~ohm.turnOff(i); });
 	"Ohm initialized".postln;
