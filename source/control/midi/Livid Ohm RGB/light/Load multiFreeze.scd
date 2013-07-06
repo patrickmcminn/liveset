@@ -15,6 +15,7 @@ prm
 	"/multiFreeze/interface.scd".loadRelative;
 	"/multiFreeze/controls.scd".loadRelative;
 	"/multiFreeze/outputSet.scd".loadRelative;
+	"/multiFreeze/presets.scd".loadRelative;
 
 	s.sync;
 	~lightOhm.multiFreeze.makeOSC;
