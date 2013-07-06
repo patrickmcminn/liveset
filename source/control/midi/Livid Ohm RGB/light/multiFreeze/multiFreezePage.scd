@@ -13,6 +13,7 @@ prm
 	~scLang.sendMsg(\lightControl, \multiFreezeInterface);
 	~scLang.sendMsg(\lightControl, \multiFreezeControls);
 	~scLang.sendMsg(\lightControl, \multiFreezeOutput);
+	~lightOhm.multiFreeze.presets.init;
 
 	~restoreOhm.light.multiFreeze.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhmMultiFreeze, name, state); });
 
