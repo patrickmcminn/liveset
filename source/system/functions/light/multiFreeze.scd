@@ -30,6 +30,8 @@ prm
 	tremRate: 0,
 	tremDepth: 0,
 
+	rateNum: 1,
+
 	spawn: { | self |
 		if( self.state == 0, { self.init }, { self.kill; } );
 		self;
@@ -88,7 +90,6 @@ prm
 			{ id == \rel } { self.rel = val; }
 			{ id == \curve } { self.curve = val; }
 			{ id == \preset } { self.preset(val); }
-			{ val == 1 } { self.playEnv(val2); }
 		}, \lightMultiFreeze);
 
 		self;
@@ -282,4 +283,32 @@ prm
 			self.freezeGroup, \addToTail);
 		self;
 	},
+
+	rateChange: { | self |
+		case
+		{ self.rateNum == 0.5 }
+		{
+			self.freezeGroup.set(\rate, 0.5);
+			self.rateNum = 1;
+			~scLang.sendMsg(\lightControl, \multiFreezeRate, 0.5);
+		}
+		{ self.rateNum == 1 }
+		{
+			self.freezeGroup.set(\rate, 1);
+			self.rateNum = 1.5;
+			~scLang.sendMsg(\lightControl, \multiFreezeRate, 1);
+		}
+		{ self.rateNum == 1.5 }
+		{
+			self.freezeGroup.set(\rate, 1.5);
+			self.rateNum = 2;
+			~scLang.sendMsg(\lightControl, \multiFreezeRate, 1.5);
+		}
+		{ self.rateNum == 2 }
+		{
+			self.freezeGroup.set(\rate, 2);
+			self.rateNum = 0.5;
+			~scLang.sendMsg(\lightControl, \multiFreezeRate, 2);
+		}
+	}
 )

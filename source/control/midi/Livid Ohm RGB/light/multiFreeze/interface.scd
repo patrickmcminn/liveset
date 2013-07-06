@@ -4,7 +4,7 @@ interface.scd
 prm
 */
 
-var record, freeze, env, vol, trem, trig, freeAll, clearAll, singleVol, singleTremRate, singleTremDepth;
+var record, freeze, env, vol, trem, trig, freeAll, clearAll, singleVol, singleTremRate, singleTremDepth, rate;
 record = 0;
 freeze = 1;
 env = 2;
@@ -14,8 +14,9 @@ singleTremRate = 13;
 singleTremDepth = 12;
 trem = 4;
 trig = 64;
-freeAll = 55;
-clearAll = 63;
+// freeAll = 55;
+// clearAll = 63;
+rate = 63;
 
 
 ~lightOhm.multiFreeze.interface = (
@@ -183,6 +184,41 @@ clearAll = 63;
 		~ohm.turnYellow(trig);
 		MIDIdef.noteOn(\trigToggle, { ~scLang.sendMsg(\lightMultiFreeze, \trig); }, trig);
 		self;
+	},
+
+	makeRate: { | self |
+		self.makeRateMIDI;
+		self.makeRateButton(1);
+		self;
+	},
+
+	makeRateMIDI: { | self |
+		MIDIdef(\rate, { ~light.multiFreeze.rateChange; }, 63);
+		self;
+	},
+
+	makeRateButton: { | self, num |
+		case
+		{ num == 0.5 }
+		{
+			~ohm.turnBlue(rate);
+			~restoreOhm.light.multiFreeze.page.put(rate, \blue);
+		}
+		{ num == 1 }
+		{
+			~ohm.turnCyan(rate);
+			~restoreOhm.light.multiFreeze.page.put(rate, \cyan);
+		}
+		{ num == 1.5 }
+		{
+			~ohm.turnPurple(rate);
+			~restoreOhm.light.multiFreeze.page.put(rate, \purple);
+		}
+		{ num == 2 }
+		{
+			~ohm.turnYellow(rate);
+			~restoreOhm.light.multiFreeze.page.put(rate, \yellow);
+		}
 	},
 
 );
