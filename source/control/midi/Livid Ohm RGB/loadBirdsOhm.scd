@@ -4,6 +4,7 @@ loadBirdsOhm.scd
 prm
 */
 
+"/birds/birdsPage.scd".loadRelative;
 "/birds/bedOhm.scd".loadRelative;
 "/birds/birdsMicVerbOhm.scd".loadRelative;
 "/birds/eqgtrOhm.scd".loadRelative;

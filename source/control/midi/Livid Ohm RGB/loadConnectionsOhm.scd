@@ -4,7 +4,7 @@ loadConnectionsOhm.scd
 prm
 */
 
-
+"/connections/connectionsPage.scd".loadRelative;
 "/connections/airSputtersOhm.scd".loadRelative;
 "/connections/attackRandomizerOhm.scd".loadRelative;
 "/connections/basslinesOhm.scd".loadRelative;
