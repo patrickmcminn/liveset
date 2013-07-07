@@ -90,6 +90,7 @@ prm
 			{ id == \rel } { self.rel = val; }
 			{ id == \curve } { self.curve = val; }
 			{ id == \preset } { self.preset(val); }
+			{ val == 1 } { self.playEnv(val2); }
 		}, \lightMultiFreeze);
 
 		self;
