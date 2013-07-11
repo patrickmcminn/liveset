@@ -152,7 +152,7 @@ prm
 
 	p4: { | self |
 		self.harm3.set(\interval, -5);
-		~scLang.sendMsg(\lightControl, \chordHarmp4), 1;
+		~scLang.sendMsg(\lightControl, \chordHarmp4, 1);
 		self;
 	},
 
@@ -164,7 +164,7 @@ prm
 
 	octave: { | self |
 		self.harm1.set(\interval, -12);
-		~scLang.sendMsg(\lightcontrol, \chordHarmOctave, 1)
+		~scLang.sendMsg(\lightControl, \chordHarmOctave, 1);
 		self;
 	},
 

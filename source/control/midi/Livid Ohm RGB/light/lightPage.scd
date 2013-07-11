@@ -4,8 +4,9 @@ lightPage.scd
 prm
 */
 
-var multiFreeze;
+var multiFreeze, chordHarm;
 multiFreeze = 1;
+chordHarm = 2;
 
 ~page.light = ( );
 
@@ -16,6 +17,8 @@ multiFreeze = 1;
 	// page defs go here
 	~ohm.turnYellow(multiFreeze);
 	MIDIdef.noteOn(\lightMultiFreeze, { ~scLang.sendMsg(\lightMultiFreeze, \main); }, multiFreeze);
+	~ohm.turnWhite(chordHarm);
+	MIDIdef.noteOn(\lightChordHarm, { ~light.chordHarm.spawn; }, chordHarm);
 
 	~restoreOhm.light.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhmLight, name, state); });
 

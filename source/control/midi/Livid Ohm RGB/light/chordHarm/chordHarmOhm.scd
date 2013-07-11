@@ -39,7 +39,7 @@ prm
 	},
 
 	spawn: { | self, state |
-		if ( state == 0, { self.init; }, { self.kill });
+		if ( state == 1, { self.init; }, { self.kill });
 		self;
 	},
 
@@ -182,7 +182,7 @@ prm
 	},
 
 	killToggleMIDI: { | self |
-		MIDIdef(\chordHarmToggle).kill;
+		MIDIdef(\chordHarmToggle).free;
 		self;
 	},
 
@@ -273,7 +273,7 @@ prm
 	},
 
 	p4Ohm: { | self |
-		~ohm.turnLavender(self.fifth);
+		~ohm.turnCyan(self.fifth);
 		self;
 	},
 

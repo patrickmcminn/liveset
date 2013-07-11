@@ -13,13 +13,9 @@ try
 	"/Livid Ohm RGB/livesetOhm.scd".loadRelative;
 	"/Livid Ohm RGB/topPage.scd".loadRelative;
 	"/Livid Ohm RGB/loadStructural.scd".loadRelative;
-	"/Livid Ohm RGB/connectionsPage.scd".loadRelative;
 	"/Livid Ohm RGB/loadConnectionsOhm.scd".loadRelative;
-	"/Livid Ohm RGB/boyPage.scd".loadRelative;
 	"/Livid Ohm RGB/loadBoyOhm.scd".loadRelative;
-	"/Livid Ohm RGB/birdsPage.scd".loadRelative;
 	"/Livid Ohm RGB/loadBirdsOhm.scd".loadRelative;
-	"/Livid Ohm RGB/improvPage.scd".loadRelative;
 	"/Livid Ohm RGB/loadImprovOhm.scd".loadRelative;
 	"/Livid Ohm RGB/loadLightOhm.scd".loadRelative;
 
