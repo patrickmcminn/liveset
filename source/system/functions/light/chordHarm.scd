@@ -35,7 +35,7 @@ prm
 
 	makeBusses: { | self |
 		self.harmBus = Bus.audio;
-		self.verBus = Bus.audio;
+		self.verbBus = Bus.audio;
 		self.faderBus = Bus.audio;
 		self;
 	},
@@ -72,7 +72,7 @@ prm
 	},
 
 	muteToggle: { | self |
-		if( self.muteState == 1, { self.mute; }, { self.unmutel });
+		if( self.muteState == 1, { self.mute; }, { self.unmute; });
 		self;
 	},
 

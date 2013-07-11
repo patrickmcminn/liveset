@@ -189,7 +189,7 @@ prm
 	toggleOhm: { | self, val |
 		case
 		{ val == 0 } { ~ohm.turnRed(self.toggle); }
-		{ val == 1 } { ~ohm.turnWhite(self.toggle); }
+		{ val == 1 } { ~ohm.turnGreen(self.toggle); }
 	},
 
 	makeOctaveMIDI: { | self |
@@ -284,7 +284,7 @@ prm
 
 	makeVol: { | self |
 		MIDIdef.cc(\chordHarmVol, { | val |
-			var amp = val.linlin(0, -2.dbamp);
+			var amp = val.linlin(0, 127, 0, -2.dbamp);
 			~light.chordHarm.fader.set(\amp, amp);
 		}, self.vol);
 		~restoreOhm.light.chordHarmVol = 1;
