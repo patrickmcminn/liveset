@@ -23,6 +23,6 @@ defines external inputs to the system
 
 
 	// instrument inputs:
-	~instI[\guitarInit] = Synth(\instIn, [\in, 0, \out, ~inst[\guitar], \amp, amp], ~group[\input], \addToTail);
-	~instI[\mute] = Synth(\instIn, [\in, 1, \out, ~inst[\mute], \amp, amp], ~group[\input], \addToTail);
-	~instI[\mic] = Synth(\instIn, [\in, 2, \out, ~inst[\mic], \amp, amp], ~group[\input], \addToTail);
+	//~instI[\guitarInit] = Synth(\instIn, [\in, 0, \out, ~inst[\guitar], \amp, amp], ~group[\input], \addToTail);
+	~instI[\mute] = Synth(\instIn, [\in, 0, \out, ~inst[\mute], \amp, amp], ~group[\input], \addToTail);
+	~instI[\mic] = Synth(\instIn, [\in, 1, \out, ~inst[\mic], \amp, amp], ~group[\input], \addToTail);
