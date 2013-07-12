@@ -56,7 +56,7 @@ prm
 			~group.fx, \addToTail);
 		self.harm3 = Synth(\pitchShifter, [\in, self.harmBus, \out, self.verbBus, \interval, -5, \amp, 2.dbamp],
 			~group.fx, \addToTail);
-		self.verb = Synth(\reverb1, [\in, self.verbBus, \out, self.faderBus, \mix, 0.7, \room, 0.75, \damp, 0.9],
+		self.verb = Synth(\reverb1, [\in, self.verbBus, \out, self.faderBus, \mix, 0.7, \room, 0.75, \damp, 0.9, \amp, 4.dbamp],
 			~group.fx, \addToTail);
 		self.fader = Synth(\pan, [\in, self.faderBus, \out, self.out, \amp, -6.dbamp],
 			~group.fx, \addToTail);

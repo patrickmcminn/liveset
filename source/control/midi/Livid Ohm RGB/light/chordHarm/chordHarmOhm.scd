@@ -31,6 +31,17 @@ prm
 			{ id == \chordHarmOctave } { self.octaveOhm }
 			{ id == \chordHarmMajor7 } { self.major7Ohm; }
 		}, \lightControl, ~scLang);
+
+		OSCdef(\chordHarmRestore, { | msg |
+			var id, val;
+			id = msg.at(1);
+			val = msg.at(2);
+			case
+			{ id == \chordHarmOctave } { if( val == 1, { self.makeOctaveMIDI; self.makeMajor7MIDI; }) }
+			{ id == \chordHarmThird } { if( val == 1, { self.makeMajorMIDI; self.makeMinorMIDI; }); }
+			{ id == \chordHarmFifth } { if( val == 1, { self.makep4MIDI; self.makettMIDI; }); }
+			{ id == \chordHarmVol } { if( val == 1, { self.makeVol; } ) }
+		}, \restoreOhmLight);
 	},
 
 	killOSC: { | self |
