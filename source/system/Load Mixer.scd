@@ -8,7 +8,7 @@ r{
 	"/mixer/groups.scd".loadRelative;
 	"/mixer/mixer.scd".loadRelative;
 	"/mixer/instruments.scd".loadRelative;
-	"/mixer/guitar.scd".loadRelative;
+	//"/mixer/guitar.scd".loadRelative;
 	//"/mixer/soundcheck.scd".loadRelative;
 	"/mixer/loopers.scd".loadRelative;
 

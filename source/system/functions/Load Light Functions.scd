@@ -11,6 +11,7 @@ prm
 	s.sync;
 	// load functions:
 	"/light/multiFreeze.scd".loadRelative;
+	"/light/chordHarm.scd".loadRelative;
 
 	s.sync;
 	~light.multiFreeze.makeOSC;
