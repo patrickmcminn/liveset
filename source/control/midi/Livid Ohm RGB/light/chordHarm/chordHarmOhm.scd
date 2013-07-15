@@ -31,6 +31,18 @@ prm
 			{ id == \chordHarmOctave } { self.octaveOhm }
 			{ id == \chordHarmMajor7 } { self.major7Ohm; }
 		}, \lightControl, ~scLang);
+
+		OSCdef(\chordHarmRestore, { | msg |
+			var id, val;
+			id = msg.at(1);
+			val = msg.at(2);
+			case
+			{ id == \chordHarmOctave } { if( val == 1, { self.makeOctaveMIDI; self.makeMajor7MIDI; }) }
+			{ id == \chordHarmThird } { if( val == 1, { self.makeMajorMIDI; self.makeMinorMIDI; }); }
+			{ id == \chordHarmFifth } { if( val == 1, { self.makep4MIDI; self.makettMIDI; }); }
+			{ id == \chordHarmVol } { if( val == 1, { self.makeVol; } ) }
+			{ id == \chordHarmToggle } { if( val == 1, { self.makeToggleMIDI; }); }
+		}, \restoreOhmLight);
 	},
 
 	killOSC: { | self |
@@ -188,8 +200,8 @@ prm
 
 	toggleOhm: { | self, val |
 		case
-		{ val == 0 } { ~ohm.turnRed(self.toggle); }
-		{ val == 1 } { ~ohm.turnGreen(self.toggle); }
+		{ val == 0 } { ~ohm.turnRed(self.toggle); ~restoreOhm.light.page.put(self.toggle, \red); }
+		{ val == 1 } { ~ohm.turnGreen(self.toggle); ~restoreOhm.light.page.put(self.toggle, \green); }
 	},
 
 	makeOctaveMIDI: { | self |

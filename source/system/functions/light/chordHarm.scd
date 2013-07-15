@@ -50,10 +50,13 @@ prm
 	makeSynths: { | self |
 		self.inFader = Synth(\fader, [\in, self.in, \out, self.harmBus], ~group.fx, \addToTail);
 		self.thru = Synth(\fader, [\in, self.harmBus, \out, self.verbBus], ~group.fx, \addToTail);
-		self.harm1 = Synth(\pitchShifter, [\in, self.harmBus, \out, self.verbBus, \interval, -12], ~group.fx, \addToTail);
-		self.harm2 = Synth(\pitchShifter, [\in, self.harmBus, \out, self.verbBus, \interval, -8], ~group.fx, \addToTail);
-		self.harm3 = Synth(\pitchShifter, [\in, self.harmBus, \out, self.verbBus, \interval, -5], ~group.fx, \addToTail);
-		self.verb = Synth(\reverb1, [\in, self.verbBus, \out, self.faderBus, \mix, 0.7, \room, 0.8, \damp, 0.4],
+		self.harm1 = Synth(\pitchShifter, [\in, self.harmBus, \out, self.verbBus, \interval, -12, \amp, 2.dbamp ],
+			~group.fx, \addToTail);
+		self.harm2 = Synth(\pitchShifter, [\in, self.harmBus, \out, self.verbBus, \interval, -8, \amp, 2.dbamp],
+			~group.fx, \addToTail);
+		self.harm3 = Synth(\pitchShifter, [\in, self.harmBus, \out, self.verbBus, \interval, -5, \amp, 2.dbamp],
+			~group.fx, \addToTail);
+		self.verb = Synth(\reverb1, [\in, self.verbBus, \out, self.faderBus, \mix, 0.7, \room, 0.9, \damp, 0.9, \amp, 4.dbamp],
 			~group.fx, \addToTail);
 		self.fader = Synth(\pan, [\in, self.faderBus, \out, self.out, \amp, -6.dbamp],
 			~group.fx, \addToTail);
@@ -61,7 +64,7 @@ prm
 	},
 
 	killSynths: { | self |
-		self.inFader;
+		self.inFader.free;
 		self.thru.free;
 		self.harm1.free;
 		self.harm2.free;
