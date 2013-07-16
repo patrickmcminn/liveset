@@ -296,7 +296,7 @@ prm
 
 	makeVol: { | self |
 		MIDIdef.cc(\chordHarmVol, { | val |
-			var amp = val.linlin(0, 127, 0, -2.dbamp);
+			var amp = val.linlin(0, 127, 0, 4.dbamp);
 			~light.chordHarm.fader.set(\amp, amp);
 		}, self.vol);
 		~restoreOhm.light.chordHarmVol = 1;

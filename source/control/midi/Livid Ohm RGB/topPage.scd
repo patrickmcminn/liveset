@@ -22,7 +22,7 @@ defines function for making the top layer of the tree
 	MIDIdef.noteOn(\birdsBranch, { ~scLang.sendMsg(\page, \birds) }, 2);
 
 	// various other functions
-	~ohm.turnPink(3);
+	~ohm.turnCyan(3);
 	MIDIdef.noteOn(\improvBranch, { ~scLang.sendMsg(\page, \improv) }, 3);
 
 	// Light
