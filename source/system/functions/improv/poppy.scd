@@ -105,7 +105,7 @@ prm
 		self.verb = Synth.tail(~group.fx, \reverb1, [\in, self.verbBus, \out, self.faderBus, \amp, 2.dbamp,
 			\mix, 0.7, \room, 0.87, \damp, 0.9]);
 		self.record = Synth.tail(~group.fx, \recordBuf,
-			[\in, self.faderBus, \bufName, self.buffer, \loop, 1, \preLevel, 0]);
+			[\in, self.verbBus, \bufName, self.buffer, \loop, 1, \preLevel, 0.3]);
 		self.fader = Synth.tail(~group.fx, \pan, [\in, self.faderBus, \out, self.out, \amp, -6.dbamp]);
 		self;
 	},
@@ -122,7 +122,7 @@ prm
 		Synth.before(self.record, \playBuf,
 			[
 				\bufName, self.buffer, \out, self.faderBus, \rate, 1, \loop, 0, \amp, self.playVol,
-				\attack, self.attack, \sustain, rrand(self.lengthLo, self.lengthHi), \release, self.rel,
+				\attack, self.atk, \sustain, rrand(self.lengthLo, self.lengthHi), \release, self.rel,
 				\startPos, self.buffer.numFrames * 1.0.rand
 			],
 		);

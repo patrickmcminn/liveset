@@ -207,7 +207,7 @@ prm
 
 	makeVol: { | self |
 		MIDIdef.cc(\poppyVol, { | val |
-			var amp = val.linlin(0, 127, 0, -2.dbamp);
+			var amp = val.linlin(0, 127, 0, 4.dbamp);
 			~improv.poppy.fader.set(\amp, amp);
 		}, self.vol);
 		~restoreOhm.improv.poppyVol = 1;
