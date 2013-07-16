@@ -9,7 +9,7 @@ SynthDef(\playBuf, {
 	| bufName, out, rate = 1, loop = 0, startPos = 0, amp = 1,
 	attack = 0.05, sustain = 1, release = 0.05 |
 	var play, sig, env;
-	play = PlayBuf.ar(1, bufName, rate, 1, startPos, loop, doneAction: 2);
+	play = PlayBuf.ar(1, bufName, rate, 1, startPos, loop);
 	env = EnvGen.kr(Env.linen(attack, sustain, release), 1, doneAction: 2);
 	sig =  env * play;
 	sig = sig * amp;

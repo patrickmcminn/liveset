@@ -14,8 +14,8 @@ prm
 	triggerState: 0,
 
 	playVol: -2.dbamp,
-	atk: 0.01,
-	rel: 0.01,
+	atk: 0.05,
+	rel: 0.05,
 	lengthLo: 0.5,
 	lengthHi: 1.5,
 
@@ -31,7 +31,7 @@ prm
 		self.makeBusses;
 		self.makeSynths;
 		self.state = 1;
-		~scLang.sendMsg(\improvControl, \poppyMain, 1);
+		~scLang.sendMsg(\improvControl, \poppyTop, 1);
 		self;
 	},
 
@@ -40,7 +40,7 @@ prm
 		self.killBuffers;
 		self.killBusses;
 		self.killSynths;
-		~scLang.sendMsg(\improvControl, \poppyMain, 0);
+		~scLang.sendMsg(\improvControl, \poppyTop, 0);
 		self.state = 0;
 		self;
 	},
@@ -105,7 +105,7 @@ prm
 		self.verb = Synth.tail(~group.fx, \reverb1, [\in, self.verbBus, \out, self.faderBus, \amp, 2.dbamp,
 			\mix, 0.7, \room, 0.87, \damp, 0.9]);
 		self.record = Synth.tail(~group.fx, \recordBuf,
-			[\in, self.faderBus, \bufName, self.buffer, \loop, 1, \preLevel, 0.5]);
+			[\in, self.faderBus, \bufName, self.buffer, \loop, 1, \preLevel, 0]);
 		self.fader = Synth.tail(~group.fx, \pan, [\in, self.faderBus, \out, self.out, \amp, -6.dbamp]);
 		self;
 	},
@@ -121,7 +121,7 @@ prm
 	playEnv: { | self |
 		Synth.before(self.record, \playBuf,
 			[
-				\bufName, self.buffer, \out, self.faderBus, \rate, 1, \loop, 1, \amp, self.playVol,
+				\bufName, self.buffer, \out, self.faderBus, \rate, 1, \loop, 0, \amp, self.playVol,
 				\attack, self.attack, \sustain, rrand(self.lengthLo, self.lengthHi), \release, self.rel,
 				\startPos, self.buffer.numFrames * 1.0.rand
 			],
@@ -135,7 +135,7 @@ prm
 	},
 
 	makeTrigger: { | self |
-		self.trigger = Synth.tail(~group.control, \improvPoppyTr, [\trigRate, 0.1]);
+		self.trigger = Synth.tail(~group.control, \improvPoppyTr, [\trigRate, 0.3]);
 		~scLang.sendMsg(\improvControl, \poppyTrigger, 1);
 		self.triggerState = 1;
 		self;
@@ -148,7 +148,7 @@ prm
 		self;
 	},
 
-	changeTrigVal: { | self, val |
+	changeTrigRate: { | self, val |
 		self.trigger.set(\trigRate, val);
 		~scLang.sendMsg(\improvControl, \poppyTrigVal, val);
 		self;
@@ -163,6 +163,25 @@ prm
 	clearBuffer: { | self |
 		self.buffer.zero;
 		~scLang.sendMsg(\improvControl, \poppyBufferClear);
+		self;
+	},
+
+	muteToggle: { | self |
+		if( self.activeState == 1, { self.mute; }, { self.unmute; });
+		self;
+	},
+
+	mute: { | self |
+		self.inFader.set(\amp, 0);
+		self.activeState = 0;
+		~scLang.sendMsg(\improvControl, \poppyMute, 0);
+		self;
+	},
+
+	unmute: { | self |
+		self.inFader.set(\amp, 1);
+		self.activeState = 1;
+		~scLang.sendMsg(\improvControl, \poppyMute, 1);
 		self;
 	},
 

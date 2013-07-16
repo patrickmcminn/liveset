@@ -9,5 +9,6 @@ prm
 "improv/granulator.scd".loadRelative;
 "improv/pings.scd".loadRelative;
 "improv/noiseSynth.scd".loadRelative;
+"improv/poppy.scd".loadRelative;
 
 ~improv.noiseSynth.makeOSC;

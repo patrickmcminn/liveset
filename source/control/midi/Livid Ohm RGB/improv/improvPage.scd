@@ -4,6 +4,9 @@ improvPage.scd
 prm
 */
 
+var poppy;
+poppy = 3;
+
 ~restoreOhm[\improv] = ( );
 ~restoreOhm[\improv].page = Array.fill(81, nil);
 ~page.improv = ( );
@@ -20,6 +23,9 @@ prm
 
 	~ohm.turnYellow(2);
 	MIDIdef.noteOn(\improvNoiseSynth, { ~scLang.sendMsg(\improvNoiseSynth, \main) }, 2);
+
+	~ohm.turnWhite(poppy);
+	MIDIdef.noteOn(\improvPoppy, { ~improv.poppy.spawn; }, poppy);
 
 	~restoreOhm[\improv].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 

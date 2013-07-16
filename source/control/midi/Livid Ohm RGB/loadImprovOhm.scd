@@ -8,7 +8,7 @@ prm
 "/improv/gendyOhm.scd".loadRelative;
 "/improv/pingsOhm.scd".loadRelative;
 "/improv/Load Noise Synth.scd".loadRelative;
-
+"/improv/Load poppy.scd".loadRelative;
 
 
 
