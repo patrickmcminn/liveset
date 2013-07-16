@@ -81,11 +81,3 @@ SynthDef(\huge, {
 
 }).add;
 )
-
-a = Synth(\huge, [\in, 8])
-
-a.set(\dist, 1000)
-a.set(\subAmp, 0.7)
-a.set(\amp, 0.7)
-
-s.meter

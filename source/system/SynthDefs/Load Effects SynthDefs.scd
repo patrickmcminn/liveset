@@ -30,3 +30,4 @@ prm
 "/Effects SynthDefs/warpEnv.scd".loadRelative;
 "/Effects SynthDefs/autoFilter.scd".loadRelative;
 "/Effects SynthDefs/looper.scd".loadRelative;
+"/Effects SynthDefs/huge.scd".loadRelative;
