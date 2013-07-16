@@ -10,5 +10,6 @@ prm
 "improv/pings.scd".loadRelative;
 "improv/noiseSynth.scd".loadRelative;
 "improv/poppy.scd".loadRelative;
+"improv/huge.scd".loadRelative;
 
 ~improv.noiseSynth.makeOSC;

@@ -68,7 +68,7 @@ SynthDef(\huge, {
 	shift3 = PitchShift.ar(filter, 0.2, shifter3);
 	shiftSum = Mix.new([shift1, shift2, shift3]);
 	shiftSum = shiftSum * shiftAmp;
-
+	shiftSum = shiftSum ! 2;
 
 	// mix Section:
 	sum = Mix.new([filter, sine, shiftSum, granulation]);
