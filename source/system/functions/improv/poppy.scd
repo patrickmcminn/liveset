@@ -13,7 +13,7 @@ prm
 	activeState: 1,
 	triggerState: 0,
 
-	playVol: -2.dbamp,
+	playVol: 0.dbamp,
 	atk: 0.05,
 	rel: 0.05,
 	lengthLo: 0.5,
@@ -40,6 +40,7 @@ prm
 		self.killBuffers;
 		self.killBusses;
 		self.killSynths;
+		if( self.triggerState == 1, { self.killTrigger; });
 		~scLang.sendMsg(\improvControl, \poppyTop, 0);
 		self.state = 0;
 		self;
@@ -80,13 +81,15 @@ prm
 
 	makeBusses: { | self |
 		self.verbBus = Bus.audio;
+		self.thruBus = Bus.audio;
 		self.faderBus = Bus.audio;
 		self;
 	},
 
 	killBusses: { | self |
-		self.verbBus;
-		self.faderBus;
+		self.verbBus.free;
+		self.thruBus.free;
+		self.faderBus.free;
 		self;
 	},
 
@@ -102,11 +105,12 @@ prm
 
 	makeSynths: { | self |
 		self.inFader = Synth.tail(~group.fx, \fader, [\in, self.in, \out, self.verbBus, \amp, 1]);
-		self.verb = Synth.tail(~group.fx, \reverb1, [\in, self.verbBus, \out, self.faderBus, \amp, 2.dbamp,
-			\mix, 0.7, \room, 0.87, \damp, 0.9]);
+		self.verb = Synth.tail(~group.fx, \reverb1, [\in, self.verbBus, \out, self.thruBus, \amp, 4.dbamp,
+			\mix, 0.82, \room, 0.92, \damp, 0.9]);
+		self.thru = Synth.tail(~group.fx, \fader, [\in, self.thruBus, \out, self.faderBus]);
 		self.record = Synth.tail(~group.fx, \recordBuf,
-			[\in, self.verbBus, \bufName, self.buffer, \loop, 1, \preLevel, 0.3]);
-		self.fader = Synth.tail(~group.fx, \pan, [\in, self.faderBus, \out, self.out, \amp, -6.dbamp]);
+			[\in, self.thruBus, \bufName, self.buffer, \loop, 1, \preLevel, 0.3]);
+		self.fader = Synth.tail(~group.fx, \pan, [\in, self.faderBus, \out, self.out, \amp, -4.dbamp]);
 		self;
 	},
 
