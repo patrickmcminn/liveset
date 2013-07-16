@@ -21,6 +21,7 @@ prm
 			val = msg.at(2);
 			case
 			{ id == \hugeTop } { self.spawn(val); }
+			{ id == \hugeActive } { self.toggleOhm(val); }
 
 		}, \improvControl, ~scLang);
 
@@ -33,7 +34,7 @@ prm
 			{ id == \hugePage } { if( val == 1, { self.makePageMIDI; })}
 			{ id == \hugeVolume } { if ( val == 1, { self.makeVolume;}) }
 			{ id == \hugeCutoffRate } { if ( val == 1, { self.makeCutoffRate; }) }
-		}, \restoreOhmImprov);
+		}, \restoreOhmImprov, ~scLang);
 
 		self;
 	},
@@ -81,7 +82,7 @@ prm
 		if( val == 1,
 			{
 				~ohm.turnBlue(self.main);
-				~restoreOhm.improv.page.put(self.main, \white);
+				~restoreOhm.improv.page.put(self.main, \blue);
 			},
 			{
 				~ohm.turnRed(self.main);
@@ -108,7 +109,7 @@ prm
 	},
 
 	makeToggleMIDI: { | self |
-		MIDIdef.noteOn(\hugeToggle, { ~improv.huge.muteToggle; });
+		MIDIdef.noteOn(\hugeToggle, { ~improv.huge.muteToggle; }, self.toggle);
 		self;
 	},
 
@@ -188,6 +189,7 @@ prm
 		MIDIdef.cc(\hugeCutoffRate, { | val |
 			var rate = val.linlin(0, 127, 0.1, 100);
 			~improv.huge.main.set(\cutoffChangeRate, rate);
+			rate.postln;
 		}, self.cutoffRate);
 		~restoreOhm.improv.cutoffRate = 1;
 		self;

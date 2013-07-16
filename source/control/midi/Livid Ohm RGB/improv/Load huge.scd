@@ -7,7 +7,7 @@ prm
 {
 	s.sync;
 
-	"/poppy/hugeOhm.scd".loadRelative;
+	"/huge/hugeOhm.scd".loadRelative;
 
 	s.sync;
 

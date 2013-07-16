@@ -4,8 +4,10 @@ improvPage.scd
 prm
 */
 
-var poppy;
+var poppy, huge;
 poppy = 3;
+huge = 5;
+
 
 ~restoreOhm[\improv] = ( );
 ~restoreOhm[\improv].page = Array.fill(81, nil);
@@ -27,7 +29,11 @@ poppy = 3;
 	~ohm.turnWhite(poppy);
 	MIDIdef.noteOn(\improvPoppy, { ~improv.poppy.spawn; }, poppy);
 
+	~ohm.turnCyan(huge);
+	MIDIdef.noteOn(\improvHuge, { ~improv.huge.spawn; }, huge);
+
 	~restoreOhm[\improv].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
+	~restoreOhm.improv.keysValuesDo({ | name, state | ~scLang.sendMsg(\restoreOhmImprov, name, state); });
 
 	~restoreOhm[\improv].page.do({ | color, note |
 		case

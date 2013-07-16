@@ -22,6 +22,7 @@ prm
 		self.makeBusses;
 		self.makeSynths;
 		~scLang.sendMsg(\improvControl, \hugeTop, 1);
+		self.state = 1;
 		self;
 	},
 
@@ -30,6 +31,7 @@ prm
 		self.killBusses;
 		self.killSynths;
 		~scLang.sendMsg(\improvControl, \hugeTop, 0);
+		self.state = 0;
 		self;
 	},
 
