@@ -8,6 +8,9 @@ prm
 	s.sync;
 
 	"/huge/hugeOhm.scd".loadRelative;
+	"/huge/hugePage.scd".loadRelative;
+	"/huge/outputSet.scd".loadRelative;
+	"/huge/presets.scd".loadRelative;
 
 	s.sync;
 

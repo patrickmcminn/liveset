@@ -12,7 +12,7 @@ SynthDef(\huge, {
 	verb1Mix = 0.92, verb1Room = 0.95, verbMix = 0.6, verbRoom = 0.7, shiftAmp = 1,
 	bufLength = 1, modFreq = 0.3, trigLo = 5, trigHi = 12, grainDur = 0.05, rateLo = 1, rateHi = 150, grainAmp = 0.07,
 	cutoffLo = 500, cutoffHi = 7000, cutoffChangeRate = 16, res = 1,
-	maxDelay = 4, delayTime = 0.4, decayTime = 4, delayFreq = 1,
+	maxDelay = 4, delayTime = 0.4, decayTime = 4
 	bassBoost = 4
 	|
 
