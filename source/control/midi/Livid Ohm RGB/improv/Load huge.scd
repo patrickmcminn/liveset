@@ -11,6 +11,7 @@ prm
 	"/huge/hugePage.scd".loadRelative;
 	"/huge/outputSet.scd".loadRelative;
 	"/huge/presets.scd".loadRelative;
+	"/huge/controls.scd".loadRelative;
 
 	s.sync;
 

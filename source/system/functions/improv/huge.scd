@@ -55,7 +55,7 @@ prm
 
 	makeSynths: { | self |
 		self.inFader = Synth.tail(~group.fx, \fader, [\in, self.in, \out, self.hugeBus]);
-		self.main = Synth.tail(~group.fx, \huge, [\in, self.hugeBus, \out, self.faderBus, \amp, 0.5]);
+		self.main = Synth.tail(~group.fx, \huge, [\in, self.hugeBus, \out, self.out, \amp, 0.5]);
 		self;
 	},
 

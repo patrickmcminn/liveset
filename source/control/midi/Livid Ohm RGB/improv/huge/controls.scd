@@ -18,8 +18,8 @@ prm
 	cutoffHi: 9,
 	res: 8,
 
-	delayTime: 17,
-	verbMix: 16,
+	delayTime: 19,
+	verbMix: 18,
 	rateLo: 11,
 	rateHi: 10,
 
@@ -87,7 +87,7 @@ prm
 	makeShiftVolume: { | self |
 		MIDIdef.cc(\hugeShiftVolume, { | val |
 			var amp = val.linlin(0, 127, 0, 1);
-			~improv.huge.set(\shiftAmp, amp);
+			~improv.huge.main.set(\shiftAmp, amp);
 		}, self.shiftVol);
 		self;
 	},
@@ -100,7 +100,7 @@ prm
 	makeGrainVolume: { | self |
 		MIDIdef.cc(\hugeGrainVolume, { | val |
 			var amp = val.linlin(0, 127, 0, -12.dbamp);
-			~improv.huge.set(\grainAmp, amp);
+			~improv.huge.main.set(\grainAmp, amp);
 		}, self.grainVol);
 		self;
 	},
@@ -211,7 +211,7 @@ prm
 
 	makeRateLo: { | self |
 		MIDIdef.cc(\hugeRateLo, { | val |
-			var lo = val.linexo(0, 127, 0.1, 25);
+			var lo = val.linexp(0, 127, 0.1, 25);
 			~improv.huge.main.set(\rateLo, lo);
 		}, self.rateLo);
 		self;
@@ -276,7 +276,7 @@ prm
 
 	makeRes: { | self |
 		MIDIdef.cc(\hugeRes, { | val |
-			var res = val.linlin(0, 127, 0, 1);
+			var res = val.linlin(0, 127, 0.1, 1);
 			~improv.huge.main.set(\res, res);
 		}, self.res);
 		self;
