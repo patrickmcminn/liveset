@@ -264,7 +264,7 @@ prm
 	makeCutoffRate: { | self |
 		MIDIdef.cc(\hugeCutoffRate, { | val |
 			var rate = val.linlin(0, 127, 0.1, 100);
-			~improv.huge.main.set(\cutoffRate, rate);
+			~improv.huge.main.set(\cutoffChangeRate, rate);
 		}, self.cutoffRate);
 		self;
 	},
@@ -276,7 +276,7 @@ prm
 
 	makeRes: { | self |
 		MIDIdef.cc(\hugeRes, { | val |
-			var res = val.linlin(0, 127, 0.1, 1);
+			var res = val.linlin(0, 127, 1, 0.1);
 			~improv.huge.main.set(\res, res);
 		}, self.res);
 		self;

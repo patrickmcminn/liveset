@@ -8,18 +8,18 @@ prm
 	// adds buttons and faders that persist through page and effect changes
 
 	// Ohm Button to toggle booting and quitting the server
-	~ohm.turnGreen(87);
-	MIDIdef.noteOn(\reboot, Routine({ | val = 87 |
-		loop{
-			~scLang.sendMsg(\server, \quit);
-			["quitting server"].postln;
-			~ohm.turnRed(val).yield;
-
-			~scLang.sendMsg(\server, \boot);
-			["booting server"].postln;
-			~ohm.turnGreen(val).yield;
-		};
-	}), 87);
+	// ~ohm.turnGreen(87);
+	// MIDIdef.noteOn(\reboot, Routine({ | val = 87 |
+	// 	loop{
+	// 		~scLang.sendMsg(\server, \quit);
+	// 		["quitting server"].postln;
+	// 		~ohm.turnRed(val).yield;
+	//
+	// 		~scLang.sendMsg(\server, \boot);
+	// 		["booting server"].postln;
+	// 		~ohm.turnGreen(val).yield;
+	// 	};
+	// }), 87);
 
 	// Ohm Button to go to Top Page
 	~ohm.turnGreen(71);

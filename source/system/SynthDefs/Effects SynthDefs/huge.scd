@@ -20,7 +20,7 @@ SynthDef(\huge, {
 	var sine, verb1, distortion, verb2;
 	var buffer, playhead, record, rate, trigMod, trigger, panner, granulation;
 	var shiftArray, shifter1, shifter2, shifter3, shift1, shift2, shift3, shiftSum;
-	var cutoffShift, filter, sum, delayMod, delay, eq, sig;
+	var cutoffShift, filter, sum, delayLag, delay, eq, sig;
 
 
 	//input:
@@ -73,7 +73,8 @@ SynthDef(\huge, {
 	// mix Section:
 	sum = Mix.new([filter, sine, shiftSum, granulation]);
 	//sum = sum/3;
-	delay = CombN.ar(sum, maxDelay, delayTime, decayTime);
+	delayLag = Lag2.kr(delayTime, 0.1);
+	delay = CombC.ar(sum, maxDelay, delayLag, decayTime);
 	delay = (delay * 0.5) + sum;
 	eq = BLowShelf.ar(delay, freq/2, 1, bassBoost);
 	sig = eq * amp;

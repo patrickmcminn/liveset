@@ -73,7 +73,19 @@ prm
 	},
 
 	preset1: { | self |
-
+		~improv.huge.main.set(\subAmp, 0);
+		~improv.huge.main.set(\shiftAmp, 0);
+		~improv.huge.main.set(\modFreq, 0.35);
+		~improv.huge.main.set(\trigLo, 1);
+		~improv.huge.main.set(\trigHi, 9);
+		~improv.huge.main.set(\rateLo, 2);
+		~improv.huge.main.set(\rateHi, 25);
+		~improv.huge.main.set(\grainAmp, 0.5);
+		~improv.huge.main.set(\cutoffLo, 200);
+		~improv.huge.main.set(\cutoffHi, 650);
+		~improv.huge.main.set(\cutoffChangeRate, 3);
+		~improv.huge.main.set(\res, 0.7);
+		~improv.huge.main.set(\delayTime, 0.7);
 		self.presetTurn(1);
 		self;
 	},
