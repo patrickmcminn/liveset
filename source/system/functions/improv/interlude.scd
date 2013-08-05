@@ -59,8 +59,8 @@ prm
 	makeSynths: { | self |
 		self.inFader = Synth.tail(~group.fx, \fader, [\in, self.in, \out, self.mainBus]);
 		self.main = Synth.tail(~group.fx, \bufferGranAmp, [\in, self.mainBus, \out, self.faderBus,
-			\buffer, self.buffer, \amp, 1]);
-		self.fader = Synth.tail(~group.tx, \stereoFader, [\in, self.faderBus, \out, self.out, \amp, -6.dbamp]);
+			\buffer, self.buffer, \amp, 1, \env, ~grainBufs.gabWide]);
+		self.fader = Synth.tail(~group.fx, \stereoFader, [\in, self.faderBus, \out, self.out, \amp, -6.dbamp]);
 		self;
 	},
 
@@ -71,7 +71,7 @@ prm
 		self;
 	},
 
-muteToggle: { | self |
+	muteToggle: { | self |
 		if( self.muteState == 1, { self.mute; }, { self.unmute; });
 		self;
 	},

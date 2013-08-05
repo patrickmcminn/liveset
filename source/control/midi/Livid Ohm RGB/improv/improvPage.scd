@@ -4,9 +4,11 @@ improvPage.scd
 prm
 */
 
-var poppy, huge;
+var poppy, huge, interludeTpt, interlude;
 poppy = 3;
 huge = 5;
+interludeTpt = 6;
+interlude = 7;
 
 
 ~restoreOhm[\improv] = ( );
@@ -31,6 +33,15 @@ huge = 5;
 
 	~ohm.turnCyan(huge);
 	MIDIdef.noteOn(\improvHuge, { ~improv.huge.spawn; }, huge);
+
+	~ohm.turnPurple(interludeTpt);
+	MIDIdef.noteOn(\improvInterludeTpt, {
+		~improv.interludeTpt.spawn;
+		~scLang.sendMsg(\improvControl, \interludeTptTop, ~improv.interludeTpt.state);
+	}, interludeTpt);
+
+	~ohm.turnBlue(interlude);
+	MIDIdef.noteOn(\imrprovInterlude, { ~improv.interlude.spawn; }, interlude);
 
 	~restoreOhm[\improv].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 	~restoreOhm.improv.keysValuesDo({ | name, state | ~scLang.sendMsg(\restoreOhmImprov, name, state); });
