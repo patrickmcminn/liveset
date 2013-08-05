@@ -102,14 +102,14 @@ prm
 
 	makeToggleMIDI: { | self |
 		MIDIdef.noteOn(\interludeTptToggle, {
-			~improv.poppy.muteToggle;
+			~improv.interludeTpt.muteToggle;
 			~scLang.sendMsg(\improvControl, \interludeTptMute, ~improv.interludeTpt.muteState);
 		}, self.toggle);
 		self;
 	},
 
 	killToggleMIDI: { | self |
-		MIDIdef(\poppyToggle).free;
+		MIDIdef(\interludeTptToggle).free;
 		self;
 	},
 
