@@ -11,5 +11,6 @@ prm
 "improv/noiseSynth.scd".loadRelative;
 "improv/poppy.scd".loadRelative;
 "improv/huge.scd".loadRelative;
+"improv/interludeTpt.scd".loadRelative;
 
 ~improv.noiseSynth.makeOSC;
