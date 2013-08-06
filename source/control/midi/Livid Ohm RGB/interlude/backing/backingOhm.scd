@@ -7,7 +7,7 @@ prm
 ~interludeOhm.backing = (
 
 	main: 0,
-	stop: 8,
+	stopBtn: 8,
 	dist: 16,
 
 	texture: [1, 9, 17, 25, 2, 10, 18, 26, 3, 11, 19],
@@ -23,6 +23,10 @@ prm
 			val = msg.at(2);
 			case
 			{ id == \backingTop} { self.spawn(val); }
+			{ id == \backingStop } { self.stopOhm; }
+			{ id == \backingDist } { self.distOhm(val); }
+			{ id == \texture } { self.textureOhm(val); }
+			{ id == \shot } { self.shotOhm(val) }
 		}, \interludeControl, ~scLang);
 
 		OSCdef(\interludeBackingOhmRestore, { | msg |
@@ -89,34 +93,34 @@ prm
 		if( val == 1,
 			{
 				~ohm.turnWhite(self.main);
-				~restoreOhm.improv.page.put(self.main, \white);
+				~restoreOhm.interlude.page.put(self.main, \white);
 			},
 			{
 				~ohm.turnRed(self.main);
-				~restoreOhm.improv.page.put(self.main, \red);
+				~restoreOhm.interlude.page.put(self.main, \red);
 			}
 		);
 		self;
 	},
 
 	makeStop: { | self |
-		~ohm.turnRed(self.stop);
-		~restoreOhm.improv.page.put(self.stop, \red);
+		~ohm.turnRed(self.stopBtn);
+		~restoreOhm.interlude.page.put(self.stopBtn, \red);
 		self.makeStopMIDI;
 		self;
 	},
 
 	killStop: { | self |
-		~ohm.turnOff(self.stop);
-		~restoreOhm.improv.page.put(self.stop, \off);
+		~ohm.turnOff(self.stopBtn);
+		~restoreOhm.interlude.page.put(self.stopBtn, \off);
 		self.killStopMIDI;
 		self;
 	},
 
 	makeStopMIDI: { | self |
 		MIDIdef.noteOn(\textureStop, {
-			~interlude.backing.textureStop;
-			~scLang.sendMsg(\interludeControl, \stop); }, self.stop);
+			~interlude.backing.stopTexture;
+			~scLang.sendMsg(\interludeControl, \backingStop); }, self.stopBtn);
 		self;
 	},
 
@@ -127,8 +131,8 @@ prm
 
 	stopOhm: { | self |
 		self.texture.do({ | num, i |
-			~ohm.turnCyan(self.texture[num]);
-			~restoreOhm.interlude.page.put(self.texture[num], \cyan);
+			~ohm.turnCyan(num);
+			~restoreOhm.interlude.page.put(num, \cyan);
 		});
 	},
 
@@ -149,11 +153,11 @@ prm
 	makeDistMIDI: { | self |
 		MIDIdef.noteOn(\backingDistOn, {
 			~interlude.backing.texture.set(\amp, 100);
-			~scLang.sendMsg(\interludeControl, \dist, 1);
+			~scLang.sendMsg(\interludeControl, \backingDist, 1);
 		}, self.dist);
 		MIDIdef.noteOff(\backingDistOff, {
 			~interlude.backing.texture.set(\amp, 1);
-			~scLang.sendMsg(\interludeControl, \dist, 0);
+			~scLang.sendMsg(\interludeControl, \backingDist, 0);
 		}, self.dist);
 		self;
 	},
@@ -171,17 +175,17 @@ prm
 
 	makeTextureButtons: { | self |
 		self.texture.do({ | num, i |
-			~ohm.turnCyan(self.texture[num]);
-			~restoreOhm.interlude.page.put(self.texture[num], \cyan);
+			~ohm.turnCyan(num);
+			~restoreOhm.interlude.page.put(num, \cyan);
 		});
 		self.makeTextureMIDI;
 		self;
 	},
 
 	killTextureButtons: { | self |
-		self.texture.do({ | i |
-			~ohm.turnOff(self.texture[i]);
-			~restoreOhm.interlude.page.put(self.texture[i], \off);
+		self.texture.do({ | num, i |
+			~ohm.turnOff(num);
+			~restoreOhm.interlude.page.put(num, \off);
 		});
 		self.killTextureMIDI;
 		self;
@@ -204,9 +208,9 @@ prm
 	},
 
 	textureOhm: { | self, val |
-		self.texture.do({ | i |
-			~ohm.turnCyan(self.texture[i]);
-			~restoreOhm.interlude.page.put(self.texture[num], \cyan);
+		self.texture.do({ | num, i |
+			~ohm.turnCyan(num);
+			~restoreOhm.interlude.page.put(num, \cyan);
 		});
 		~ohm.turnGreen(val);
 		~restoreOhm.interlude.page.put(val, \green);
@@ -214,8 +218,8 @@ prm
 
 	makeShotButtons: { | self |
 		self.shot.do({ | num, i |
-			~ohm.turnYellow(self.shot[num]);
-			~restoreOhm.interlude.page.put(self.shot[num], \yellow);
+			~ohm.turnYellow(num);
+			~restoreOhm.interlude.page.put(num, \yellow);
 		});
 		self.makeShotMIDI;
 		self;
@@ -223,8 +227,8 @@ prm
 
 	killShotButtons: { | self |
 		self.shot.do({ | num, i |
-			~ohm.turnOff(self.shot[num]);
-			~restoreOhm.interlude.page.put(self.shot[num], \off);
+			~ohm.turnOff(num);
+			~restoreOhm.interlude.page.put(num, \off);
 		});
 		self.killShotMIDI;
 		self;
@@ -234,7 +238,7 @@ prm
 		self.shot.do({ | num, i |
 			MIDIdef.noteOn("shot" ++ (i + 1), {
 				~interlude.backing.playShot(i + 1);
-				~scLang.sendMsg(\interludeControl, \shot, (i + 1));
+				~scLang.sendMsg(\interludeControl, \shot, num);
 			}, num);
 		});
 		self;
@@ -243,6 +247,11 @@ prm
 	killShotMIDI: { | self |
 		self.shot.do({ | num, i | MIDIdef("shot" ++ (i + 1)).free; });
 		self;
+	},
+
+	shotOhm: { | self, val |
+		~ohm.blink(val, \red, 2);
+		{ self.shot.do({ | i | ~ohm.turnYellow(i) }); }.defer(2);
 	},
 
 	makeFaders: { | self |

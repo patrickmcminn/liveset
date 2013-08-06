@@ -1,6 +1,6 @@
 /*
-Wednesday, December 12th 2012
-loadImprovOhm.scd
+Tuesday, August 6th 2013
+loadInterludeOhm.scd
 prm
 */
 
@@ -12,7 +12,9 @@ prm
 	~restoreOhm.interlude.page = Array.fill(81, nil);
 
 	s.sync;
-	"/improv/interludePage.scd".loadRelative;
+	"/interlude/interludePage.scd".loadRelative;
+	"/interlude/Load backing.scd".loadRelative;
+	"interlude/Load tpt.scd".loadRelative;
 
 }.fork;
 

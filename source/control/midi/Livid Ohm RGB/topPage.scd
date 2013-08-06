@@ -29,6 +29,10 @@ defines function for making the top layer of the tree
 	~ohm.turnYellow(4);
 	MIDIdef.noteOn(\lightBranch, { ~scLang.sendMsg(\page, \light) }, 4);
 
+	//Interlude
+	~ohm.turnGreen(5);
+	MIDIdef.noteOn(\interludeBranch, { ~page.interlude.top; }, 5);
+
 	// input volume:
 	MIDIdef.cc(\inputVol, { | val |
 		var amp = val.linlin(0, 127, 0, 1);

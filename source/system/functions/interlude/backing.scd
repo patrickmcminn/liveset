@@ -104,7 +104,7 @@ prm
 	playTexture: { | self, num |
 		if ( self.playState == 0,
 			{
-				self.texture = Synth.before(self.fader, \bufferGranAmp, [\in, self.mainBus, \out, self.faderbus,
+				self.texture = Synth.before(self.fader, \bufferGranAmp, [\in, self.mainBus, \out, self.faderBus,
 					\buffer, self.textureBuf[num-1], \amp, 1, \env, ~grainBufs.gabWide]);
 			},
 			{
@@ -117,7 +117,7 @@ prm
 
 	playShot: { | self, num |
 		Synth.before(self.fader, \playBufStereo, [\bufName, self.shotBuf[num-1],
-			\sustain, self.shotBuf[num-1].numFrames/s.sampleRate]);
+			\sustain, self.shotBuf[num-1].numFrames/s.sampleRate, \out, self.faderBus]);
 		self;
 	},
 

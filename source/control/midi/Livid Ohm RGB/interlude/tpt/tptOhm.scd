@@ -6,10 +6,10 @@ prm
 
 ~interludeOhm.tpt = (
 
-	main: 6,
-	toggle: 14,
+	main: 7,
+	toggle: 15,
 
-	vol: 22,
+	vol: 14,
 
 	makeOSC: { | self |
 		OSCdef(\interludeTptOhm, { | msg |

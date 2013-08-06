@@ -17,21 +17,21 @@ tpt = 7;
 	// functions:
 
 	~ohm.turnBlue(backing);
-	MIDIdef(\interludeBacking, {
+	MIDIdef.noteOn(\interludeBacking, {
 		~interlude.backing.spawn;
 		~scLang.sendMsg(\interludeControl, \backingTop, ~interlude.backing.state);
 	}, backing);
 
 	~ohm.turnWhite(tpt);
-	MIDIdef(\interludeTpt, {
+	MIDIdef.noteOn(\interludeTpt, {
 		~interlude.tpt.spawn;
 		~scLang.sendMsg(\interludeControl, \tptTop, ~interlude.tpt.state);
 	}, tpt);
 
-	~restoreOhm[\improv].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
-	~restoreOhm.improv.keysValuesDo({ | name, state | ~scLang.sendMsg(\restoreOhmImprov, name, state); });
+	~restoreOhm.interlude.keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
+	~restoreOhm.interlude.keysValuesDo({ | name, state | ~scLang.sendMsg(\restoreOhmInterlude, name, state); });
 
-	~restoreOhm[\improv].page.do({ | color, note |
+	~restoreOhm.interlude.page.do({ | color, note |
 		case
 		{ color == \off } { ~ohm.turnOff(note); }
 		{ color == \blue } { ~ohm.turnBlue(note); }
