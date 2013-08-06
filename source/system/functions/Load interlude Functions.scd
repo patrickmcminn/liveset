@@ -4,6 +4,7 @@ Load interlude Functions.scd
 prm
 */
 
+~interlude = ( );
 
-"/interlude/main.scd".loadRelative;
+"/interlude/backing.scd".loadRelative;
 "/interlude/interludeTpt.scd".loadRelative;

@@ -18,8 +18,9 @@ try
 	"/Livid Ohm RGB/loadBirdsOhm.scd".loadRelative;
 	"/Livid Ohm RGB/loadImprovOhm.scd".loadRelative;
 	"/Livid Ohm RGB/loadLightOhm.scd".loadRelative;
+	"/Livid Ohm RGB/loadInterludeOhm.scd".loadRelative;
 
 	"/Livid Ohm RGB/ohmStartup.scd".loadRelative;
 }
 
-{ "Livid Ohm RGB not present!" }
+{ "Livid Ohm RGB not present!".postln; }
