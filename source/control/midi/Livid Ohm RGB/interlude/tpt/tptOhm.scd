@@ -17,18 +17,18 @@ prm
 			id = msg.at(1);
 			val = msg.at(2);
 			case
-			{ id == \interludeTptTop } { self.spawn(val); }
-			{ id == \interludeTptMute } { self.toggleOhm(val); }
-		}, \improvControl, ~scLang);
+			{ id == \tptTop } { self.spawn(val); }
+			{ id == \tptMute } { self.toggleOhm(val); }
+		}, \interludeControl, ~scLang);
 
 		OSCdef(\interludeTptOhmRestore, { | msg |
 			var id, val;
 			id = msg.at(1);
 			val = msg.at(2);
 			case
-			{ id == \interludeTptToggle } { if ( val == 1, { self.makeToggleMIDI; }) }
-			{ id == \interludeTptVol } { if(val == 1, { self.makeVol; }) }
-		}, \restoreOhmImprov, ~scLang);
+			{ id == \tptToggle } { if ( val == 1, { self.makeToggleMIDI; }) }
+			{ id == \tptVol } { if(val == 1, { self.makeVol; }) }
+		}, \restoreOhmInterlude, ~scLang);
 
 		self;
 	},
@@ -73,12 +73,12 @@ prm
 	topOhm: { | self, val |
 		if( val == 1,
 			{
-				~ohm.turnWhite(self.main);
-				~restoreOhm.improv.page.put(self.main, \white);
+				~ohm.turnBlue(self.main);
+				~restoreOhm.interlude.page.put(self.main, \blue);
 			},
 			{
 				~ohm.turnRed(self.main);
-				~restoreOhm.improv.page.put(self.main, \red);
+				~restoreOhm.interlude.page.put(self.main, \red);
 			}
 		);
 		self;
@@ -86,24 +86,24 @@ prm
 
 	makeToggle: { | self |
 		~ohm.turnGreen(self.toggle);
-		~restoreOhm.improv.page.put(self.toggle, \green);
+		~restoreOhm.interlude.page.put(self.toggle, \green);
 		self.makeToggleMIDI;
-		~restoreOhm.improv.interludeTptToggle = 1;
+		~restoreOhm.interlude.tptToggle = 1;
 		self;
 	},
 
 	killToggle: { | self |
 		~ohm.turnOff(self.toggle);
-		~restoreOhm.improv.page.put(self.toggle, \off);
+		~restoreOhm.interlude.page.put(self.toggle, \off);
 		self.killToggleMIDI;
-		~restoreOhm.improv.interludeTptToggle = 0;
+		~restoreOhm.interlude.tptToggle = 0;
 		self;
 	},
 
 	makeToggleMIDI: { | self |
 		MIDIdef.noteOn(\interludeTptToggle, {
-			~improv.interludeTpt.muteToggle;
-			~scLang.sendMsg(\improvControl, \interludeTptMute, ~improv.interludeTpt.muteState);
+			~interlude.tpt.muteToggle;
+			~scLang.sendMsg(\interludeControl, \tptMute, ~interlude.tpt.muteState);
 		}, self.toggle);
 		self;
 	},
@@ -115,8 +115,8 @@ prm
 
 	toggleOhm: { | self, val |
 		case
-		{ val == 0 } { ~ohm.turnRed(self.toggle); ~restoreOhm.improv.page.put(self.toggle, \red); }
-		{ val == 1 } { ~ohm.turnGreen(self.toggle); ~restoreOhm.improv.page.put(self.toggle, \green); }
+		{ val == 0 } { ~ohm.turnRed(self.toggle); ~restoreOhm.interlude.page.put(self.toggle, \red); }
+		{ val == 1 } { ~ohm.turnGreen(self.toggle); ~restoreOhm.interlude.page.put(self.toggle, \green); }
 	},
 
 	makeFaders: { | self |
@@ -132,15 +132,15 @@ prm
 	makeVol: { | self |
 		MIDIdef.cc(\interludeTptVol, { | val |
 			var amp = val.linlin(0, 127, 0, 0.dbamp);
-			~improv.interludeTpt.fader.set(\amp, amp);
+			~interlude.tpt.fader.set(\amp, amp);
 		}, self.vol);
-		~restoreOhm.improv.interludeTptVol = 1;
+		~restoreOhm.interlude.tptVol = 1;
 		self;
 	},
 
 	killVol: { | self |
 		MIDIdef(\interludeTptVol).free;
-		~restoreOhm.improv.poppyVol = 0;
+		~restoreOhm.interlude.tptVol = 0;
 		self;
 	},
 
