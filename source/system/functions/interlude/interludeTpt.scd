@@ -1,25 +1,24 @@
 /*
-Monday, August 5th 2013
-interlude.scd
+Sunday, August 4th 2013
+interludeTpt.scd
 prm
 */
 
-~improv.interlude = (
+~interlude.tpt = (
+
+	in: ~inst.mic,
+	out: ~mixer.s3,
 
 	state: 0,
 	muteState: 1,
 
-	in: ~inst.mic,
-	out: ~mixer.s2,
-
 	spawn: { | self |
-		if( self.state == 0, { self.init }, { self.kill });
+		if( self.state == 0, { self.init; }, { self.kill; });
 		self;
 	},
 
 	init: { | self |
 		self.state = 1;
-		self.makeBuffers;
 		self.makeBusses;
 		self.makeSynths;
 		self;
@@ -27,20 +26,8 @@ prm
 
 	kill: { | self |
 		self.state = 0;
-		self.killBuffers;
 		self.killBusses;
 		self.killSynths;
-		self;
-	},
-
-	makeBuffers: { | self |
-		var path = "/Users/patrickmcminn/Documents/Music/Current Work/Patrick McMinn/liveset/data/sampled/Interlude/interludeBacking.aif";
-		self.buffer = Buffer.read(s, path);
-		self;
-	},
-
-	killBuffers: { | self |
-		self.buffer.free;
 		self;
 	},
 
@@ -58,8 +45,7 @@ prm
 
 	makeSynths: { | self |
 		self.inFader = Synth.tail(~group.fx, \fader, [\in, self.in, \out, self.mainBus]);
-		self.main = Synth.tail(~group.fx, \bufferGranAmp, [\in, self.mainBus, \out, self.faderBus,
-			\buffer, self.buffer, \amp, 1, \env, ~grainBufs.gabWide]);
+		self.main = Synth.tail(~group.fx, \slapDist, [\in, self.mainBus, \out, self.faderBus, \amp, 1]);
 		self.fader = Synth.tail(~group.fx, \stereoFader, [\in, self.faderBus, \out, self.out, \amp, -6.dbamp]);
 		self;
 	},
@@ -67,7 +53,6 @@ prm
 	killSynths: { | self |
 		self.inFader.free;
 		self.main.free;
-		self.fader.free;
 		self;
 	},
 
@@ -111,6 +96,5 @@ prm
 		self.output = ~mixer.s3;
 		self.fader.set(\out, self.output);
 		self;
-	}
-
-)
+	},
+);

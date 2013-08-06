@@ -12,3 +12,4 @@ prm
 "/functions/Load Light Functions.scd".loadRelative;
 //"/functions/Load Waking Functions.scd".loadRelative;
 "/functions/Load improv Functions.scd".loadRelative;
+"/functions/Load interlude Functions.scd".loadRelative;
