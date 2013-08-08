@@ -47,7 +47,7 @@ SynthDef(\slapDist, {
 	distortion = distortion + ( shift * (1-distMix));
 	filter = LPF.ar(distortion, cutoff);
 
-	verb = FreeVerb2.ar(filter[0], filter[1], verbMix, 0.7, 0.8);
+	verb = FreeVerb2.ar(filter[0], filter[1], verbMix, 0.6, 0.8);
 	sig = verb * amp;
 
 	sig = Out.ar(out, sig);

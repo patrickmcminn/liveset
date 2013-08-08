@@ -9,7 +9,7 @@ SynthDef(\bufferGranAmp, {
 
 	|
 	buffer, in, out, amp = 1, ampScaleHi = 0.3,
-	grainDurLo = 5, grainDurHi = 0.1, trigLo = 0.65, trigHi = 100, ampLo = 0.4, ampHi = 1.3,
+	grainDurLo = 5, grainDurHi = 0.005, trigLo = 0.65, trigHi = 95, ampLo = 0.4, ampHi = 1.3,
 	posLo = 0.0, posHi = 1.0, panLo = -1, panHi = 1, rateLo = 1, rateHi = 1, env = -1
 	|
 
