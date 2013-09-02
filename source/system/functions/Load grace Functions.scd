@@ -6,3 +6,4 @@ prm
 
 ~grace = ( );
 
+"/grace/cluster.scd".loadRelative;

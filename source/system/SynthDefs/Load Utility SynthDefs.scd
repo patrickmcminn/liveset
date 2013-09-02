@@ -22,3 +22,4 @@ prm
 "/Utility SynthDefs/eq3 stereo.scd".loadRelative;
 "/Utility SynthDefs/sidechainCompressor.scd".loadRelative;
 "/Utility SynthDefs/channelStrip.scd".loadRelative;
+"/Utility SynthDefs/rlpf.scd".loadRelative;
