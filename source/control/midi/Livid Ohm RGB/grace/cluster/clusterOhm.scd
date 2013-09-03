@@ -11,7 +11,7 @@ prm
 	playCluster: 18,
 
 	vol: 22,
-	cutoff: 20
+	cutoff: 20,
 
 	makeOSC: { | self |
 		OSCdef(\graceClusterOhm, { | msg |
@@ -212,4 +212,4 @@ prm
 		~restoreOhm.grace.clusterCutoff = 0;
 		self;
 	},
-)
+);

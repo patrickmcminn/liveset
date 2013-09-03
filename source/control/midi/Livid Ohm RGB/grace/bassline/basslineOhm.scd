@@ -4,44 +4,34 @@ basslineOhm.scd
 prm
 */
 
-~graceOhm.poppy = (
+~graceOhm.bassline = (
 
-	main: 0,
-	toggle: 8,
-	trigger: 1,
-	resetter: 9,
+	main: 3,
+	bassline1: 11,
+	bassline2: 19,
 
-	vol: 14,
-	playVol: 12,
-	trigRate: 10,
-	lengthLo: 18,
-	lengthHi: 11,
+	vol: 15,
 
 	makeOSC: { | self |
-		OSCdef(\gracePoppyOhm, { | msg |
+		OSCdef(\graceBasslineOhm, { | msg |
 			var id, val;
 			id = msg.at(1);
 			val = msg.at(2);
 			case
-			{ id == \poppyTop } { self.spawn(val); }
-			{ id == \poppyMute } { self.toggleOhm(val); }
-			{ id == \poppyTrigger } { self.triggerOhm(val); }
+			{ id == \basslineTop } { self.spawn(val); }
+			{ id == \bassline1 } { self.bassline1Ohm(val); }
+			{ id == \bassline2 } { self.bassline2Ohm(val); }
 
 		}, \graceControl, ~scLang);
 
-		OSCdef(\gracePoppyOhmRestore, { | msg |
+		OSCdef(\graceBasslineOhmRestore, { | msg |
 			var id, val;
 			id = msg.at(1);
 			val = msg.at(2);
 			case
-			{ id == \poppyToggle } { if ( val == 1, { self.makeToggleMIDI; }) }
-			{ id == \poppyTrigger } { if ( val == 1, { self.makeTriggerMIDI; }) }
-			{ id == \poppyReset } { if( val == 1, { self.makeResetMIDI; }) }
-			{ id == \poppyVol } { if(val == 1, { self.makeVol; }) }
-			{ id == \poppyTrigRate } { if(val == 1, { self.makeTrigRate; }) }
-			{ id == \poppyPlayVol } { if (val == 1, { self.makePlayVol;} ) }
-			{ id == \poppyLengthLo } { if ( val == 1, { self.makeLengthLo; } ) }
-			{ id == \poppyLengthHi } { if ( val == 1, { self.makeLengthHil } ) }
+			{ id == \basslineVol } { if(val == 1, { self.makeVol; }) }
+			{ id == \bassline1 } { if( val == 1, { self.makeBassline1MIDI; }) }
+			{ id == \bassline2 } { if ( val == 1, { self.makeBassline2MIDI; }) }
 
 		}, \restoreOhmGrace, ~scLang);
 
@@ -49,8 +39,8 @@ prm
 	},
 
 	killOSC: { | self |
-		OSCdef(\gracePoppyOhm).free;
-		OSCdef(\gracePoppyOhmRestore).free;
+		OSCdef(\graceBasslineOhm).free;
+		OSCdef(\graceBasslineOhmRestore).free;
 		self;
 	},
 
@@ -76,17 +66,15 @@ prm
 
 	makeButtons: { | self |
 		self.topOhm(1);
-		self.makeToggle;
-		self.makeTrigger;
-		self.makeReset;
+		self.makeBassline1;
+		self.makeBassline2;
 
 	},
 
 	killButtons: { | self |
 		self.topOhm(0);
-		self.killToggle;
-		self.killTrigger;
-		self.killReset;
+		self.killBassline1;
+		self.killBassline2;
 	},
 
 	topOhm: { | self, val |
@@ -103,194 +91,96 @@ prm
 		self;
 	},
 
-	makeToggle: { | self |
-		~ohm.turnGreen(self.toggle);
-		~restoreOhm.grace.page.put(self.toggle, \green);
-		self.makeToggleMIDI;
-		~restoreOhm.grace.poppyToggle = 1;
+	makeBassline1: { | self |
+		~ohm.turnWhite(self.bassline1);
+		~restoreOhm.grace.page.put(self.bassline1, \white);
+		self.makeBassline1MIDI;
+		~restoreOhm.grace.bassline1 = 1;
 		self;
 	},
 
-	killToggle: { | self |
-		~ohm.turnOff(self.toggle);
-		~restoreOhm.grace.page.put(self.toggle, \off);
-		self.killToggleMIDI;
-		~restoreOhm.grace.poppyToggle = 0;
+	killBassline1: { | self |
+		~ohm.turnOff(self.bassline1);
+		~restoreOhm.grace.page.put(self.bassline1, \off);
+		self.killBassline1MIDI;
+		~restoreOhm.grace.bassline1 = 0;
+	},
+
+	makeBassline1MIDI: { | self |
+		MIDIdef.noteOn(\graceBassline1, {
+			~grace.bassline.togglePattern1;
+			~scLang.sendMsg(\graceControl, \bassline1, ~grace.bassline.play1State);
+		}, self.bassline1);
+	},
+
+	killBassline1MIDI: { | self |
+		MIDIdef(\graceBassline1).free;
 		self;
 	},
 
-	makeToggleMIDI: { | self |
-		MIDIdef.noteOn(\gracePoppyToggle, { ~grace.poppy.muteToggle }, self.toggle);
+	bassline1Ohm: { | self, val |
+		if( val == 1,
+			{ ~ohm.turnGreen(self.bassline1); ~restoreOhm.grace.put(self.bassline1, \green); },
+			{ ~ohm.turnRed(self.bassline1); ~restoreOhm.grace.put(self.bassline1, \red); });
 		self;
 	},
 
-	killToggleMIDI: { | self |
-		MIDIdef(\gracePoppyToggle).free;
+	makeBassline2: { | self |
+		~ohm.turnYellow(self.bassline2);
+		~restoreOhm.grace.page.put(self.bassline2, \yellow);
+		self.makeBassline2MIDI;
+		~restoreOhm.grace.bassline2 = 1;
 		self;
 	},
 
-	toggleOhm: { | self, val |
-		case
-		{ val == 0 } { ~ohm.turnRed(self.toggle); ~restoreOhm.grace.page.put(self.toggle, \red); }
-		{ val == 1 } { ~ohm.turnGreen(self.toggle); ~restoreOhm.grace.page.put(self.toggle, \green); }
+	killBassline2: { | self |
+		~ohm.turnOff(self.bassline2);
+		~restoreOhm.grace.page.put(self.bassline2, \off);
+		self.killBassline2MIDI;
+		~restoreOhm.grace.bassline2 = 0;
 	},
 
-	makeTrigger: { | self |
-		~ohm.turnRed(self.trigger);
-		~restoreOhm.grace.page.put(self.trigger, \red);
-		self.makeTriggerMIDI;
-		~restoreOhm.grace.poppyTrigger = 1;
+	makeBassline2MIDI: { | self |
+		MIDIdef.noteOn(\graceBassline2, {
+			~grace.bassline.togglePattern2;
+			~scLang.sendMsg(\graceControl, \bassline2, ~grace.bassline.play2State);
+		}, self.bassline2);
+	},
+
+	killBassline2MIDI: { | self |
+		MIDIdef(\graceBassline2).free;
 		self;
 	},
 
-	killTrigger: { | self |
-		~ohm.turnOff(self.trigger);
-		~restoreOhm.grace.page.put(self.trigger, \off);
-		self.killTriggerMIDI;
-		~restoreOhm.grace.poppyTrigger = 0;
-		self;
-	},
-
-	makeTriggerMIDI: { | self |
-		MIDIdef.noteOn(\gracePoppyTrigger, { ~grace.poppy.triggerToggle; }, self.trigger);
-		self;
-	},
-
-	killTriggerMIDI: { | self |
-		MIDIdef(\gracePoppyTrigger).free;
-		self;
-	},
-
-	triggerOhm: { | self, val |
-		case
-		{ val == 0 } { ~ohm.turnRed(self.trigger); ~restoreOhm.grace.page.put(self.trigger, \red); }
-		{ val == 1 } { ~ohm.turnWhite(self.trigger); ~restoreOhm.grace.page.put(self.trigger, \white); }
-	},
-
-	makeReset: { | self |
-		~ohm.turnPurple(self.resetter);
-		~restoreOhm.grace.page.put(self.resetter, \purple);
-		self.makeResetMIDI;
-		~restoreOhm.grace.poppyReset = 1;
-		self;
-	},
-
-	killReset: { | self |
-		~ohm.turnOff(self.resetter);
-		~restoreOhm.grace.page.put(self.resetter, \off);
-		self.killResetMIDI;
-		~restoreOhm.grace.poppyReset = 0;
-		self;
-	},
-
-	makeResetMIDI: { | self |
-		MIDIdef.noteOn(\gracePoppyReset, { ~grace.poppy.clearBuffer; }, self.resetter);
-		self;
-	},
-
-	killResetMIDI: { | self |
-		MIDIdef(\gracePoppyReset).free;
+	bassline2Ohm: { | self, val |
+		if( val == 1,
+			{ ~ohm.turnGreen(self.bassline2); ~restoreOhm.grace.put(self.bassline2, \green); },
+			{ ~ohm.turnRed(self.bassline2); ~restoreOhm.grace.put(self.bassline2, \red); });
 		self;
 	},
 
 	makeFaders: { | self |
 		self.makeVol;
-
 		self;
 	},
 
 	killFaders: { | self |
 		self.killVol;
-
 		self;
 	},
 
 	makeVol: { | self |
-		MIDIdef.cc(\gracePoppyVol, { | val |
-			var amp = val.linlin(0, 127, 0, 4.dbamp);
-			~grace.poppy.fader.set(\amp, amp);
+		MIDIdef.cc(\graceBasslineVol, { | val |
+			var amp = val.linlin(0, 127, 0, 1);
+			~grace.bassline.fader.set(\amp, amp);
 		}, self.vol);
-		~restoreOhm.grace.poppyVol = 1;
+		~restoreOhm.grace.basslineVol = 1;
 		self;
 	},
 
 	killVol: { | self |
-		MIDIdef(\gracePoppyVol).free;
-		~restoreOhm.grace.poppyVol = 0;
-		self;
-	},
-
-	makeDials: { | self |
-		self.makePlayVol;
-		self.makeTrigRate;
-		self.makeLengthLo;
-		self.makeLengthHi;
-		self;
-	},
-
-	killDials: { | self |
-		self.killPlayVol;
-		self.killTrigRate;
-		self;
-	},
-
-	makePlayVol: { | self |
-		MIDIdef.cc(\gracePoppyPlayVol, { | val |
-			var amp = val.linlin(0, 127, 0, 1);
-			~grace.poppy.playVol = amp;
-		}, self.playVol);
-		~restoreOhm.grace.poppyPlayVol = 1;
-		self;
-	},
-
-	killPlayVol: { | self |
-		MIDIdef(\gracePoppyPlayVol).free;
-		~restoreOhm.improv.poppyPlayVol = 0;
-		self;
-	},
-
-	makeTrigRate: { | self |
-		MIDIdef.cc(\gracePoppyTrigRate, { | val |
-			var rate = val.linlin(0, 127, 0, 3);
-			~grace.poppy.changeTrigRate(rate);
-		}, self.trigRate);
-		~restoreOhm.grace.poppyTrigRate = 1;
-		self;
-	},
-
-	killTrigRate: { | self |
-		MIDIdef(\gracePoppyTrigRate).free;
-		~restoreOhm.grace.poppyTrigRate = 0;
-		self;
-	},
-
-	makeLengthLo: { | self |
-		MIDIdef.cc(\gracePoppyLengthLo, { | val |
-			var length = val.linlin(0, 127, 0.01, 4);
-			~grace.poppy.lengthLo = length;
-		}, self.lengthLo);
-		~restoreOhm.grace.poppyLengthLo = 1;
-		self;
-	},
-
-	killLengthLo: { | self |
-		MIDIdef(\gracePoppyLengthLo).free;
-		~restoreOhm.grace.poppyLengthLo = 0;
-		self;
-	},
-
-	makeLengthHi: { | self |
-		MIDIdef.cc(\gracePoppyLengthHi, { | val |
-			var length = val.linlin(0, 127, 0.5, 5);
-			~grace.poppy.lengthHi = length;
-		}, self.lengthHi);
-		~restoreOhm.grace.poppyLengthHi = 1;
-		self;
-	},
-
-	killLengthHi: { | self |
-		MIDIdef(\gracePoppyLengthHi).free;
-		~restoreOhm.improv.poppyLengthHi = 1;
+		MIDIdef(\graceBasslineVol).free;
+		~restoreOhm.grace.basslineVol = 0;
 		self;
 	},
 )
