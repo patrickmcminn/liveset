@@ -19,6 +19,7 @@ try
 	"/Livid Ohm RGB/loadImprovOhm.scd".loadRelative;
 	"/Livid Ohm RGB/loadLightOhm.scd".loadRelative;
 	"/Livid Ohm RGB/loadInterludeOhm.scd".loadRelative;
+	"/Livid Ohm RGB/loadGraceOhm.scd".loadRelative;
 
 	"/Livid Ohm RGB/ohmStartup.scd".loadRelative;
 }

@@ -7,3 +7,5 @@ prm
 ~grace = ( );
 
 "/grace/cluster.scd".loadRelative;
+"/grace/poppy.scd".loadRelative;
+"/grace/bassline.scd".loadRelative;
