@@ -13,6 +13,6 @@ prm
 
 	~restoreOhm.grace.cluster = ( );
 	~restoreOhm.grace.cluster.page = Array.fill(81, nil);
-	~graceOhm.poppy.makeOSC;
+	~graceOhm.cluster.makeOSC;
 
 }.fork;

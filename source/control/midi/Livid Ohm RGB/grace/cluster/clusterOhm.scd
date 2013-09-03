@@ -176,14 +176,14 @@ prm
 	makeVol: { | self |
 		MIDIdef.cc(\graceClusterVol, { | val |
 			var amp = val.linlin(0, 127, 0, 2.dbamp);
-			~grace.poppy.fader.set(\amp, amp);
+			~grace.cluster.fader.set(\amp, amp);
 		}, self.vol);
 		~restoreOhm.grace.clusterVol = 1;
 		self;
 	},
 
 	killVol: { | self |
-		MIDIdef(\gracePoppyVol).free;
+		MIDIdef(\graceClusterVol).free;
 		~restoreOhm.grace.clusterVol = 0;
 		self;
 	},

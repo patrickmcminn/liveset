@@ -11,7 +11,7 @@ bassline = 3;
 
 ~page.grace = ( );
 
-~page.interlude.top = {
+~page.grace.top = {
 	~ohm.clearAll;
 	~ohm.addEssential;
 

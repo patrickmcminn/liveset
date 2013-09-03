@@ -33,6 +33,10 @@ defines function for making the top layer of the tree
 	~ohm.turnGreen(5);
 	MIDIdef.noteOn(\interludeBranch, { ~page.interlude.top; }, 5);
 
+	// There Is No Grace In Me
+	~ohm.turnWhite(6);
+	MIDIdef.noteOn(\graceBranch, { ~page.grace.top; }, 6);
+
 	// input volume:
 	MIDIdef.cc(\inputVol, { | val |
 		var amp = val.linlin(0, 127, 0, 1);
