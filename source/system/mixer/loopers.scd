@@ -66,10 +66,10 @@ prm
 	},
 
 	makeBuffers: { | self |
-		self.masterBuf = Buffer.alloc(s, s.sampleRate * 10, 2);
-		self.s1Buf = Buffer.alloc(s, s.sampleRate * 10, 2);
-		self.s2Buf = Buffer.alloc(s, s.sampleRate * 10, 2);
-		self.s3Buf = Buffer.alloc(s, s.sampleRate * 10, 2);
+		self.masterBuf = Buffer.alloc(s, s.sampleRate * 20, 2);
+		self.s1Buf = Buffer.alloc(s, s.sampleRate * 20, 2);
+		self.s2Buf = Buffer.alloc(s, s.sampleRate * 20, 2);
+		self.s3Buf = Buffer.alloc(s, s.sampleRate * 20, 2);
 		self;
 	},
 
