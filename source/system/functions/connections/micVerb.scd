@@ -23,7 +23,7 @@ prm
 		\inFader: Synth(\fader, [\in, ~inst[\mic], \out, ~connectBus[\micVerb].inVerb], ~group[\fx], \addToTail),
 
 		\verb: Synth(\reverb1, [\in, ~connectBus[\micVerb].inVerb, \out, ~connectBus[\micVerb].gran,
-			\room, 0.9, \damp, 0.2, \mix, 0.6, \amp, 0], ~group[\fx], \addToTail),
+			\room, 0.9, \damp, 0.2, \mix, 0.6, \amp, 1], ~group[\fx], \addToTail),
 
 		\gran: Synth(\granulator,
 			[
@@ -35,7 +35,7 @@ prm
 			~group[\fx], \addToTail),
 
 		\verb2: Synth(\convReverbStereo, [\in, ~connectBus[\micVerb].verb, \out, ~connectBus[\micVerb].fader,
-			\buffer, ~impulse[\cathedral1], \mix, 0.1], ~group[\fx], \addToTail),
+			\buffer, ~impulse[\cathedral1], \mix, 0.5], ~group[\fx], \addToTail),
 
 		\fader: Synth(\stereoFader, [\in, ~connectBus[\micVerb].fader, \out, ~mixer[\s3], \amp, 1], ~group[\fx], \addToTail)
 	);
@@ -47,32 +47,41 @@ prm
 	~connectSynth[\micVerb].do({ | i | i.free });
 });
 
-~connectMake[\micVerb] = r {
+~connectMake[\micVerb] = r { | main |
+	var val, toggle, vol, mix;
+	val = main.at(0);
+	toggle = main.at(1);
+	vol = main.at(2);
+	mix = main.at(3);
 	loop{
 		~connections[\micVerb].value;
+		~ohm.turnGreen(toggle);
+		MIDIdef.noteOn(\micVerbToggle, { ~scLang.sendMsg(\micVerb, \toggle, toggle) }, toggle);
+		MIDIdef.cc(\micVerbVolume, { | amp | ~scLang.sendMsg(\micVerb, \volume, amp) }, vol);
+		MIDIdef.cc(\micVerbGran, { | mix | ~scLang.sendMsg(\micVerb, \gran, mix) }, mix);
 		~connectSynth[\micVerb].gran.set(\rate, ~connectBus[\micVerb].at(\rate).asMap);
-		~scLang.sendMsg(\control, \micVerb);
-		"Mic Verb Active".postln.yield;
-
+		"Mic Verb Active".postln;
+		~ohm.turnBlue(val).yield;
 
 		~connections[\micVerb].kill;
-		~scLang.sendMsg(\control, \micVerb);
-		"Mic Verb Freed".postln.yield;
-
+		~ohm.turnOff(toggle);
+		MIDIdef(\micVerbVolume).free;
+		MIDIdef(\micVerbToggle).free;
+		MIDIdef(\micVerbGran).free;
+		"Mic Verb Freed".postln;
+		~ohm.turnRed(val).yield;
 	};
 };
 
 ~connectMake[\micVerbToggle] = r { | val |
 	loop{
 		~connectSynth[\micVerb].inFader.set(\mute, 0);
-		~scLang.sendMsg(\control, \micVerbToggle);
-		["input for mic verb muted"].postln.yield;
-
+		["input for mic verb muted"].postln;
+		~ohm.turnRed(val).yield;
 
 		~connectSynth[\micVerb].inFader.set(\mute, 1);
-		~scLang.sendMsg(\control, \micVerbToggle);
-		["input for mic verb active"].postln.yield;
-
+		["input for mic verb active"].postln;
+		~ohm.turnBlue(val).yield;
 	};
 };
 
