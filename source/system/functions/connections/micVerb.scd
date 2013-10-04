@@ -47,41 +47,32 @@ prm
 	~connectSynth[\micVerb].do({ | i | i.free });
 });
 
-~connectMake[\micVerb] = r { | main |
-	var val, toggle, vol, mix;
-	val = main.at(0);
-	toggle = main.at(1);
-	vol = main.at(2);
-	mix = main.at(3);
+~connectMake[\micVerb] = r {
 	loop{
 		~connections[\micVerb].value;
-		~ohm.turnGreen(toggle);
-		MIDIdef.noteOn(\micVerbToggle, { ~scLang.sendMsg(\micVerb, \toggle, toggle) }, toggle);
-		MIDIdef.cc(\micVerbVolume, { | amp | ~scLang.sendMsg(\micVerb, \volume, amp) }, vol);
-		MIDIdef.cc(\micVerbGran, { | mix | ~scLang.sendMsg(\micVerb, \gran, mix) }, mix);
 		~connectSynth[\micVerb].gran.set(\rate, ~connectBus[\micVerb].at(\rate).asMap);
-		"Mic Verb Active".postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \micVerb);
+		"Mic Verb Active".postln.yield;
+
 
 		~connections[\micVerb].kill;
-		~ohm.turnOff(toggle);
-		MIDIdef(\micVerbVolume).free;
-		MIDIdef(\micVerbToggle).free;
-		MIDIdef(\micVerbGran).free;
-		"Mic Verb Freed".postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \micVerb);
+		"Mic Verb Freed".postln.yield;
+
 	};
 };
 
 ~connectMake[\micVerbToggle] = r { | val |
 	loop{
 		~connectSynth[\micVerb].inFader.set(\mute, 0);
-		["input for mic verb muted"].postln;
-		~ohm.turnRed(val).yield;
+		~scLang.sendMsg(\control, \micVerbToggle);
+		["input for mic verb muted"].postln.yield;
+
 
 		~connectSynth[\micVerb].inFader.set(\mute, 1);
-		["input for mic verb active"].postln;
-		~ohm.turnBlue(val).yield;
+		~scLang.sendMsg(\control, \micVerbToggle);
+		["input for mic verb active"].postln.yield;
+
 	};
 };
 
