@@ -23,7 +23,7 @@ prm
 		\inFader: Synth(\fader, [\in, ~inst[\mic], \out, ~connectBus[\micVerb].inVerb], ~group[\fx], \addToTail),
 
 		\verb: Synth(\reverb1, [\in, ~connectBus[\micVerb].inVerb, \out, ~connectBus[\micVerb].gran,
-			\room, 0.9, \damp, 0.2, \mix, 0.6, \amp, 1], ~group[\fx], \addToTail),
+			\room, 0.9, \damp, 0.2, \mix, 0.6, \amp, 0], ~group[\fx], \addToTail),
 
 		\gran: Synth(\granulator,
 			[
@@ -35,7 +35,7 @@ prm
 			~group[\fx], \addToTail),
 
 		\verb2: Synth(\convReverbStereo, [\in, ~connectBus[\micVerb].verb, \out, ~connectBus[\micVerb].fader,
-			\buffer, ~impulse[\cathedral1], \mix, 0.5], ~group[\fx], \addToTail),
+			\buffer, ~impulse[\cathedral1], \mix, 0.1], ~group[\fx], \addToTail),
 
 		\fader: Synth(\stereoFader, [\in, ~connectBus[\micVerb].fader, \out, ~mixer[\s3], \amp, 1], ~group[\fx], \addToTail)
 	);

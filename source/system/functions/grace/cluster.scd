@@ -89,7 +89,7 @@ prm
 			\amp, Pwhite(0.1, 0.3, inf),
 			\attack, Pwhite(3, 7, inf),
 			\decay, Pwhite(0.01, 4, inf),
-			\sustain, Pwhite(0.3, 1, inf),
+			\sustain, Pwhite(0.6, 1, inf),
 			\release, Pwhite(9, 15, inf),
 			\note, Pwhite(0, 47, inf),
 			\octave, 3,
@@ -98,11 +98,30 @@ prm
 			\freq, Pfunc { | ev | ev.use(ev[\freq]) },
 			\buffer, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }),
 		);
+
+    Pbindef(\graceLowCluster,
+			\instrument, \susSampler,
+			\group, self.playGroup,
+			\addAction, \addToTail,
+			\out, self.filterBus,
+			\amp, Pwhite(0.2, 0.4, inf),
+			\attack, Pwhite(3, 7, inf),
+			\decay, 0
+			\sustain, 1
+			\release, Pwhite(9, 15, inf),
+			\note, Pwhite(0, 5, inf),
+			\octave, 3,
+			\legato, 1.5,
+			\dur, Pwhite(0.1, 0.4, inf),
+			\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+			\buffer, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }),
+		);
 		self;
 	},
 
 	killPatterns: { | self |
 		Pbindef(\graceCluster).clear;
+    Pbindef(\graceLowCluster).clear;
 		self;
 	},
 
@@ -113,12 +132,14 @@ prm
 
 	playCluster: { | self |
 		Pbindef(\graceCluster).play;
+    Pbindef(\graceClusterLow).play;
 		self.playState = 1;
 		self;
 	},
 
 	stopCluster: { | self |
 		Pbindef(\graceCluster).stop;
+    Pbindef(\graceClusterLow).stop;
 		self.playState = 0;
 		self;
 	},
