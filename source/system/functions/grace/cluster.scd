@@ -8,6 +8,7 @@ prm
 
 	state: 0,
 	playState: 0,
+  transitionState: 0,
 	muteState: 1,
 	output: ~mixer.s2,
 
@@ -70,7 +71,7 @@ prm
 
 	makeSynths: { | self |
 		self.filter = Synth.tail(~group.fx, \rlpfStereo, [\in, self.filterBus, \out, self.faderBus, \cutoff, 7000, \res, 1]);
-		self.fader = Synth.tail(~group.fx, \stereoFader, [\in, self.faderBus, \out, self.output, \amp, -12.dbamp, \mute, 0]);
+		self.fader = Synth.tail(~group.fx, \stereoFader, [\in, self.faderBus, \out, self.output, \amp, -15.dbamp, \mute, 0]);
 		self;
 	},
 
@@ -89,7 +90,7 @@ prm
 			\amp, Pwhite(0.1, 0.3, inf),
 			\attack, Pwhite(3, 7, inf),
 			\decay, Pwhite(0.01, 4, inf),
-			\sustain, Pwhite(0.3, 1, inf),
+			\sustain, Pwhite(0.6, 1, inf),
 			\release, Pwhite(9, 15, inf),
 			\note, Pwhite(0, 47, inf),
 			\octave, 3,
@@ -98,11 +99,49 @@ prm
 			\freq, Pfunc { | ev | ev.use(ev[\freq]) },
 			\buffer, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }),
 		);
+
+    Pbindef(\graceClusterLow,
+			\instrument, \susSampler,
+			\group, self.playGroup,
+			\addAction, \addToTail,
+			\out, self.filterBus,
+			\amp, Pwhite(0.1, 0.2, inf),
+			\attack, Pwhite(3, 7, inf),
+			\decay, 0,
+			\sustain, 1,
+			\release, Pwhite(9, 15, inf),
+			\note, Pwhite(0, 5, inf),
+			\octave, 3,
+			\legato, 1.5,
+			\dur, Pwhite(0.1, 0.4, inf),
+			\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+			\buffer, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }),
+		);
+
+    Pbindef(\graceTransition,
+			\instrument, \susSampler,
+			\group, self.playGroup,
+			\addAction, \addToTail,
+			\out, self.filterBus,
+			\amp, Pwhite(0.05, 0.15, inf),
+      \attack, Pseq([Pwhite(0.05, 3, 500), Pwhite(0.5, 2.5, 150), Pwhite(0.01, 0.05, inf)], 1),
+			\decay, 0,
+			\sustain, 1,
+      \release, Pseq([Pwhite(0.05, 4, 500), Pwhite(1, 4, 150), Pwhite(0.01, 0.05, inf)], 1),
+      \note, Pseq([Pwhite(0, 47, 500), Prand([0, 2, 4, 5, 7, 9, 10,], inf)], 1),
+      \octave, Pseq([Pseq([3], 500), Prand([3, 4, 5], 150), Pseq([4], inf)], 1),
+			\legato, 1.5,
+      \dur, Pseq([Pwhite(0.05, 0.1, 500), Pwhite(0.1, 0.3, 150),
+        Prand([0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 1/9, 0.25, 0.0625, 0.0625], inf)], 1),
+			\freq, Pfunc { | ev | ev.use(ev[\freq]) },
+			\buffer, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }),
+		);
 		self;
 	},
 
 	killPatterns: { | self |
 		Pbindef(\graceCluster).clear;
+    Pbindef(\graceClusterLow).clear;
 		self;
 	},
 
@@ -113,15 +152,35 @@ prm
 
 	playCluster: { | self |
 		Pbindef(\graceCluster).play;
+    Pbindef(\graceClusterLow).play;
 		self.playState = 1;
 		self;
 	},
 
 	stopCluster: { | self |
 		Pbindef(\graceCluster).stop;
+    Pbindef(\graceClusterLow).stop;
 		self.playState = 0;
 		self;
 	},
+
+  toggleTransition: { | self |
+    if ( self.transitionState == 0, { self.playTransition; }, { self.stopTransition; });
+    self;
+  },
+
+  playTransition: { | self |
+    self.stopCluster;
+    Pbindef(\graceTransition).play;
+    self.transitionState = 1;
+    self;
+  },
+
+  stopTransition: { | self |
+    Pbindef(\graceTransition).stop;
+    self.transitionState = 0;
+    self;
+  },
 
 	/*
 	playNote: { | self, note |
