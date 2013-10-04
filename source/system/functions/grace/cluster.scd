@@ -8,6 +8,7 @@ prm
 
 	state: 0,
 	playState: 0,
+  transitionState: 0,
 	muteState: 1,
 	output: ~mixer.s2,
 
@@ -163,14 +164,21 @@ prm
 		self;
 	},
 
+  toggleTransition: { | self |
+    if ( self.transitionState == 0, { self.playTransition; }, { self.stopTransition; });
+    self;
+  },
+
   playTransition: { | self |
     self.stopCluster;
     Pbindef(\graceTransition).play;
+    self.transitionState = 1;
     self;
   },
 
   stopTransition: { | self |
     Pbindef(\graceTransition).stop;
+    self.transitionState = 0;
     self;
   },
 
