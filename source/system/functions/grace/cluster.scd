@@ -71,7 +71,7 @@ prm
 
 	makeSynths: { | self |
 		self.filter = Synth.tail(~group.fx, \rlpfStereo, [\in, self.filterBus, \out, self.faderBus, \cutoff, 7000, \res, 1]);
-		self.fader = Synth.tail(~group.fx, \stereoFader, [\in, self.faderBus, \out, self.output, \amp, -12.dbamp, \mute, 0]);
+		self.fader = Synth.tail(~group.fx, \stereoFader, [\in, self.faderBus, \out, self.output, \amp, -15.dbamp, \mute, 0]);
 		self;
 	},
 
@@ -105,7 +105,7 @@ prm
 			\group, self.playGroup,
 			\addAction, \addToTail,
 			\out, self.filterBus,
-			\amp, Pwhite(0.2, 0.4, inf),
+			\amp, Pwhite(0.1, 0.2, inf),
 			\attack, Pwhite(3, 7, inf),
 			\decay, 0,
 			\sustain, 1,
@@ -123,7 +123,7 @@ prm
 			\group, self.playGroup,
 			\addAction, \addToTail,
 			\out, self.filterBus,
-			\amp, Pwhite(0.25, 0.3, inf),
+			\amp, Pwhite(0.05, 0.15, inf),
       \attack, Pseq([Pwhite(0.05, 3, 500), Pwhite(0.5, 2.5, 150), Pwhite(0.01, 0.05, inf)], 1),
 			\decay, 0,
 			\sustain, 1,

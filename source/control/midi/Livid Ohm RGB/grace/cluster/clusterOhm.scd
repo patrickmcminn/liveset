@@ -216,7 +216,7 @@ prm
 
 	makeVol: { | self |
 		MIDIdef.cc(\graceClusterVol, { | val |
-			var amp = val.linlin(0, 127, 0, 2.dbamp);
+			var amp = val.linlin(0, 127, 0, -12.dbamp);
 			~grace.cluster.fader.set(\amp, amp);
 		}, self.vol);
 		~restoreOhm.grace.clusterVol = 1;
