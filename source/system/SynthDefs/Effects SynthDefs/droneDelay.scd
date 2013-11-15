@@ -19,7 +19,7 @@ SynthDef(\droneDelay, {
 	sig = (dry + delay) * amp;
 	sig = sig.softclip;
 	limiter = Compander.ar(sig, sig, 1, 1, 0.1, 0.01, 0.01);
-	output = ReplaceOut.ar(out, limiter);
+	output = ReplaceOut.ar(out, sig);
 }).add;
 
 "droneDelay SynthDef added".postln;

@@ -11,8 +11,8 @@ erode = 2;
 rater = 10;
 granMix = 17;
 vol = 22;
-loShelf = 9;
-hiShelf = 16;
+loShelf = 16;
+hiShelf = 9;
 erodeControl = 24;
 
 OSCdef(\dronerOhm, { | msg |
@@ -110,7 +110,7 @@ OSCdef(\dronerOhmRestoer, { | msg |
 			~scLang.sendMsg(\droner, \loShelf, gain)}, loShelf
 		);
 	MIDIdef.cc(\dronerHiShelf, { | val |
-			var gain = val.linlin(0, 127, -3.0, 4.0);
+			var gain = val.linlin(0, 127, -6.0, 6.0);
 			~scLang.sendMsg(\droner, \hiShelf, gain)}, hiShelf
 		);
 

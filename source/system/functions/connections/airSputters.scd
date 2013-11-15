@@ -55,7 +55,7 @@ prm
 		\attack, 0.05,
 		\sustain, 0.7,
 		\release, 0.05,
-		\amp, 0.8,
+		\amp, 0.6,
 		\dur, 0.125,
 		\note, Pseq([1, 1, 1, \r, \r, 1, 1, 1, \r, \r, 1, 1, 1, \r, \r, \r], inf),
 		\rate,  Pstep(
@@ -73,7 +73,7 @@ prm
 		\attack, 0.05,
 		\sustain, 0.7,
 		\release, 0.05,
-		\amp, 0.8,
+		\amp, 0.6,
 		\dur, 0.125,
 		\note, Pseq([1, 1, \r, \r, \r, \r, \r, 1, 1, \r, \r, \r, \r, \r, 1, 1], inf),
 		\rate, Pstep(
@@ -91,7 +91,7 @@ prm
 		\attack, 0.05,
 		\sustain, 0.7,
 		\release, 0.05,
-		\amp, 0.8,
+		\amp, 0.6,
 		\dur, 0.125,
 		\note, Pseq([1, \r, \r, \r], inf),
 		\rate, Pstep(
@@ -109,7 +109,7 @@ prm
 		\attack, 0.05,
 		\sustain, 0.7,
 		\release, 0.05,
-		\amp, 0.8,
+		\amp, 0.6,
 		\dur, 0.125,
 		\note, Pseq([1, \r, \r, 1, \r, \r, 1, \r, \r, 1, \r, \r, \r], inf),
 		\rate, 0.25);

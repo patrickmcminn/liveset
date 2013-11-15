@@ -104,7 +104,7 @@ prm
 			\rel, 0.05,
 			\legato, 1,
 			\octave, 2,
-			\note, Pseq([Pseq([0, 2, 4], 2), Pseq([0, 2, -2], 1)], inf),
+      \note, Pseq([Pseq([[0,12], [2, 14], [4, 16]], 2), Pseq([[0, 12], [2, 14], [-2, 10]], 1)], inf),
 			\filterMul,Pseq([Pseq([4, 4, 4], 2), Pseq([4, 4, 5], 1)], inf),
 			\amp, Pseq([0.9, 0.9, 1], inf),
 			\dur, Pseq([4.5, 4.5, 9], inf) + Pwhite(-0.3, 0.3),

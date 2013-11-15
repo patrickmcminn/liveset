@@ -22,9 +22,6 @@ prm
 
 		\inFader: Synth(\fader, [\in, ~inst[\mute], \out, ~connectBus[\droner].drone], ~group[\fx], \addToTail),
 
-		\hiShelf: Synth(\hiShelf, [\in, ~connectBus[\droner].drone, \out, ~connectBus[\droner].drone, \freq, 2637,
-			\gain, -3], ~group[\fx], \addToTail),
-
 		\del:     Synth(\droneDelay, [\in, ~connectBus[\droner].drone, \out, ~connectBus[\droner].drone,
 			\delayTime, 1.1305, \decayTime, 200, \mix, 1], ~group[\fx], \addToTail),
 
@@ -36,16 +33,19 @@ prm
 				\mix, 0, \in, ~connectBus[\droner].drone,
 				\out, ~connectBus[\droner].verb,
 				\bufLength, 5, \panOffset, 0.03, \grainDur, 0.13, \grainDurOffset, 0.1,
-				\rate, ~connectBus[\droner].at(\rate).asMap, \env, ~grainBufs[\gabor], \trigRate, 15, \amp, 3
+				\rate, ~connectBus[\droner].at(\rate).asMap, \env, ~grainBufs[\gabor], \trigRate, 15, \amp, 1
 		], ~group[\fx], \addToTail),
 
 		\verb:    Synth(\convReverbStereo, [\in, ~connectBus[\droner].verb, \out, ~connectBus[\droner].filter,
 			\buffer, ~impulse[\cathedral1], \mix, 0.6, \inputScale, 0.5], ~group[\fx], \addToTail),
 
-		\loShelf: Synth(\lowShelfStereo, [\in, ~connectBus[\droner].filter, \out, ~connectBus[\droner].fader,
-			\freq, 250, \gain, -6], ~group[\fx], \addToTail),
+    \hiShelf: Synth(\hiShelfStereo, [\in, ~connectBus[\droner].filter, \out, ~connectBus[\droner].filter, \freq, 2637,
+			\gain, -3], ~group[\fx], \addToTail),
 
-		\fader:   Synth(\stereoFader, [\in, ~connectBus[\droner].filter, \out, ~mixer[\s1], \amp, -6.dbamp],
+		\loShelf: Synth(\lowShelfStereo, [\in, ~connectBus[\droner].filter, \out, ~connectBus[\droner].fader,
+			\freq, 250, \gain, 0], ~group[\fx], \addToTail),
+
+		\fader:   Synth(\stereoFader, [\in, ~connectBus[\droner].fader, \out, ~mixer[\s1], \amp, -6.dbamp],
 			~group[\fx], \addToTail)
 	);
 
