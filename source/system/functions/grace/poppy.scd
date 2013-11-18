@@ -19,6 +19,8 @@ prm
 	lengthLo: 0.5,
 	lengthHi: 1.5,
 
+  microClusterActiveState: nil,
+
 	spawn: { | self |
 		if( self. state == 0, { self.init; }, { self.kill; });
 		self;
@@ -80,6 +82,7 @@ prm
 	},
 
 	makeBusses: { | self |
+    self.microBus = Bus.audio;
 		self.verbBus = Bus.audio;
 		self.thruBus = Bus.audio;
 		self.faderBus = Bus.audio;
@@ -87,6 +90,7 @@ prm
 	},
 
 	killBusses: { | self |
+    self.microBus.free;
 		self.verbBus.free;
 		self.thruBus.free;
 		self.faderBus.free;
@@ -104,18 +108,26 @@ prm
 	},
 
 	makeSynths: { | self |
-		self.inFader = Synth.tail(~group.fx, \fader, [\in, self.in, \out, self.verbBus, \amp, 1]);
-		self.verb = Synth.tail(~group.fx, \reverb1, [\in, self.verbBus, \out, self.thruBus, \amp, 4.dbamp,
-			\mix, 0.75, \room, 0.88, \damp, 0.9]);
-		self.thru = Synth.tail(~group.fx, \fader, [\in, self.thruBus, \out, self.faderBus]);
-		self.record = Synth.tail(~group.fx, \recordBuf,
-			[\in, self.thruBus, \bufName, self.buffer, \loop, 1, \preLevel, 0.3]);
-		self.fader = Synth.tail(~group.fx, \pan, [\in, self.faderBus, \out, self.out, \amp, -4.dbamp]);
+		{
+      self.inFader = Synth.tail(~group.fx, \fader, [\in, self.in, \out, self.microBus, \amp, 1]);
+      s.sync;
+      self.microCluster = MicroCluster(self.microBus, 1, 20, -2, 2, 0, 7, 0.3, 7500, 0, ~group.fx);
+      0.1.wait;
+      self.verb = Synth.tail(~group.fx, \reverb1, [\in, self.microCluster.outBus, \out, self.thruBus, \amp, 4.dbamp,
+        \mix, 0.65, \room, 0.88, \damp, 0.9]);
+      self.thru = Synth.tail(~group.fx, \fader, [\in, self.thruBus, \out, self.faderBus]);
+      self.record = Synth.tail(~group.fx, \recordBuf,
+        [\in, self.thruBus, \bufName, self.buffer, \loop, 1, \preLevel, 0.3]);
+      self.fader = Synth.tail(~group.fx, \pan, [\in, self.faderBus, \out, self.out, \amp, -4.dbamp]);
+      self.muteMicroCluster;
+      self.microCluster.setWetVol(6.dbamp);
+    }.fork;
 		self;
 	},
 
 	killSynths: { | self |
 		self.inFader.free;
+    self.microCluster.free;
 		self.verb.free;
 		self.record.free;
 		self.fader.free;
@@ -188,6 +200,26 @@ prm
 		~scLang.sendMsg(\graceControl, \poppyMute, 1);
 		self;
 	},
+
+  muteMicroCluster: { | self |
+    self.microCluster.muteWet;
+    self.microClusterActiveState = 0;
+    ~scLang.sendMsg(\graceControl, \poppyMicroClusterMute, 0);
+    self;
+  },
+
+  unMuteMicroCluster: { | self |
+    self.microCluster.unMuteWet;
+    self.microClusterActiveState = 1;
+    ~scLang.sendMsg(\graceControl, \poppyMicroClusterMute, 1);
+    self;
+  },
+
+  tglMuteMicroCluster: { | self |
+    if( self.microClusterActiveState == 1, { self.muteMicroCluster; }, { self.unMuteMicroCluster; });
+    self;
+  },
+
 
 	setOutput: { | self, output |
 		case

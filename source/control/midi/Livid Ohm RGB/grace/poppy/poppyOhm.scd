@@ -10,6 +10,7 @@ prm
 	toggle: 8,
 	trigger: 1,
 	resetter: 9,
+  microCluster: 17,
 
 	vol: 14,
 	playVol: 12,
@@ -26,6 +27,7 @@ prm
 			{ id == \poppyTop } { self.spawn(val); }
 			{ id == \poppyMute } { self.toggleOhm(val); }
 			{ id == \poppyTrigger } { self.triggerOhm(val); }
+      { id == \poppyMicroClusterMute } { self.microClusterOhm(val) }
 
 		}, \graceControl, ~scLang);
 
@@ -37,6 +39,7 @@ prm
 			{ id == \poppyToggle } { if ( val == 1, { self.makeToggleMIDI; }) }
 			{ id == \poppyTrigger } { if ( val == 1, { self.makeTriggerMIDI; }) }
 			{ id == \poppyReset } { if( val == 1, { self.makeResetMIDI; }) }
+      { id == \poppyMicroCluster } { if( val == 1, { self.makeMicroClusterMIDI; }) }
 			{ id == \poppyVol } { if(val == 1, { self.makeVol; }) }
 			{ id == \poppyTrigRate } { if(val == 1, { self.makeTrigRate; }) }
 			{ id == \poppyPlayVol } { if (val == 1, { self.makePlayVol;} ) }
@@ -79,6 +82,7 @@ prm
 		self.makeToggle;
 		self.makeTrigger;
 		self.makeReset;
+    self.makeMicroCluster;
 
 	},
 
@@ -87,6 +91,7 @@ prm
 		self.killToggle;
 		self.killTrigger;
 		self.killReset;
+    self.killMicroCluster;
 	},
 
 	topOhm: { | self, val |
@@ -192,6 +197,40 @@ prm
 		MIDIdef(\gracePoppyReset).free;
 		self;
 	},
+
+  makeMicroCluster: { | self |
+    ~ohm.turnRed(self.microCluster);
+    ~restoreOhm.grace.page.put(self.microCluster, \red);
+    self.makeMicroClusterMIDI;
+    ~restoreOhm.grace.poppyMicroCluster = 1;
+    self;
+  },
+
+  killMicroCluster: { | self |
+    ~ohm.turnOff(self.microCluster);
+    ~restoreOhm.grace.page.put(self.microCluster, \off);
+    self.killMicroClusterMIDI;
+    ~restoreOhm.grace.poppyMicroCluster = 0;
+    self;
+  },
+
+  makeMicroClusterMIDI: { | self |
+    MIDIdef.noteOn(\gracePoppyMicroCluster, { ~grace.poppy.microCluster.tglMuteMicroCluster; }, self.microCluster);
+    self;
+  },
+
+  killMicroClusterMIDI: { | self |
+    MIDIdef(\gracePoppyMicroCluster).free;
+    self;
+  },
+
+  microClusterOhm: { | self, val |
+    if( val == 0,
+      { ~ohm.turnRed(self.microCluster); ~restoreOhm.grace.page.put(self.microCluster, \red); },
+      { ~ohm.turnWhite(self.microCluster); ~restoreOhm.grace.page.put(self.microCluster, \white); }
+    );
+    self;
+  },
 
 	makeFaders: { | self |
 		self.makeVol;
