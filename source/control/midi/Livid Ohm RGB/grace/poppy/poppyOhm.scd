@@ -215,7 +215,7 @@ prm
   },
 
   makeMicroClusterMIDI: { | self |
-    MIDIdef.noteOn(\gracePoppyMicroCluster, { ~grace.poppy.microCluster.tglMuteMicroCluster; }, self.microCluster);
+    MIDIdef.noteOn(\gracePoppyMicroCluster, { ~grace.poppy.tglMuteMicroCluster; }, self.microCluster);
     self;
   },
 

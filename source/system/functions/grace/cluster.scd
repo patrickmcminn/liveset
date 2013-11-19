@@ -11,6 +11,7 @@ prm
   transitionState: 0,
 	muteState: 1,
 	output: ~mixer.s2,
+  tremState: nil,
 
 	spawn: { | self |
 		if( self.state == 0, { self.init; }, { self.kill; });
@@ -33,6 +34,7 @@ prm
 		self.killSynths;
 		self.killGroups;
 		self.killPatterns;
+    self.tremState = 0;
 		self.state = 0;
 		self;
 	},
@@ -182,34 +184,6 @@ prm
     self;
   },
 
-	/*
-	playNote: { | self, note |
-		var pitch = note - 32;
-		self.put(note,
-			Synth(\susSampler,
-				[\out, self.filterBus, \buffer, ~birdsBuf.noiseSynth[pitch],
-					\attack, self.atk, \sustain, self.sus, \release, self.rel, \amp, self.synthAmp],
-			self.synthGroup, \addToTail);
-		);
-		self;
-	},
-
-	stopNote: { | self, note |
-		self[note].set(\gate, 0);
-		self;
-	},
-
-	releaseAll: { | self |
-		self.synthGroup.set(\gate, 0);
-		self;
-	},
-
-	freeAll: { | self |
-		self.synthGroup.freeAll;
-		self;
-	},
-	*/
-
 	toggleMute: { | self |
 		if( self.muteState == 0, { self.mute; }, { self.unmute; });
 		self;
@@ -226,6 +200,23 @@ prm
 		self.muteState = 0;
 		self;
 	},
+
+  toggleTrem: { | self |
+    if(self.tremState == 0, { self.makeTrem; }, { self.killTrem; });
+    self;
+  },
+
+  makeTrem: { | self |
+    self.noiseMod = Synth.before(self.fader, \noiseModStereo, [\bus, self.faderBus, \freq, 7, \rangeLo, 0.2, \rangeHi, 1.2]);
+    self.tremState = 1;
+    self;
+  },
+
+  killTrem: { | self |
+    self.noiseMod.free;
+    self.tremState = 0;
+    self;
+  },
 
 	setOutput: { | self, output |
 		case

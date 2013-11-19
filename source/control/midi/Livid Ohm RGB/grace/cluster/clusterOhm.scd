@@ -10,6 +10,7 @@ prm
 	toggle: 10,
 	playCluster: 18,
   clusterTran: 26,
+  clusterTrem: 34,
 
 	vol: 22,
 	cutoff: 20,
@@ -24,6 +25,7 @@ prm
 			{ id == \clusterMute } { self.toggleOhm(val); }
 			{ id == \clusterPlay } { self.playOhm(val); }
       { id == \clusterTran } { self.tranOhm(val); }
+      { id == \clusterTrem } { self.tremOhm(val); }
 
 		}, \graceControl, ~scLang);
 
@@ -35,6 +37,7 @@ prm
 			{ id == \clusterToggle } { if ( val == 1, { self.makeToggleMIDI; }) }
 			{ id == \clusterPlay } { if ( val == 1, { self.makeClusterMIDI; }) }
       { id == \clusterTran } { if ( val == 1, { self.makeTranMIDI; }) }
+      { id == \clusterTrem } { if ( val == 1, { self.makeTremMIDI; }) }
 			{ id == \clusterVol } { if (val == 1, { self.makeVol;} ) }
 			{ id == \clusterCutoff } { if ( val == 1, { self.makeCutoff; } ) }
 
@@ -74,8 +77,7 @@ prm
 		self.makeToggle;
 		self.makeClusterPlay;
     self.makeTran;
-
-
+    self.makeTrem;
 	},
 
 	killButtons: { | self |
@@ -83,6 +85,7 @@ prm
 		self.killToggle;
 		self.killClusterPlay;
     self.killTran;
+    self.killTrem;
 	},
 
 	topOhm: { | self, val |
@@ -204,6 +207,42 @@ prm
     { val == 0 } { ~ohm.turnRed(self.clusterTran); ~restoreOhm.grace.page.put(self.clusterTran, \red); }
   },
 
+  makeTrem: { | self |
+    ~ohm.turnCyan(self.clusterTrem);
+    ~restoreOhm.grace.page.put(self.clusterTrem, \cyan);
+    self.makeTremMIDI;
+    ~restoreOhm.grace.clusterTrem = 1;
+    self;
+  },
+
+  killTrem: { | self |
+    ~ohm.turnOff(self.clusterTrem);
+    ~restoreOhm.grace.page.put(self.clusterTrem, \off);
+    self.killTremMIDI;
+    ~restoreOhm.grace.clusterTrem = 0;
+  },
+
+  makeTremMIDI: { | self |
+    MIDIdef.noteOn(\graceClusterTrem, {
+      ~grace.cluster.toggleTrem;
+      ~scLang.sendMsg(\graceControl, \clusterTrem, ~grace.cluster.tremState);
+    }, self.clusterTrem);
+    self;
+  },
+
+  killTremMIDI: { | self |
+    MIDIdef(\graceClusterTrem).free;
+    self;
+  },
+
+  tremOhm: { | self, val |
+    if( val == 1,
+      { ~ohm.turnGreen(self.clusterTrem); ~restoreOhm.grace.page.put(self.clusterTrem, \green); },
+      { ~ohm.turnRed(self.clustertrem); ~restoreOhm.grace.page.put(self.clusterTrem, \red); }
+    );
+    self;
+  },
+
 	makeFaders: { | self |
 		self.makeVol;
 		self;
@@ -241,7 +280,7 @@ prm
 
 	makeCutoff: { | self |
 		MIDIdef.cc(\clusterCutoff, { | val |
-			var cutoff = val.linlin(0, 127, 400, 15000);
+			var cutoff = val.linexp(0, 127, 400, 15000);
 			~grace.cluster.filter.set(\cutoff, cutoff);
 		}, self.cutoff);
 		~restoreOhm.grace.clusterCutoff = 1;

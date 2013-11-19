@@ -111,7 +111,7 @@ prm
 		{
       self.inFader = Synth.tail(~group.fx, \fader, [\in, self.in, \out, self.microBus, \amp, 1]);
       s.sync;
-      self.microCluster = MicroCluster(self.microBus, 1, 20, -2, 2, 0, 7, 0.3, 7500, 0, ~group.fx);
+      self.microCluster = MicroCluster(self.microBus, 1, 20, -2, 2, 0, 7, 0.5, 7500, 0, ~group.fx);
       0.1.wait;
       self.verb = Synth.tail(~group.fx, \reverb1, [\in, self.microCluster.outBus, \out, self.thruBus, \amp, 4.dbamp,
         \mix, 0.65, \room, 0.88, \damp, 0.9]);
@@ -120,7 +120,7 @@ prm
         [\in, self.thruBus, \bufName, self.buffer, \loop, 1, \preLevel, 0.3]);
       self.fader = Synth.tail(~group.fx, \pan, [\in, self.faderBus, \out, self.out, \amp, -4.dbamp]);
       self.muteMicroCluster;
-      self.microCluster.setWetVol(6.dbamp);
+      self.microCluster.setWetVol(9.dbamp);
     }.fork;
 		self;
 	},

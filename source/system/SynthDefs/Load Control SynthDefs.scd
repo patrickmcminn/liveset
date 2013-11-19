@@ -13,3 +13,4 @@ prm
 "/Control SynthDefs/noiseControl0.scd".loadRelative;
 "/Control SynthDefs/randTrig.scd".loadRelative;
 "/Control SynthDefs/lightFreezeTr.scd".loadRelative;
+"/Control SynthDefs/noiseMod.scd".loadRelative;
