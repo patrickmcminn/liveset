@@ -16,6 +16,10 @@ prm
 	"/grace/Load poppy.scd".loadRelative;
 	"/grace/Load cluster.scd".loadRelative;
 	"/grace/Load bassline.scd".loadRelative;
+  "/grace/pitchSequencerOhm.scd".loadRelative;
+
+  s.sync;
+  ~graceOhm.pitchSequencer.makeOSC;
 
 }.fork;
 

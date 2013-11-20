@@ -4,10 +4,11 @@ gracePage.scd
 prm
 */
 
-var poppy, cluster, bassline;
+var poppy, cluster, bassline, pitchSequencer;
 poppy = 0;
 cluster = 2;
 bassline = 4;
+pitchSequencer = 5;
 
 ~page.grace = ( );
 
@@ -34,6 +35,12 @@ bassline = 4;
 		~grace.bassline.spawn;
 		~scLang.sendMsg(\graceControl, \basslineTop, ~grace.bassline.state);
 	}, bassline);
+
+  ~ohm.turnCyan(pitchSequencer);
+  MIDIdef.noteOn(\gracePitchSequencer, {
+    ~grace.pitchSequencer.spawn;
+    ~scLang.sendMsg(\graceControl, \pitchSequencerTop, ~grace.pitchSequencer.state);
+  }, pitchSequencer);
 
 	~restoreOhm.grace.keysValuesDo({ | name, state | ~scLang.sendMsg(\restoreOhmGrace, name, state); });
 

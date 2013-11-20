@@ -88,6 +88,7 @@ prm
 		self.topOhm(0);
 		self.killToggle;
 		self.killClusterPlay;
+    self.killChords;
     self.killTran;
     self.killTrem;
 	},
