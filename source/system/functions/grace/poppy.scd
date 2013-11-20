@@ -62,7 +62,6 @@ prm
 		self;
 	},
 
-
 	makeOSC: { | self |
 		OSCdef(\gracePoppy, { | msg |
 			var id, val, val2;

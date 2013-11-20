@@ -9,3 +9,4 @@ prm
 "/grace/cluster.scd".loadRelative;
 "/grace/poppy.scd".loadRelative;
 "/grace/bassline.scd".loadRelative;
+"/grace/pitchSequencer.scd".loadRelative;

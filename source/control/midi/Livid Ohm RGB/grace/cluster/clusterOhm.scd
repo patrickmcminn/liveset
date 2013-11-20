@@ -238,7 +238,7 @@ prm
   tremOhm: { | self, val |
     if( val == 1,
       { ~ohm.turnGreen(self.clusterTrem); ~restoreOhm.grace.page.put(self.clusterTrem, \green); },
-      { ~ohm.turnRed(self.clustertrem); ~restoreOhm.grace.page.put(self.clusterTrem, \red); }
+      { ~ohm.turnRed(self.clusterTrem); ~restoreOhm.grace.page.put(self.clusterTrem, \red); }
     );
     self;
   },

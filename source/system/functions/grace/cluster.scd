@@ -207,7 +207,7 @@ prm
   },
 
   makeTrem: { | self |
-    self.noiseMod = Synth.before(self.fader, \noiseModStereo, [\bus, self.faderBus, \freq, 7, \rangeLo, 0.2, \rangeHi, 1.2]);
+    self.noiseMod = Synth.before(self.filter, \noiseModStereo, [\bus, self.filterBus, \freq, 7, \rangeLo, 0.2, \rangeHi, 1.2]);
     self.tremState = 1;
     self;
   },
