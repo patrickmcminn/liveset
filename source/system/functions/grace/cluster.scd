@@ -8,10 +8,12 @@ prm
 
 	state: 0,
 	playState: 0,
+  chordState: 0,
   transitionState: 0,
 	muteState: 1,
 	output: ~mixer.s2,
   tremState: nil,
+  chord: nil,
 
 	spawn: { | self |
 		if( self.state == 0, { self.init; }, { self.kill; });
@@ -19,6 +21,7 @@ prm
 	},
 
 	init: { | self |
+    self.makeChords;
 		self.makeBuffers;
 		self.makeBusses;
 		self.makeSynths;
@@ -38,6 +41,21 @@ prm
 		self.state = 0;
 		self;
 	},
+
+  makeChords: { | self |
+    self.chord = Array.newClear(10);
+    self.chord[0] = [0, 12, 16, 19, 23];
+    self.chord[1] = [-3, 9, 12, 16, 19];
+    self.chord[2] = [5, 17, 21, 24, 28];
+    self.chord[3] = [2, 14, 17, 21, 24];
+    self.chord[4] = [-2, 10, 14, 17, 21];
+    self.chord[5] = [7, 19, 23, 26, 30];
+    self.chord[6] = [4, 16, 19, 23, 26];
+    self.chord[7] = [7, 19, 22, 26, 29];
+    self.chord[8] = [6, 18, 22, 25, 29];
+    self.chord[9] = [3, 15, 19, 22, 26];
+    self;
+  },
 
 	makeGroups: { | self |
 		self.playGroup = Group.new(self.filter, \addBefore);
@@ -74,6 +92,7 @@ prm
 	makeSynths: { | self |
 		self.filter = Synth.tail(~group.fx, \rlpfStereo, [\in, self.filterBus, \out, self.faderBus, \cutoff, 7000, \res, 1]);
 		self.fader = Synth.tail(~group.fx, \stereoFader, [\in, self.faderBus, \out, self.output, \amp, -15.dbamp, \mute, 0]);
+    self.tremState = 0;
 		self;
 	},
 
@@ -119,6 +138,26 @@ prm
 			\freq, Pfunc { | ev | ev.use(ev[\freq]) },
 			\buffer, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }),
 		);
+
+    Pbindef(\graceClusterChords,
+      \instrument, \susSampler,
+      \group, self.playGroup,
+      \addAction, \addToTail,
+      \out, self.filterBus,
+      \amp, 0.1,
+      \attack, 0.01,
+      \decay, 0,
+      \sustain, 1,
+      \release, Pwhite(0.2, 0.5),
+      \note, Prand([self.chord[0], self.chord[1], self.chord[2], self.chord[3], self.chord[4],
+        self.chord[5], self.chord[6], self.chord[7], self.chord[8], self.chord[9]], inf),
+      \octave, Prand([2, 3, 4, 3, 4], inf),
+      \legato, 1,
+      \dur, Pwhite(0.05, 0.5),
+      \freq, Pfunc { | ev | ev.use(ev[\freq]) },
+			\buffer, Pfunc({ | ev | ~birdsBuf[\noiseSynth].at((ev[\freq].cpsmidi)-32) }),
+      \balance, Pwhite(-1, 1)
+    );
 
     Pbindef(\graceTransition,
 			\instrument, \susSampler,
@@ -166,13 +205,30 @@ prm
 		self;
 	},
 
+  toggleChords: { | self |
+    if( self.chordState == 0, { self.playChords; }, { self.stopChords});
+    self;
+  },
+
+  playChords: { | self |
+    Pbindef(\graceClusterChords).play;
+    self.chordState = 1;
+    self;
+  },
+
+  stopChords: { | self |
+    Pbindef(\graceClusterChords).stop;
+    self.chordState = 0;
+    self;
+  },
+
   toggleTransition: { | self |
     if ( self.transitionState == 0, { self.playTransition; }, { self.stopTransition; });
     self;
   },
 
   playTransition: { | self |
-    self.stopCluster;
+    //self.stopCluster;
     Pbindef(\graceTransition).play;
     self.transitionState = 1;
     self;

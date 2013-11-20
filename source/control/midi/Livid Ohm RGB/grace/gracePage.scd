@@ -7,7 +7,7 @@ prm
 var poppy, cluster, bassline;
 poppy = 0;
 cluster = 2;
-bassline = 3;
+bassline = 4;
 
 ~page.grace = ( );
 

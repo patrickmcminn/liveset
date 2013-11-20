@@ -7,10 +7,11 @@ prm
 ~graceOhm.cluster = (
 
 	main: 2,
-	toggle: 10,
-	playCluster: 18,
+	toggle: 3,
+	playCluster: 10,
+  chords: 18,
   clusterTran: 26,
-  clusterTrem: 34,
+  clusterTrem: 11,
 
 	vol: 22,
 	cutoff: 20,
@@ -24,6 +25,7 @@ prm
 			{ id == \clusterTop } { self.spawn(val); }
 			{ id == \clusterMute } { self.toggleOhm(val); }
 			{ id == \clusterPlay } { self.playOhm(val); }
+      { id == \clusterChords } { self.chordsOhm(val); }
       { id == \clusterTran } { self.tranOhm(val); }
       { id == \clusterTrem } { self.tremOhm(val); }
 
@@ -37,6 +39,7 @@ prm
 			{ id == \clusterToggle } { if ( val == 1, { self.makeToggleMIDI; }) }
 			{ id == \clusterPlay } { if ( val == 1, { self.makeClusterMIDI; }) }
       { id == \clusterTran } { if ( val == 1, { self.makeTranMIDI; }) }
+      { id == \clusterChords } { if ( val == 1, { self.makeChordsMIDI; }) }
       { id == \clusterTrem } { if ( val == 1, { self.makeTremMIDI; }) }
 			{ id == \clusterVol } { if (val == 1, { self.makeVol;} ) }
 			{ id == \clusterCutoff } { if ( val == 1, { self.makeCutoff; } ) }
@@ -76,6 +79,7 @@ prm
 		self.topOhm(1);
 		self.makeToggle;
 		self.makeClusterPlay;
+    self.makeChords;
     self.makeTran;
     self.makeTrem;
 	},
@@ -172,6 +176,44 @@ prm
 		{ val == 0 } { ~ohm.turnRed(self.playCluster); ~restoreOhm.grace.page.put(self.playCluster, \red); }
 	},
 
+  makeChords: { | self |
+    ~ohm.turnPurple(self.chords);
+    ~restoreOhm.grace.page.put(self.chords, \purple);
+    self.makeChordsMIDI;
+    ~restoreOhm.grace.clusterChords = 1;
+    self;
+  },
+
+  killChords: { | self |
+    ~ohm.turnOff(self.chords);
+    ~restoreOhm.grace.page.put(self.chords, \off);
+    self.killChordsMIDI;
+    ~restoreOhm.grace.clusterChords = 0;
+    self;
+  },
+
+  makeChordsMIDI: { | self |
+    MIDIdef.noteOn(\clusterChords, {
+      ~grace.cluster.toggleChords;
+      ~scLang.sendMsg(\graceControl, \clausterChords, ~grace.cluster.chordState);
+    }, self.chords);
+    self;
+    self;
+  },
+
+  killChordsMIDI: { | self |
+    MIDIdef(\clusterChords).free;
+    self;
+  },
+
+  chordsOhm: { | self, val |
+    if( val == 0,
+      { ~ohm.turnGreen(self.chords); ~restoreOhm.grace.page.put(self.chords, \green); },
+      { ~ohm.turnRed(self.chords); ~restoreOhm.grace.page.put(self.chords, \red); }
+    );
+    self;
+  },
+
   makeTran: { | self |
     ~ohm.turnPurple(self.clusterTran);
     ~restoreOhm.grace.page.put(self.clusterTran, \purple);
@@ -237,7 +279,7 @@ prm
 
   tremOhm: { | self, val |
     if( val == 1,
-      { ~ohm.turnGreen(self.clusterTrem); ~restoreOhm.grace.page.put(self.clusterTrem, \green); },
+      { ~ohm.turnYellow(self.clusterTrem); ~restoreOhm.grace.page.put(self.clusterTrem, \yellow); },
       { ~ohm.turnRed(self.clusterTrem); ~restoreOhm.grace.page.put(self.clusterTrem, \red); }
     );
     self;
