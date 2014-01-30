@@ -39,8 +39,9 @@ ohm.latency = 0;
 
 
 ~ohm.addUniqueMethod(\clearAll, { | func, val |
-	MIDIdef.freeAll;
-	127.do({ | i | ~ohm.turnOff(i);});});
+  MIDIdef.freeAll;
+	127.do({ | i | ~ohm.turnOff(i);});
+});
 
 
 ~ohm.addUniqueMethod(\blink, { | func, val, color, time |

@@ -23,7 +23,7 @@ prm
 
 	// Ohm Button to go to Top Page
 	~ohm.turnGreen(71);
-	MIDIdef.noteOn(\topPage, { ~scLang.sendMsg(\page, \top) }, 71);
+  MIDIdef.noteOn(\topPage, { ~scLang.sendMsg(\page, \top); ~ohm2.setPage('nilPage'); }, 71);
 
 	// Master Volume Control (Far Right Slider)
 	MIDIdef.cc(\masterVolume, { | val |

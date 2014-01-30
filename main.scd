@@ -10,6 +10,8 @@ r {
 	"/source/Load system.scd".loadRelative;
 	7.wait;
 	"/source/Load control.scd".loadRelative;
+  5.wait;
+  "source/control/midi/Livid Ohm RGB/improv/GrainCloudOhm.scd".loadRelative;
 }.play(AppClock);
 );
 

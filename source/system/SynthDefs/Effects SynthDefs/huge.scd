@@ -7,7 +7,7 @@ prm
 (
 SynthDef(\huge, {
 	|
-	in, out, amp = 0.5, dist = 1000,
+	in, out, amp = 0.5, dist = 1000, cutoff = 10000,
 	ampScale = 2, subAmp = 0.6,
 	verb1Mix = 0.92, verb1Room = 0.95, verbMix = 0.6, verbRoom = 0.7, shiftAmp = 1,
 	bufLength = 1, modFreq = 0.3, trigLo = 5, trigHi = 12, grainDur = 0.05, rateLo = 1, rateHi = 150, grainAmp = 0.07,
@@ -20,7 +20,7 @@ SynthDef(\huge, {
 	var sine, verb1, distortion, verb2;
 	var buffer, playhead, record, rate, trigMod, trigger, panner, granulation;
 	var shiftArray, shifter1, shifter2, shifter3, shift1, shift2, shift3, shiftSum;
-	var cutoffShift, filter, sum, delayLag, delay, eq, sig;
+	var cutoffShift, filter, sum, delayLag, delay, eq, lowPass, sig;
 
 
 	//input:
@@ -59,7 +59,7 @@ SynthDef(\huge, {
 
 
 	// pitchShift Section:
-	shiftArray = [1.5, 2, 0.75, 4/3, 1.5, 1.5, 2];
+	shiftArray = [1.5, 2, 1.25, 0.75, 1.5, 1.5, 2];
 	shifter1 = Demand.ar(Dust.ar(cutoffChangeRate), 0, Drand(shiftArray, inf));
 	shift1 = PitchShift.ar(filter, 0.2, shifter1);
 	shifter2 = Demand.ar(Dust.ar(cutoffChangeRate), 0, Drand(shiftArray, inf));
@@ -77,7 +77,8 @@ SynthDef(\huge, {
 	delay = CombC.ar(sum, maxDelay, delayLag, decayTime);
 	delay = (delay * 0.5) + sum;
 	eq = BLowShelf.ar(delay, freq/2, 1, bassBoost);
-	sig = eq * amp;
+  lowPass = LPF.ar(eq, cutoff);
+	sig = lowPass * amp;
 	sig = Out.ar(out, sig);
 
 }).add;

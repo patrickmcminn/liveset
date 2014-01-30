@@ -22,6 +22,7 @@ try
 	"/Livid Ohm RGB/loadGraceOhm.scd".loadRelative;
 
 	"/Livid Ohm RGB/ohmStartup.scd".loadRelative;
+
 }
 
 { "Livid Ohm RGB not present!".postln; }

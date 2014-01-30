@@ -196,7 +196,7 @@ prm
   makeChordsMIDI: { | self |
     MIDIdef.noteOn(\clusterChords, {
       ~grace.cluster.toggleChords;
-      ~scLang.sendMsg(\graceControl, \clausterChords, ~grace.cluster.chordState);
+      ~scLang.sendMsg(\graceControl, \clusterChords, ~grace.cluster.chordState);
     }, self.chords);
     self;
     self;
@@ -208,7 +208,7 @@ prm
   },
 
   chordsOhm: { | self, val |
-    if( val == 0,
+    if( val == 1,
       { ~ohm.turnGreen(self.chords); ~restoreOhm.grace.page.put(self.chords, \green); },
       { ~ohm.turnRed(self.chords); ~restoreOhm.grace.page.put(self.chords, \red); }
     );

@@ -6,8 +6,8 @@ prm
 
 ~graceOhm.pitchSequencer = (
 
-	main: 2,
-	toggle: 3,
+	main: 5,
+	toggle: 13,
 
 	vol: 23,
 
@@ -103,7 +103,7 @@ prm
 
 	makeToggleMIDI: { | self |
 		MIDIdef.noteOn(\gracePitchSequencerToggle, {
-			~grace.pitchSequencer.toggleMute;
+			~grace.pitchSequencer.muteToggle;
 			~scLang.sendMsg(\graceControl, \pitchSequencerMute, ~grace.pitchSequencer.muteState);
 		}, self.toggle);
 		self;
@@ -116,8 +116,8 @@ prm
 
 	toggleOhm: { | self, val |
 		case
-		{ val == 0 } { ~ohm.turnRed(self.toggle); ~restoreOhm.grace.page.put(self.toggle, \red); }
-		{ val == 1 } { ~ohm.turnGreen(self.toggle); ~restoreOhm.grace.page.put(self.toggle, \green); }
+		{ val == 1 } { ~ohm.turnRed(self.toggle); ~restoreOhm.grace.page.put(self.toggle, \red); }
+		{ val == 0 } { ~ohm.turnGreen(self.toggle); ~restoreOhm.grace.page.put(self.toggle, \green); }
 	},
 
 	makeFaders: { | self |

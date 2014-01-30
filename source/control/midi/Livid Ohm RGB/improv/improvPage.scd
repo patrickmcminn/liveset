@@ -4,15 +4,21 @@ improvPage.scd
 prm
 */
 
-var poppy, huge;
+var poppy, huge, grainCloud;
+var page = 'improv';
 poppy = 3;
 huge = 5;
+grainCloud = 7;
+
 
 ~restoreOhm[\improv] = ( );
 ~restoreOhm[\improv].page = Array.fill(81, nil);
 ~page.improv = ( );
+//~ohm2.makePage(page);
 
 ~page.improv.top = {
+  ~ohm2.setPage(page);
+
 	~ohm.clearAll;
 	~ohm.addEssential;
 
@@ -30,6 +36,24 @@ huge = 5;
 
 	~ohm.turnCyan(huge);
 	MIDIdef.noteOn(\improvHuge, { ~improv.huge.spawn; }, huge);
+
+  ~ohm2.turnGridPurple(0, 7);
+  ~ohm2.setGridFunc(0, 7, r {
+    loop {
+      ~grainCloud = GrainCloud.new(~mixer.s2, -6.dbamp, 0, ~group.fx, \addToTail);
+      ~ohm2.setGridFunc(1, 7, { ~ohm.clearAll; ~ohm2.setPage('grainCloud'); ~ohm.addEssential; });
+      ~ohm2.turnGridWhite(1, 7);
+      ~ohm2.turnGridGreen(0, 7).yield;
+
+      ~grainCloud.free;
+      ~ohm2.setGridFunc(1, 7, { });
+      ~ohm2.turnGridOff(1, 7);
+      ~ohm2.turnGridRed(0, 7).yield;
+    };
+  });
+  //~ohm.turnPurple(grainCloud);
+  //MIDIdef.noteOn(\improvGrainCloud, { ~improvOhm.grainCloud.spawn; }, grainCloud);
+
 
 	~restoreOhm[\improv].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
 	~restoreOhm.improv.keysValuesDo({ | name, state | ~scLang.sendMsg(\restoreOhmImprov, name, state); });

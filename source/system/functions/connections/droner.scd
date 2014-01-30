@@ -36,8 +36,8 @@ prm
 				\rate, ~connectBus[\droner].at(\rate).asMap, \env, ~grainBufs[\gabor], \trigRate, 15, \amp, 1
 		], ~group[\fx], \addToTail),
 
-		\verb:    Synth(\convReverbStereo, [\in, ~connectBus[\droner].verb, \out, ~connectBus[\droner].filter,
-			\buffer, ~impulse[\cathedral1], \mix, 0.6, \inputScale, 0.5], ~group[\fx], \addToTail),
+		\verb:    Synth(\reverb2, [\in, ~connectBus[\droner].verb, \out, ~connectBus[\droner].filter,
+			\mix, 0.75, \room, 1, \damp, 0.7], ~group[\fx], \addToTail),
 
     \hiShelf: Synth(\hiShelfStereo, [\in, ~connectBus[\droner].filter, \out, ~connectBus[\droner].filter, \freq, 2637,
 			\gain, -3], ~group[\fx], \addToTail),

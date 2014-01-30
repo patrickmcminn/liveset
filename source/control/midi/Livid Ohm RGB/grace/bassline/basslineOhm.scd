@@ -6,9 +6,9 @@ prm
 
 ~graceOhm.bassline = (
 
-	main: 3,
-	bassline1: 11,
-	bassline2: 19,
+	main: 4,
+	bassline1: 12,
+	bassline2: 20,
 
 	vol: 15,
 

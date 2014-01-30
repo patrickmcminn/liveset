@@ -18,8 +18,8 @@ prm
 	cutoffHi: 9,
 	res: 8,
 
-	delayTime: 19,
-	verbMix: 18,
+  cutoff: 19,
+	delayTime: 18,
 	rateLo: 11,
 	rateHi: 10,
 
@@ -112,7 +112,8 @@ prm
 
 	makeDials: { | self |
 		self.makeDist;
-		self.makeVerbMix;
+		self.makeCutoff;
+    //self.makeVerbMix;
 		self.makeModFreq;
 		self.makeTrigLo;
 		self.makeTrigHi;
@@ -128,7 +129,8 @@ prm
 
 	killDials: { | self |
 		self.killDist;
-		self.killVerbMix;
+    self.killCutoff;
+		//self.killVerbMix;
 		self.killModFreq;
 		self.killTrigLo;
 		self.killTrigHi;
@@ -144,7 +146,7 @@ prm
 
 	makeDist: { | self |
 		MIDIdef.cc(\hugeDist, { | val |
-			var dist = val.linlin(0, 127, 1, 10000);
+			var dist = val.linexp(0, 127, 1, 10000);
 			~improv.huge.main.set(\dist, dist);
 		}, self.dist);
 		self;
@@ -156,17 +158,17 @@ prm
 		self;
 	},
 
-	makeVerbMix: { | self |
-		MIDIdef.cc(\hugeVerb, { | val |
-			var mix = val.linlin(0, 127, 0, 1);
-			~improv.huge.main.set(\verbMix, mix);
-		}, self.verbMix);
+	makeCutoff: { | self |
+		MIDIdef.cc(\hugeCutoff, { | val |
+			var cutoff = val.linexp(0, 127, 100, 17000);
+			~improv.huge.main.set(\cutoff, cutoff);
+		}, self.cutoff);
 		self;
 		self;
 	},
 
-	killVerbMix: { | self |
-		MIDIdef(\hugeVerb).free;
+	killCutoff: { | self |
+		MIDIdef(\hugeCutoff).free;
 		self;
 	},
 
