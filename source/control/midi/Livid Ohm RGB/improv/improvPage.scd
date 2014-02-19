@@ -51,6 +51,32 @@ grainCloud = 7;
       ~ohm2.turnGridRed(0, 7).yield;
     };
   });
+
+
+  ~ohm2.turnGridBlue(4, 0);
+  ~ohm2.setGridFunc(4, 0, r {
+    loop {
+      ~delayNetwork = DelayNetwork.new(~inst.mic, ~mixer.s3, 0.dbamp, 0, 8, 3, 0.1, 0.5, 45, 55, 0, 3000, 4000, 0, 0, -0.2, 0.2,
+        relGroup: ~group.fx, addAction: \addToTail);
+      ~ohm2.setGridFunc(5, 0, { ~ohm.clearAll; ~ohm2.setPage('delayNetwork'); ~ohm.addEssential; });
+      ~ohm2.turnGridPurple(5, 0);
+      ~ohm2.turnGridGreen(4, 0).yield;
+
+      ~delayNetwork.free;
+      ~ohm2.setGridFunc(5, 0, { });
+      ~ohm2.turnGridOff(5, 0);
+      ~ohm2.turnGridRed(4, 0).yield;
+    };
+  });
+
+  ~ohm2.turnGridRed(4, 1);
+  ~ohm2.setGridFunc(4, 1, {
+    ~delayNetwork.free;
+    ~ohm2.setGridFunc(5, 0, { });
+    ~ohm2.turnGridOff(5, 0);
+    ~ohm2.turnGridRed(4, 0);
+  });
+
   //~ohm.turnPurple(grainCloud);
   //MIDIdef.noteOn(\improvGrainCloud, { ~improvOhm.grainCloud.spawn; }, grainCloud);
 

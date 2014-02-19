@@ -21,6 +21,12 @@ prm
 	serverOptions.memSize = size;
 });
 
+~server.addUniqueMethod(\setNumAudioBusses, { | func, num = 1024 |
+  var serverOptions;
+  serverOptions = Server.default.options;
+  serverOptions.numAudioBusChannels = num;
+});
 
 ~server.memSize(131072);
+~server.setNumAudioBusses(1024);
 ~server.boot;

@@ -15,4 +15,5 @@ r {
   ~ohm2.makePage('nilPage');
   ~ohm2.makePage('improv');
   ~ohm2.makePage('grainCloud');
+  ~ohm2.makePage('delayNetwork');
 }.play(AppClock);

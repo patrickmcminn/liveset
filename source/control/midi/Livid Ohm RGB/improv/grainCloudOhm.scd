@@ -5,6 +5,7 @@ prm
 */
 
 var page = 'grainCloud';
+// ~ohm.makePage(page);
 var octave1 = [[0, 7], [1, 6], [1, 7], [2, 6], [2, 7], [3, 7], [4, 6], [4, 7], [5, 6], [5, 7], [6, 6], [6, 7]];
 var octave2 = octave1 - [[0, 2]];
 var octave3 = octave2 - [[0, 2]];

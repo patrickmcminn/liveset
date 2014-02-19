@@ -7,11 +7,12 @@ prm
 
 (
 r {
-	"/source/Load system.scd".loadRelative;
-	7.wait;
-	"/source/Load control.scd".loadRelative;
+  "/source/Load system.scd".loadRelative;
+  7.wait;
+  "/source/Load control.scd".loadRelative;
   5.wait;
   "source/control/midi/Livid Ohm RGB/improv/GrainCloudOhm.scd".loadRelative;
+  "source/control/midi/Livid Ohm RGB/improv/delayNetworkOhm.scd".loadRelative;
 }.play(AppClock);
 );
 
