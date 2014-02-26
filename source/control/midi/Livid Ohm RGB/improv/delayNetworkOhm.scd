@@ -64,12 +64,6 @@ rampTime = 3;
   rampTime = time;
 }, page: page);
 
-// pitchShifting:
-
-6.do({ | row | 4.do({ | column | ~ohm2.turnGridPurple(column + 4, row, page: page)}); });
-~ohm2.turnGridWhite(4, 6, page: page);
-
-
 
 // presets:
 3.do({ | i | ~ohm2.turnGridYellow(i, 4, page: page); });
@@ -282,3 +276,410 @@ rampTime = 3;
   ~delayNetwork.randomizePan(panLow, panHigh);
 }, bank: triggerBank, page: page);
 
+
+// pitchShifting:
+
+6.do({ | row | 4.do({ | column | ~ohm2.turnGridPurple(column + 4, row, page: page)}); });
+~ohm2.turnGridWhite(4, 6, page: page);
+
+// 0:
+~ohm2.setGridFunc(4, 6,  {
+  if( pitchShiftArray.includes(0),
+    {
+      pitchShiftArray.remove(0);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(4, 6);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(0);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(4, 6);
+    }
+  );
+}, page: page);
+
+// -12
+~ohm2.setGridFunc(4, 0,  {
+  if( pitchShiftArray.includes(-12),
+    {
+      pitchShiftArray.remove(-12);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(4, 0);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-12);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(4, 0);
+    }
+  );
+}, page: page);
+
+// -11
+~ohm2.setGridFunc(5, 0, {
+  if( pitchShiftArray.includes(-11),
+    {
+      pitchShiftArray.remove(-11);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(5, 0);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-11);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(5, 0);
+    }
+  );
+}, page: page);
+
+// -10
+~ohm2.setGridFunc(6, 0,  {
+  if( pitchShiftArray.includes(-10),
+    {
+      pitchShiftArray.remove(-10);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(6, 0);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-10);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(6, 0);
+    }
+  );
+}, page: page);
+
+// -9
+~ohm2.setGridFunc(7, 0,  {
+  if( pitchShiftArray.includes(-9),
+    {
+      pitchShiftArray.remove(-9);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(7, 0);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-9);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(7, 0);
+    }
+  );
+}, page: page);
+
+// -8
+~ohm2.setGridFunc(4, 1,  {
+  if( pitchShiftArray.includes(-8),
+    {
+      pitchShiftArray.remove(-8);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(4, 1);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-8);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(4, 1);
+    }
+  );
+}, page: page);
+
+// -7
+~ohm2.setGridFunc(5, 1,  {
+  if( pitchShiftArray.includes(-7),
+    {
+      pitchShiftArray.remove(-7);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(5, 1);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-7);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(5, 1);
+    }
+  );
+}, page: page);
+
+// -6
+~ohm2.setGridFunc(6, 1,  {
+  if( pitchShiftArray.includes(-6),
+    {
+      pitchShiftArray.remove(-6);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(6, 1);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-6);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(6, 1);
+    }
+  );
+}, page: page);
+
+// -5
+~ohm2.setGridFunc(7, 1,  {
+  if( pitchShiftArray.includes(-5),
+    {
+      pitchShiftArray.remove(-5);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(7, 1);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-5);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(7, 1);
+    }
+  );
+}, page: page);
+
+// -4
+~ohm2.setGridFunc(4, 2,  {
+  if( pitchShiftArray.includes(-4),
+    {
+      pitchShiftArray.remove(-4);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(4, 2);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-4);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(4, 2);
+    }
+  );
+}, page: page);
+
+// -3
+~ohm2.setGridFunc(5, 2,  {
+  if( pitchShiftArray.includes(-3),
+    {
+      pitchShiftArray.remove(-3);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(5, 2);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-3);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(5, 2);
+    }
+  );
+}, page: page);
+
+// -2
+~ohm2.setGridFunc(6, 2,  {
+  if( pitchShiftArray.includes(-2),
+    {
+      pitchShiftArray.remove(-2);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(6, 2);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-2);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(6, 2);
+    }
+  );
+}, page: page);
+
+// -1
+~ohm2.setGridFunc(7, 2,  {
+  if( pitchShiftArray.includes(-1),
+    {
+      pitchShiftArray.remove(-1);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(7, 2);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(-1);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(7, 2);
+    }
+  );
+}, page: page);
+
+// 1
+~ohm2.setGridFunc(4, 3,  {
+  if( pitchShiftArray.includes(1),
+    {
+      pitchShiftArray.remove(1);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(4, 3);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(1);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(4, 3);
+    }
+  );
+}, page: page);
+
+// 2
+~ohm2.setGridFunc(5, 3,  {
+  if( pitchShiftArray.includes(2),
+    {
+      pitchShiftArray.remove(2);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(5, 3);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(2);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(5, 3);
+    }
+  );
+}, page: page);
+
+// 3
+~ohm2.setGridFunc(6, 3,  {
+  if( pitchShiftArray.includes(3),
+    {
+      pitchShiftArray.remove(3);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(6, 3);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(3);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(6, 3);
+    }
+  );
+}, page: page);
+
+// 4
+~ohm2.setGridFunc(7, 3, {
+  if( pitchShiftArray.includes(4),
+    {
+      pitchShiftArray.remove(4);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(7, 3);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(4);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(7, 3);
+    }
+  );
+}, page: page);
+
+// 5
+~ohm2.setGridFunc(4, 4,  {
+  if( pitchShiftArray.includes(5),
+    {
+      pitchShiftArray.remove(5);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(4, 4);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(5);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(4, 4);
+    }
+  );
+}, page: page);
+
+// 6
+~ohm2.setGridFunc(5, 4, {
+  if( pitchShiftArray.includes(6),
+    {
+      pitchShiftArray.remove(6);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(5, 4);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(6);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(5, 4);
+    };
+  );
+}, page: page);
+
+// 7
+~ohm2.setGridFunc(6, 4,  {
+  if( pitchShiftArray.includes(7),
+    {
+      pitchShiftArray.remove(7);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(6, 4);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(7);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(6, 4);
+    }
+  );
+}, page: page);
+
+// 8
+~ohm2.setGridFunc(7, 4, {
+  if( pitchShiftArray.includes(8),
+    {
+      pitchShiftArray.remove(8);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(7, 4);
+    },
+    {
+        pitchShiftArray = pitchShiftArray.add(8);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(7, 4);
+    }
+  );
+}, page: page);
+
+// 9
+~ohm2.setGridFunc(4, 5,  {
+  if( pitchShiftArray.includes(9),
+    {
+      pitchShiftArray.remove(9);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(4, 5);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(9);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(4, 5);
+    }
+  );
+}, page: page);
+
+// 10
+~ohm2.setGridFunc(5, 5, {
+  if( pitchShiftArray.includes(10),
+    {
+      pitchShiftArray.remove(10);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(5, 5);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(10);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(5, 5);
+    }
+  );
+}, page: page);
+
+// 11
+~ohm2.setGridFunc(6, 5, {
+  if( pitchShiftArray.includes(11),
+    {
+      pitchShiftArray.remove(11);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(6, 5);
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(11);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(6, 5);
+    }
+  );
+}, page: page);
+
+// 12
+~ohm2.setGridFunc(7, 5,  {
+  if( pitchShiftArray.includes(12),
+    {
+      pitchShiftArray.remove(12);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridPurple(7, 5);
+      pitchShiftArray.postln;
+    },
+    {
+      pitchShiftArray = pitchShiftArray.add(12);
+      ~delayNetwork.setPitchShiftArray(pitchShiftArray);
+      ~ohm2.turnGridWhite(7, 5);
+      pitchShiftArray.postln;
+    }
+  );
+}, page: page);

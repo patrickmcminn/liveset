@@ -96,13 +96,13 @@ octave4.do({ | item, index  |
 
 // trig rate low:
 ~ohm2.setLeftKnobFunc(0, 0, { | val |
-  var trigRateLow = val.linexp(0, 127, 1, 700);
+  var trigRateLow = val.linexp(0, 127, 0.1, 300);
   ~grainCloud.setTrigRateLow(trigRateLow);
 }, page: page);
 
 // trig rate high:
 ~ohm2.setLeftKnobFunc(1, 0, { | val |
-  var trigRateHigh = val.linexp(0, 127, 1, 1000);
+  var trigRateHigh = val.linexp(0, 127, 0.1, 400);
   ~grainCloud.setTrigRateLow(trigRateHigh);
 }, page: page);
 
@@ -152,6 +152,18 @@ octave4.do({ | item, index  |
 ~ohm2.setLeftKnobFunc(1, 2, { | val |
   var panHigh = val.linlin(0, 127, -1.0, 1.0);
   ~grainCloud.setPanHigh(panHigh);
+}, page: page);
+
+// attack:
+~ohm2.setLeftKnobFunc(2, 2, { | val |
+  var attack = val.linexp(0, 127, 0.05, 10);
+  ~grainCloud.setAttack(attack);
+}, page: page);
+
+// release:
+~ohm2.setLeftKnobFunc(3, 2, { | val |
+  var release = val.linexp(0, 127, 0.05, 20);
+  ~grainCloud.setRelease(release);
 }, page: page);
 
 

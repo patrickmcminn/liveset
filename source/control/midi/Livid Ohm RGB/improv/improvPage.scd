@@ -40,7 +40,7 @@ grainCloud = 7;
   ~ohm2.turnGridPurple(0, 7);
   ~ohm2.setGridFunc(0, 7, r {
     loop {
-      ~grainCloud = GrainCloud.new(~mixer.s2, -6.dbamp, 0, ~group.fx, \addToTail);
+      ~grainCloud = GrainCloud2.new(~mixer.s2, -6.dbamp, 0, ~group.fx, \addToTail);
       ~ohm2.setGridFunc(1, 7, { ~ohm.clearAll; ~ohm2.setPage('grainCloud'); ~ohm.addEssential; });
       ~ohm2.turnGridWhite(1, 7);
       ~ohm2.turnGridGreen(0, 7).yield;
