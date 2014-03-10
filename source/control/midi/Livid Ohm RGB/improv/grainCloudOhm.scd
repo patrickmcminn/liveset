@@ -5,61 +5,158 @@ prm
 */
 
 var page = 'grainCloud';
+var susBank = 0;
+var relBank = 1;
 // ~ohm.makePage(page);
 var octave1 = [[0, 7], [1, 6], [1, 7], [2, 6], [2, 7], [3, 7], [4, 6], [4, 7], [5, 6], [5, 7], [6, 6], [6, 7]];
 var octave2 = octave1 - [[0, 2]];
 var octave3 = octave2 - [[0, 2]];
 var octave4 = octave3 - [[0, 2]];
 
+~ohm2.addGridBanks(1);
 
-octave1.do({ | item | ~ohm2.turnGridBlue(item[0], item[1], page: page); });
-octave2.do({ | item | ~ohm2.turnGridCyan(item[0], item[1], page: page); });
-octave3.do({ | item | ~ohm2.turnGridPurple(item[0], item[1], page: page); });
-octave4.do({ | item | ~ohm2.turnGridYellow(item[0], item[1], page: page); });
+
+// susBank:
+
+octave1.do({ | item | ~ohm2.turnGridBlue(item[0], item[1], page: page, bank: susBank); });
+octave2.do({ | item | ~ohm2.turnGridCyan(item[0], item[1], page: page, bank: susBank); });
+octave3.do({ | item | ~ohm2.turnGridPurple(item[0], item[1], page: page, bank: susBank); });
+octave4.do({ | item | ~ohm2.turnGridYellow(item[0], item[1], page: page, bank: susBank); });
 
 octave1.do({ | item, index  |
   var note = index;
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
-    if( ~grainCloud.noteArray.includes(note),
+    if( ~grainCloud.playingArray[note],
       { ~ohm2.turnGridGreen(item[0], item[1]); },
       { ~ohm2.turnGridBlue(item[0], item[1]); }
     );
-  }, page: page);
+  }, page: page, bank: susBank);
 });
 
 octave2.do({ | item, index  |
   var note = index + 12;
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
-    if( ~grainCloud.noteArray.includes(note),
+    if( ~grainCloud.playingArray[note],
       { ~ohm2.turnGridGreen(item[0], item[1]); },
       { ~ohm2.turnGridCyan(item[0], item[1]); }
     );
-  }, page: page);
+  }, page: page, bank: susBank);
 });
 
 octave3.do({ | item, index  |
   var note = index + 24;
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
-    if( ~grainCloud.noteArray.includes(note),
+    if( ~grainCloud.playingArray[note],
       { ~ohm2.turnGridGreen(item[0], item[1]); },
       { ~ohm2.turnGridPurple(item[0], item[1]); }
     );
-  }, page: page);
+  }, page: page, bank: susBank);
 });
 
 octave4.do({ | item, index  |
   var note = index + 36;
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
-    if( ~grainCloud.noteArray.includes(note),
+    if( ~grainCloud.playingArray[note],
       { ~ohm2.turnGridGreen(item[0], item[1]); },
       { ~ohm2.turnGridYellow(item[0], item[1]); }
     );
-  }, page: page);
+  }, page: page, bank: susBank);
 });
+
+
+// relBank:
+octave1.do({ | item | ~ohm2.turnGridCyan(item[0], item[1], page: page, bank: relBank); });
+octave2.do({ | item | ~ohm2.turnGridPurple(item[0], item[1], page: page, bank: relBank); });
+octave3.do({ | item | ~ohm2.turnGridYellow(item[0], item[1], page: page, bank: relBank); });
+octave4.do({ | item | ~ohm2.turnGridBlue(item[0], item[1], page: page, bank: relBank); });
+
+octave1.do({ | item, index  |
+  var note = index;
+  ~ohm2.setGridFunc(item[0], item[1], {
+    ~grainCloud.toggleNote(note);
+    if( ~grainCloud.playingArray[note],
+      { ~ohm2.turnGridGreen(item[0], item[1]); },
+      { ~ohm2.turnGridCyan(item[0], item[1]); }
+    );
+  }, page: page, bank: relBank);
+  ~ohm2.setGridFunc(item[0], item[1], {
+    ~grainCloud.toggleNote(note);
+    if( ~grainCloud.playingArray[note],
+      { ~ohm2.turnGridGreen(item[0], item[1]); },
+      { ~ohm2.turnGridCyan(item[0], item[1]); }
+    );
+  }, type: 'noteOff', page: page, bank: relBank);
+});
+
+octave2.do({ | item, index  |
+  var note = index + 12;
+  ~ohm2.setGridFunc(item[0], item[1], {
+    ~grainCloud.toggleNote(note);
+    if( ~grainCloud.playingArray[note],
+      { ~ohm2.turnGridGreen(item[0], item[1]); },
+      { ~ohm2.turnGridPurple(item[0], item[1]); }
+    );
+  }, page: page, bank: susBank);
+  ~ohm2.setGridFunc(item[0], item[1], {
+    ~grainCloud.toggleNote(note);
+    if( ~grainCloud.playingArray[note],
+      { ~ohm2.turnGridGreen(item[0], item[1]); },
+      { ~ohm2.turnGridPurple(item[0], item[1]); }
+    );
+  }, type: 'noteOff', page: page, bank: relBank);
+});
+
+octave3.do({ | item, index  |
+  var note = index + 24;
+  ~ohm2.setGridFunc(item[0], item[1], {
+    ~grainCloud.toggleNote(note);
+    if( ~grainCloud.playingArray[note],
+      { ~ohm2.turnGridGreen(item[0], item[1]); },
+      { ~ohm2.turnGridYellow(item[0], item[1]); }
+    );
+  }, page: page, bank: susBank);
+  ~ohm2.setGridFunc(item[0], item[1], {
+    ~grainCloud.toggleNote(note);
+    if( ~grainCloud.playingArray[note],
+      { ~ohm2.turnGridGreen(item[0], item[1]); },
+      { ~ohm2.turnGridYellow(item[0], item[1]); }
+    );
+  }, type: 'noteOff', page: page, bank: relBank);
+});
+
+octave4.do({ | item, index  |
+  var note = index + 36;
+  ~ohm2.setGridFunc(item[0], item[1], {
+    ~grainCloud.toggleNote(note);
+    if( ~grainCloud.playingArray[note],
+      { ~ohm2.turnGridGreen(item[0], item[1]); },
+      { ~ohm2.turnGridBlue(item[0], item[1]); }
+    );
+  }, page: page, bank: susBank);
+  ~ohm2.setGridFunc(item[0], item[1], {
+    ~grainCloud.toggleNote(note);
+    if( ~grainCloud.playingArray[note],
+      { ~ohm2.turnGridGreen(item[0], item[1]); },
+      { ~ohm2.turnGridBlue(item[0], item[1]); }
+    );
+  }, type: 'noteOff', page: page, bank: relBank);
+});
+
+// bank change:
+
+~ohm2.setCrossfaderButtonFunc(0, r{
+  loop {
+    ~ohm2.setActiveGridBank(relBank);
+    ~ohm2.turnCrossfaderButtonWhite(0).yield;
+
+    ~ohm2.setActiveGridBank(susBank);
+    ~ohm2.turnCrossfaderButtonPurple(0).yield;
+  }
+}, page: page);
 
 
 4.do({ | index | ~ohm2.turnLeftButtonWhite(index, page: page); });
@@ -166,67 +263,3 @@ octave4.do({ | item, index  |
   ~grainCloud.setRelease(release);
 }, page: page);
 
-
-
-/*
-~improvOhm.grainCloud = (
-
-  // improv page function nums:
-  main: 7,
-  page: 15,
-  pageFunc: nil,
-
-  spawn: { | self |
-    if( try { ~improv.grainCloud.noteArray; }.isNil, { self.init; }, { self.kill });
-    self;
-  },
-
-  init: { | self |
-    ~improv.grainCloud = GrainCloud.new;
-    self.makeButtons;
-    self;
-  },
-
-  kill: { | self |
-    ~improv.grainCloud.free;
-    self.killButtons;
-    self;
-  },
-
-  makeButtons: { | self |
-    self.topOhm(1);
-    self.makePage;
-  },
-
-  killButtons: { | self |
-    self.topOhm(0);
-    self.killPage;
-  },
-
-  topOhm: { | self, val |
-    if ( val == 1,
-      {
-        ~ohm.turnGreen(self.main);
-        ~restoreOhm.improv.page.put(self.main, \green);
-      },
-      {
-        ~ohm.turnRed(self.main);
-        ~restoreOhm.improv.page.put(self.main, \red);
-      }
-    );
-  },
-
-  makePage: { | self |
-    ~ohm.turnPurple(self.page);
-    ~restoreOhm.improv.page.put(self.page, \purple);
-    self.pageFunc = MIDIFunc({ ~page.improv.grainCloud.top; }, self.page);
-  },
-
-  killPage: { | self |
-    ~ohm.turnOff(self.page);
-    ~restoreOhm.improv.page.put(self.page, \off);
-    self.pageFunc.free;
-  },
-
-);
-*/
