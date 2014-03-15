@@ -18,3 +18,4 @@ r {
 
 s.meter;
 Server.local.makeWindow;
+s.meter;

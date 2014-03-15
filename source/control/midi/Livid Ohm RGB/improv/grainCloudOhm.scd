@@ -76,6 +76,7 @@ octave4.do({ | item | ~ohm2.turnGridBlue(item[0], item[1], page: page, bank: rel
 
 octave1.do({ | item, index  |
   var note = index;
+
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
     if( ~grainCloud.playingArray[note],
@@ -83,6 +84,7 @@ octave1.do({ | item, index  |
       { ~ohm2.turnGridCyan(item[0], item[1]); }
     );
   }, page: page, bank: relBank);
+
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
     if( ~grainCloud.playingArray[note],
@@ -94,13 +96,15 @@ octave1.do({ | item, index  |
 
 octave2.do({ | item, index  |
   var note = index + 12;
+
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
     if( ~grainCloud.playingArray[note],
       { ~ohm2.turnGridGreen(item[0], item[1]); },
       { ~ohm2.turnGridPurple(item[0], item[1]); }
     );
-  }, page: page, bank: susBank);
+  }, page: page, bank: relBank);
+
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
     if( ~grainCloud.playingArray[note],
@@ -118,7 +122,7 @@ octave3.do({ | item, index  |
       { ~ohm2.turnGridGreen(item[0], item[1]); },
       { ~ohm2.turnGridYellow(item[0], item[1]); }
     );
-  }, page: page, bank: susBank);
+  }, page: page, bank: relBank);
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
     if( ~grainCloud.playingArray[note],
@@ -136,7 +140,7 @@ octave4.do({ | item, index  |
       { ~ohm2.turnGridGreen(item[0], item[1]); },
       { ~ohm2.turnGridBlue(item[0], item[1]); }
     );
-  }, page: page, bank: susBank);
+  }, page: page, bank: relBank);
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
     if( ~grainCloud.playingArray[note],
@@ -148,6 +152,7 @@ octave4.do({ | item, index  |
 
 // bank change:
 
+~ohm2.turnCrossfaderButtonPurple(0, page: page);
 ~ohm2.setCrossfaderButtonFunc(0, r{
   loop {
     ~ohm2.setActiveGridBank(relBank);
