@@ -13,7 +13,7 @@ var octave2 = octave1 - [[0, 2]];
 var octave3 = octave2 - [[0, 2]];
 var octave4 = octave3 - [[0, 2]];
 
-~ohm2.addGridBanks(1);
+~ohm2.addGridBanks(1, page: page);
 
 
 // susBank:
@@ -23,7 +23,7 @@ octave2.do({ | item | ~ohm2.turnGridCyan(item[0], item[1], page: page, bank: sus
 octave3.do({ | item | ~ohm2.turnGridPurple(item[0], item[1], page: page, bank: susBank); });
 octave4.do({ | item | ~ohm2.turnGridYellow(item[0], item[1], page: page, bank: susBank); });
 
-octave1.do({ | item, index  |
+octave1.do({ | item, index |
   var note = index;
   ~ohm2.setGridFunc(item[0], item[1], {
     ~grainCloud.toggleNote(note);
