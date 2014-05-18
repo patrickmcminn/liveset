@@ -37,7 +37,30 @@ grainCloud = 7;
 	~ohm.turnCyan(huge);
 	MIDIdef.noteOn(\improvHuge, { ~improv.huge.spawn; }, huge);
 
-  ~ohm2.turnGridPurple(0, 7);
+  //~ohm.turnPurple(grainCloud);
+  //MIDIdef.noteOn(\improvGrainCloud, { ~improvOhm.grainCloud.spawn; }, grainCloud);
+
+
+	~restoreOhm[\improv].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
+	~restoreOhm.improv.keysValuesDo({ | name, state | ~scLang.sendMsg(\restoreOhmImprov, name, state); });
+
+	~restoreOhm[\improv].page.do({ | color, note |
+		case
+		{ color == \off } { ~ohm.turnOff(note); }
+		{ color == \blue } { ~ohm.turnBlue(note); }
+		{ color == \red } { ~ohm.turnRed(note); }
+		{ color == \purple } { ~ohm.turnPurple(note); }
+		{ color == \green } { ~ohm.turnGreen(note); }
+		{ color == \yellow } { ~ohm.turnYellow(note); }
+		{ color == \cyan } { ~ohm.turnCyan(note); }
+		{ color == \white } { ~ohm.turnWhite(note); }
+
+		//legacy colors:
+		{ color == \pink } { ~ohm.turnPink(note) ; }
+		{ color == \lavender } { ~ohm.turnLavender(note); }
+	});
+
+  ~ohm2.turnGridPurple(0, 7, page: page);
   ~ohm2.setGridFunc(0, 7, r {
     loop {
       ~grainCloud = GrainCloud2.new(~mixer.s2, -6.dbamp, 0, ~group.fx, \addToTail);
@@ -69,7 +92,7 @@ grainCloud = 7;
     };
   });
 
-  ~ohm2.turnGridRed(4, 1);
+  ~ohm2.turnGridRed(4, 1, page: page);
   ~ohm2.setGridFunc(4, 1, {
     ~delayNetwork.free;
     ~ohm2.setGridFunc(5, 0, { });
@@ -77,27 +100,27 @@ grainCloud = 7;
     ~ohm2.turnGridRed(4, 0);
   });
 
-  //~ohm.turnPurple(grainCloud);
-  //MIDIdef.noteOn(\improvGrainCloud, { ~improvOhm.grainCloud.spawn; }, grainCloud);
+  ~ohm2.turnGridWhite(4, 2, page: page);
+  ~ohm2.setGridFunc(4, 2, r {
+    loop {
+      ~fakeGuitar = FakeGuitar.new(~mixer.s1, -6.dbamp, 0, ~group.fx, \addToTail);
+      ~ohm2.setGridFunc(5, 2, { ~ohm.clearAll; ~ohm2.setPage('fakeGuitar'); ~ohm.addEssential; });
+      ~ohm2.turnGridCyan(5, 2);
+      ~ohm2.turnGridGreen(5, 2).yield;
 
+      ~fakeGuitar.free;
+      ~ohm2.setGridFunc(5, 2, { });
+      ~ohm2.turnGridOff(5, 2);
+      ~ohm2.turnGridRed(4, 2).yield;
+    }
+  });
 
-	~restoreOhm[\improv].keysValuesDo({ | name, state |  ~scLang.sendMsg(\restoreOhm, name, state); });
-	~restoreOhm.improv.keysValuesDo({ | name, state | ~scLang.sendMsg(\restoreOhmImprov, name, state); });
-
-	~restoreOhm[\improv].page.do({ | color, note |
-		case
-		{ color == \off } { ~ohm.turnOff(note); }
-		{ color == \blue } { ~ohm.turnBlue(note); }
-		{ color == \red } { ~ohm.turnRed(note); }
-		{ color == \purple } { ~ohm.turnPurple(note); }
-		{ color == \green } { ~ohm.turnGreen(note); }
-		{ color == \yellow } { ~ohm.turnYellow(note); }
-		{ color == \cyan } { ~ohm.turnCyan(note); }
-		{ color == \white } { ~ohm.turnWhite(note); }
-
-		//legacy colors:
-		{ color == \pink } { ~ohm.turnPink(note) ; }
-		{ color == \lavender } { ~ohm.turnLavender(note); }
-	});
+  ~ohm2.turnGridRed(4, 3, page: page);
+  ~ohm2.setGridFunc(4, 3, {
+    ~fakeGuitar.free;
+    ~ohm2.setGridFunc(5, 2, { });
+    ~ohm2.turnGridOff(5, 2);
+    ~ohm2.turnGridRed(4, 2);
+  }, page: page);
 
 };

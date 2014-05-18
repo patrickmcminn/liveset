@@ -27,7 +27,7 @@ prm
 	},
 
 	makeMIDI: { | self |
-		self.presetList.do({ | num, i |
+    self.presetList.do({ | num, i |
 			MIDIdef.noteOn("preset" ++ (i + 1), { self.preset(i+1); }, num);
 			self.makeButton(num);
 		});

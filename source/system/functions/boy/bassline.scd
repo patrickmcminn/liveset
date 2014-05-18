@@ -25,7 +25,7 @@ prm
 		\eq: Synth(\eq3, [\in, ~boyBus[\bassline].eq, \out, ~boyBus[\bassline].verb,
 			\loGain, 2, \hiFreq, 7000, \hiGain, -70], ~group[\fx], \addToTail),
 
-		\verb: Synth(\reverb1, [\in, ~boyBus[\bassline].verb, \out, ~boyBus[\bassline].fader, \mix, 0.4, \room, 0.6],
+		\verb: Synth(\reverb1, [\in, ~boyBus[\bassline].verb, \out, ~boyBus[\bassline].fader, \mix, 0.3, \room, 0.6],
 			~group[\fx], \addToTail),
 
 		\fader: Synth(\pan, [\in, ~boyBus[\bassline].fader, \out, ~mixer[\s2]], ~group[\fx], \addToTail)

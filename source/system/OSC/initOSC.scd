@@ -5,6 +5,7 @@ prm
 */
 
 ~scLang = NetAddr("127.0.0.1", 57120);
+~quartzComposer = NetAddr("127.0.0.01", 60000);
 
 OSCdef(\server, { | msg |
 	var id, val;

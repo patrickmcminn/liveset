@@ -10,3 +10,4 @@ prm
 "/OSC/birds.scd".loadRelative;
 "/OSC/boy.scd".loadRelative;
 "/OSC/improv.scd".loadRelative;
+"/OSC/QuartzComposer.scd".loadRelative;

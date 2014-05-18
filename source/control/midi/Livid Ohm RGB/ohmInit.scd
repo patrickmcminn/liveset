@@ -39,6 +39,8 @@ ohm.latency = 0;
 
 
 ~ohm.addUniqueMethod(\clearAll, { | func, val |
+  // maybe won't work?
+  ~ohm2.setPage('nilPage');
   MIDIdef.freeAll;
 	127.do({ | i | ~ohm.turnOff(i);});
 });

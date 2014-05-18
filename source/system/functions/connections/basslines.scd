@@ -51,7 +51,7 @@ prm
 		\addAction, \addBefore,
 		\dur, Pseq([8, 8, 8, 4, 4], inf),
 		\legato, 1,
-		\amp, 0.3
+		\amp, 1
 	).quant_(1);
 
 	Pbindef(\basslineTwo,
@@ -64,7 +64,7 @@ prm
 		\group, ~connectSynth[\basslines].loShelf,
 		\addAction, \addBefore,
 		\rate, 0.5,
-		\amp, 0.2,
+		\amp, 0.8,
 		\dur, Pstutter(
 			noteCount,
 			Pseq([0.5, 2/3, 0.25, 1/3, 0.25], inf)),

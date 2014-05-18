@@ -16,4 +16,5 @@ r {
   ~ohm2.makePage('improv');
   ~ohm2.makePage('grainCloud');
   ~ohm2.makePage('delayNetwork');
+  ~ohm2.makePage('fakeGuitar');
 }.play(AppClock);

@@ -19,11 +19,11 @@ prm
 	res: 8,
 
   cutoff: 19,
-	delayTime: 18,
-	rateLo: 11,
-	rateHi: 10,
+  delayAmp: 18,
+	delayTime: 11,
+	feedback: 10,
 
-	dist: 21,
+	verbMix: 21,
 	modFreq: 20,
 	trigLo: 13,
 	trigHi: 12,
@@ -111,36 +111,40 @@ prm
 	},
 
 	makeDials: { | self |
-		self.makeDist;
+		//self.makeDist;
 		self.makeCutoff;
-    //self.makeVerbMix;
+    self.makeVerbMix;
 		self.makeModFreq;
 		self.makeTrigLo;
 		self.makeTrigHi;
-		self.makeRateLo;
-		self.makeRateHi;
+		//self.makeRateLo;
+		//self.makeRateHi;
 		self.makeCutoffLo;
 		self.makeCutoffHi;
 		self.makeCutoffRate;
 		self.makeRes;
+    self.makeDelayAmp;
 		self.makeDelayTime;
+    self.makeFeedback;
 		self;
 	},
 
 	killDials: { | self |
 		self.killDist;
     self.killCutoff;
-		//self.killVerbMix;
+		self.killVerbMix;
 		self.killModFreq;
 		self.killTrigLo;
 		self.killTrigHi;
-		self.killRateLo;
-		self.killRateHi;
+		//self.killRateLo;
+		//self.killRateHi;
 		self.killCutoffLo;
 		self.killCutoffHi;
 		self.killCutoffRate;
 		self.killRes;
 		self.killDelayTime;
+    self.killFeedback;
+    self.killDelayAmp;
 		self;
 	},
 
@@ -160,7 +164,7 @@ prm
 
 	makeCutoff: { | self |
 		MIDIdef.cc(\hugeCutoff, { | val |
-			var cutoff = val.linexp(0, 127, 100, 17000);
+			var cutoff = val.linexp(0, 127, 100, 7000);
 			~improv.huge.main.set(\cutoff, cutoff);
 		}, self.cutoff);
 		self;
@@ -213,7 +217,7 @@ prm
 
 	makeRateLo: { | self |
 		MIDIdef.cc(\hugeRateLo, { | val |
-			var lo = val.linexp(0, 127, 0.1, 25);
+			var lo = val.linexp(0, 127, 1, 25);
 			~improv.huge.main.set(\rateLo, lo);
 		}, self.rateLo);
 		self;
@@ -226,7 +230,7 @@ prm
 
 	makeRateHi: { | self |
 		MIDIdef.cc(\hugeRateHi, { | val |
-			var hi = val.linexp(0, 127, 0.5, 500);
+			var hi = val.linexp(0, 127, 1, 500);
 			~improv.huge.main.set(\rateHi, hi);
 		}, self.rateHi);
 		self;
@@ -291,7 +295,7 @@ prm
 
 	makeDelayTime: { | self |
 		MIDIdef.cc(\hugeDelayTime, { | val |
-			var time = val.linlin(0, 127, 0.05, 4);
+			var time = val.linlin(0, 127, 0, 1.5);
 			~improv.huge.main.set(\delayTime, time);
 		}, self.delayTime);
 		self;
@@ -300,6 +304,33 @@ prm
 	killDelayTime: { | self |
 		MIDIdef(\hugeDelayTime).free;
 		self;
-	}
+	},
+
+  makeDelayAmp: { | self |
+    MIDIdef.cc(\hugeDelayMix, { | val |
+      var amp = val.linlin(0, 127, 0, 1);
+      ~improv.huge.main.set(\delayAmp, amp);
+    }, self.delayAmp);
+  },
+
+  killDelayAmp: { | self | MIDIdef(\hugeDelayMix).free; },
+
+  makeFeedback: { | self |
+    MIDIdef.cc(\hugeDelayFeedback, { | val |
+      var fb = val.linlin(0, 127, 0, 0.5);
+      ~improv.huge.main.set(\feedback, fb);
+    }, self.feedback);
+  },
+
+  killFeedback: { | self | MIDIdef(\hugeDelayFeedback).free; },
+
+  makeVerbMix: { | self |
+    MIDIdef.cc(\hugeVerbMix, { | val |
+      var mix = val.linlin(0, 127, 0, 1);
+      ~improv.huge.main.set(\verbMix, mix);
+    }, self.verbMix);
+  },
+
+  killVerbMix: { | self | MIDIdef(\hugeVerbMix).free; }
 
 )

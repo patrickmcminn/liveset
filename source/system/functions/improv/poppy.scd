@@ -14,8 +14,8 @@ prm
 	triggerState: 0,
 
 	playVol: 0.dbamp,
-	atk: 0.05,
-	rel: 0.05,
+	atk: 0.1,
+	rel: 0.1,
 	lengthLo: 0.5,
 	lengthHi: 1.5,
 
@@ -106,7 +106,7 @@ prm
 	makeSynths: { | self |
 		self.inFader = Synth.tail(~group.fx, \fader, [\in, self.in, \out, self.verbBus, \amp, 1]);
 		self.verb = Synth.tail(~group.fx, \reverb1, [\in, self.verbBus, \out, self.thruBus, \amp, 4.dbamp,
-			\mix, 0.82, \room, 0.92, \damp, 0.9]);
+			\mix, 0.6, \room, 0.92, \damp, 0.9]);
 		self.thru = Synth.tail(~group.fx, \fader, [\in, self.thruBus, \out, self.faderBus]);
 		self.record = Synth.tail(~group.fx, \recordBuf,
 			[\in, self.thruBus, \bufName, self.buffer, \loop, 1, \preLevel, 0.3]);

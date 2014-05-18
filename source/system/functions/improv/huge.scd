@@ -4,8 +4,8 @@ huge.scd
 prm
 */
 
-~improv.huge = (
 
+~improv.huge = (
 	in: ~inst.mute,
 	out: ~mixer.s2,
 

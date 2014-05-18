@@ -11,11 +11,12 @@ r {
   7.wait;
   "/source/Load control.scd".loadRelative;
   5.wait;
+  "/source/control/midi/Livid Ohm RGB/improv/improvPage ohm2.scd".loadRelative;
   "source/control/midi/Livid Ohm RGB/improv/GrainCloudOhm.scd".loadRelative;
   "source/control/midi/Livid Ohm RGB/improv/delayNetworkOhm.scd".loadRelative;
+  "source/control/midi/Livid Ohm RGB/improv/FakeGuitarOhm.scd".loadRelative;
 }.play(AppClock);
 );
 
 s.meter;
 Server.local.makeWindow;
-s.meter;

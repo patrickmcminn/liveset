@@ -102,7 +102,7 @@ OSCdef(\dronerOhmRestoer, { | msg |
 			~scLang.sendMsg(\droner, \granMix, mix)}, granMix
 		);
 	MIDIdef.cc(\dronerVolume, { | val |
-			var amp = val.linlin(0, 127, 0, 2.dbamp);
+			var amp = val.linlin(0, 127, 0, 6.dbamp);
 			~scLang.sendMsg(\droner, \volume, amp)}, vol
 		);
 	MIDIdef.cc(\dronerLoShelf, { | val |

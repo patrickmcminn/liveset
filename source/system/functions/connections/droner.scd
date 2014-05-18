@@ -33,11 +33,11 @@ prm
 				\mix, 0, \in, ~connectBus[\droner].drone,
 				\out, ~connectBus[\droner].verb,
 				\bufLength, 5, \panOffset, 0.03, \grainDur, 0.13, \grainDurOffset, 0.1,
-				\rate, ~connectBus[\droner].at(\rate).asMap, \env, ~grainBufs[\gabor], \trigRate, 15, \amp, 1
+				\rate, ~connectBus[\droner].at(\rate).asMap, \env, ~grainBufs[\gabor], \trigRate, 15, \amp, 3
 		], ~group[\fx], \addToTail),
 
 		\verb:    Synth(\reverb2, [\in, ~connectBus[\droner].verb, \out, ~connectBus[\droner].filter,
-			\mix, 0.75, \room, 1, \damp, 0.7], ~group[\fx], \addToTail),
+			\mix, 0.75, \room, 1, \damp, 0.9], ~group[\fx], \addToTail),
 
     \hiShelf: Synth(\hiShelfStereo, [\in, ~connectBus[\droner].filter, \out, ~connectBus[\droner].filter, \freq, 2637,
 			\gain, -3], ~group[\fx], \addToTail),

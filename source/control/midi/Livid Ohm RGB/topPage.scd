@@ -23,7 +23,12 @@ defines function for making the top layer of the tree
 
 	// various other functions
 	~ohm.turnCyan(3);
-	MIDIdef.noteOn(\improvBranch, { ~scLang.sendMsg(\page, \improv) }, 3);
+  MIDIdef.noteOn(\improvBranch, {
+    ~ohm.clearAll;
+    ~ohm.addEssential;
+    ~ohm2.setPage('improv');
+  /*~scLang.sendMsg(\page, \improv);*/
+  }, 3);
 
 	// Light
 	~ohm.turnYellow(4);
