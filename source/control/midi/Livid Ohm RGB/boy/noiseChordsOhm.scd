@@ -92,7 +92,7 @@ OSCdef(\noiseChordsRestore, { | msg |
 	MIDIdef.noteOn(\noiseChordsTwo, { ~scLang.sendMsg(\noiseChords, \two) }, two);
 	MIDIdef.noteOn(\noiseChordsThree, { ~scLang.sendMsg(\noiseChords, \three) }, three);
 	MIDIdef.cc(\noiseChordsVolume, { | val |
-			var amp = val.linlin(0, 127, 0, 0.6);
+			var amp = val.linlin(0, 127, 0, 0.55);
 			~scLang.sendMsg(\noiseChords, \volume, amp) }, vol);
 });
 ~boyOhmMidi[\noiseChords].addUniqueMethod(\kill, {

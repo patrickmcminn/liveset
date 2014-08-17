@@ -97,7 +97,7 @@ OSCdef(\boyBasslineOhmRestore, { | msg |
 	MIDIdef.noteOn(\boyBasslineTwo, { ~scLang.sendMsg(\boyBassline, \two); }, two);
 	MIDIdef.noteOn(\boyBasslineThree, { ~scLang.sendMsg(\boyBassline, \three); }, three);
 	MIDIdef.cc(\boyBasslineVolume, { | val |
-			var amp = val.linlin(0, 127, 0, 6.dbamp);
+			var amp = val.linlin(0, 127, 0, 3.dbamp);
 			~scLang.sendMsg(\boyBassline, \volume, amp); }, vol);
 	MIDIdef.cc(\boyBasslineCutoff, { | val |
 		var cutoff = val.linlin(0, 127, 40, 7000);
