@@ -5,19 +5,19 @@ ohm2 improv page
 var page = 'improv';
 
 
-// gendy (not working):
+//////// gendy (not working):
 ~ohm2.turnGridGreen(0, 0, page: page);
 ~ohm2.setGridFunc(0, 0, { "gendy not working yet".postln; }, page: page);
 
-// pings (not working):
+//////// pings (not working):
 ~ohm2.turnGridGreen(0, 1, page: page);
 ~ohm2.setGridFunc(0, 1, { "pings not working yet".postln; }, page: page);
 
-// noise synth (not working):
+//////// noise synth (not working):
 ~ohm2.turnGridYellow(0, 2, page: page);
 ~ohm2.setGridFunc(0, 2, { "noise synth not working yet".postln; }, page: page);
 
-// poppy:
+//////// poppy:
 ~ohm2.turnGridWhite(0, 3, page: page);
 ~ohm2.setGridFunc(0, 3, r {
   ~improv.poppy.init;
@@ -96,7 +96,7 @@ var page = 'improv';
 }.loop, page: page);
 
 
-// huge:
+//////// huge:
 ~ohm2.turnGridCyan(0, 5, page: page);
 ~ohm2.setGridFunc(0, 5, r {
   ~improv.huge.init;
@@ -133,7 +133,7 @@ var page = 'improv';
 }.loop, page: page);
 
 
-
+//////// GrainCloud 2:
 ~ohm2.turnGridPurple(0, 7, page: page);
   ~ohm2.setGridFunc(0, 7, r {
     loop {
@@ -174,25 +174,44 @@ var page = 'improv';
     ~ohm2.turnGridRed(4, 0);
   }, page: page);
 
-  ~ohm2.turnGridWhite(4, 2, page: page);
-  ~ohm2.setGridFunc(4, 2, r {
-    loop {
-      ~fakeGuitar = FakeGuitar.new(~mixer.s1, -6.dbamp, 0, ~group.fx, \addToTail);
-      ~ohm2.setGridFunc(5, 2, { ~ohm.clearAll; ~ohm2.setPage('fakeGuitar'); ~ohm.addEssential; });
-      ~ohm2.turnGridCyan(5, 2);
-      ~ohm2.turnGridGreen(5, 2).yield;
+//////// Fake Guitar:
+~ohm2.turnGridWhite(4, 2, page: page);
+~ohm2.setGridFunc(4, 2, r {
+  loop {
+    ~fakeGuitar = FakeGuitar.new(~mixer.s1, -6.dbamp, 0, ~group.fx, \addToTail);
+    ~ohm2.setGridFunc(5, 2, { ~ohm.clearAll; ~ohm2.setPage('fakeGuitar'); ~ohm.addEssential; });
+    ~ohm2.turnGridCyan(5, 2);
+    ~ohm2.turnGridGreen(4, 2).yield;
 
-      ~fakeGuitar.free;
-      ~ohm2.setGridFunc(5, 2, { });
-      ~ohm2.turnGridOff(5, 2);
-      ~ohm2.turnGridRed(4, 2).yield;
-    }
-  }, page: page);
-
-  ~ohm2.turnGridRed(4, 3, page: page);
-  ~ohm2.setGridFunc(4, 3, {
     ~fakeGuitar.free;
     ~ohm2.setGridFunc(5, 2, { });
     ~ohm2.turnGridOff(5, 2);
-    ~ohm2.turnGridRed(4, 2);
-  }, page: page);
+    ~ohm2.turnGridRed(4, 2).yield;
+  }
+}, page: page);
+
+~ohm2.turnGridRed(4, 3, page: page);
+~ohm2.setGridFunc(4, 3, {
+  ~fakeGuitar.free;
+  ~ohm2.setGridFunc(5, 2, { });
+  ~ohm2.turnGridOff(5, 2);
+  ~ohm2.turnGridRed(4, 2);
+}, page: page);
+
+//////// Trumpet Nebula
+~ohm2.turnGridCyan(4, 4, page: page);
+~ohm2.setGridFunc(4, 4, r {
+  loop {
+    ~nebula = TrumpetNebula.new(~mixer.s1, ~group.fx, \addToTail);
+    ~nebulaInput =  { Out.ar(~nebula.inBus, SoundIn.ar(0)) }.play;
+    ~ohm2.setGridFunc(5, 4, { ~ohm.clearAll; ~ohm2.setPage('nebula'); ~ohm.addEssential; });
+    ~ohm2.turnGridYellow(5, 4);
+    ~ohm2.turnGridGreen(4, 4).yield;
+
+    ~nebula.free;
+    ~nebulaInput.free;
+    ~ohm2.setGridFunc(5, 4, { });
+    ~ohm2.turnGridOff(5, 4);
+    ~ohm2.turnGridRed(4, 4).yield;
+  }
+}, page: page);

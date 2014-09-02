@@ -15,6 +15,7 @@ r {
   "source/control/midi/Livid Ohm RGB/improv/GrainCloudOhm.scd".loadRelative;
   "source/control/midi/Livid Ohm RGB/improv/delayNetworkOhm.scd".loadRelative;
   "source/control/midi/Livid Ohm RGB/improv/FakeGuitarOhm.scd".loadRelative;
+  "source/control/midi/Livid Ohm RGB/improv/TrumpetNebulaOhm.scd".loadRelative;
 }.play(AppClock);
 );
 
