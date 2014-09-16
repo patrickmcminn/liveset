@@ -202,7 +202,7 @@ var page = 'improv';
 ~ohm2.turnGridCyan(4, 4, page: page);
 ~ohm2.setGridFunc(4, 4, r {
   loop {
-    ~nebula = TrumpetNebula.new(~mixer.s1, ~group.fx, \addToTail);
+    ~nebula = TrumpetNebula.new(~mixer.s1, nil, nil, nil, nil, ~fx, \addToHead);
     ~nebulaInput =  { Out.ar(~nebula.inBus, SoundIn.ar(0)) }.play;
     ~ohm2.setGridFunc(5, 4, { ~ohm.clearAll; ~ohm2.setPage('nebula'); ~ohm.addEssential; });
     ~ohm2.turnGridYellow(5, 4);
@@ -214,4 +214,23 @@ var page = 'improv';
     ~ohm2.turnGridOff(5, 4);
     ~ohm2.turnGridRed(4, 4).yield;
   }
+}, page: page);
+
+//////// Freeze Drone:
+~ohm2.turnGridWhite(4, 5, page: page);
+~ohm2.setGridFunc(4, 5, r {
+  loop {
+    ~freezeDrone = FreezeDrone.new(~mixer.s2, relGroup: ~fx, addAction: \addToHead);
+    while({ try { ~freezeDrone.isLoaded } != true }, { 0.001.wait; });
+    ~freezeDroneInput = { Out.ar(~freezeDrone.inBus, SoundIn.ar(0)) }.play;
+    ~ohm2.setGridFunc(5, 5, { ~ohm.clearAll; ~ohm2.setPage('freezeDrone'); ~ohm.addEssential; });
+    ~ohm2.turnGridBlue(5, 5);
+    ~ohm2.turnGridGreen(4, 5).yield;
+
+    ~freezeDroneInput.free;
+    ~freezeDrone.free;
+    ~ohm2.setGridFunc(5, 5, {});
+    ~ohm2.turnGridOff(5, 5);
+    ~ohm2.turnGridRed(4, 5).yield;
+  };
 }, page: page);

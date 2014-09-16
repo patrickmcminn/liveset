@@ -42,6 +42,20 @@ defines function for making the top layer of the tree
 	~ohm.turnWhite(6);
 	MIDIdef.noteOn(\graceBranch, { ~page.grace.top; }, 6);
 
+  // Lucky:
+  ~ohm.turnBlue(7);
+  MIDIdef.noteOn(\luckyBranch,  {
+      ~lucky = Lucky.new(~mixer.s1, ~group.fx, \addToTail);
+  }, 7);
+  ~ohm.turnYellow(15);
+  MIDIdef.noteOn(\luckyPage, {
+    ~ohm.clearAll;
+    ~ohm2.setPage('lucky');
+    ~ohm.addEssential;
+  }, 15);
+  ~ohm.turnRed(23);
+  MIDIdef.noteOn(\luckyKill, { ~lucky.free; ~ohm.turnRed(7); }, 23);
+
 	// input volume:
 	MIDIdef.cc(\inputVol, { | val |
 		var amp = val.linlin(0, 127, 0, 1);
